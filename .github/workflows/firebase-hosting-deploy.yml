@@ -1,0 +1,43 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Firebase CLI
+        run: |
+          npm --version
+          npm i -g firebase-tools@13
+
+      - name: Deploy to Firebase Hosting
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
+        run: |
+          if [ "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" != "" ]; then
+            echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > ${HOME}/gcp_key.json
+            export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/gcp_key.json"
+            firebase deploy --only hosting --project $(jq -r .projects.default .firebaserc) --non-interactive
+          else
+            echo "Using GitHub OIDC to authenticate"
+            firebase deploy --only hosting --project $(jq -r .projects.default .firebaserc) --non-interactive --token "${{ secrets.FIREBASE_TOKEN }}"
+          fi
+
+

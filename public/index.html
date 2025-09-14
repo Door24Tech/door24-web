@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Door24</title>
+  <meta name="description" content="Minimal site deployed via Firebase Hosting">
+  <style>
+    :root{--bg:#0b0f14;--fg:#e6edf3;--muted:#9aa4b2;--accent:#3fb950;--card:#11161d;--border:#223047}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;max-width:720px;width:92%;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    h1{margin:0 0 8px;font-size:28px}
+    p{margin:0 0 16px;color:var(--muted)}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+    a.button{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#0f1621;color:var(--fg);text-decoration:none}
+    a.button:hover{border-color:#31527d}
+    code{background:#0b1220;border:1px solid var(--border);padding:2px 6px;border-radius:6px}
+    footer{margin-top:16px;font-size:12px;color:var(--muted)}
+  </style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' ry='18' fill='%2311161d'/%3E%3Cpath d='M28 20h44v60H28z' fill='%23223047'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%233fb950'/%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="card">
+    <h1>Door24</h1>
+    <p>Your site is live-ready. Deploy it with Firebase Hosting and GitHub.</p>
+    <div class="row">
+      <a class="button" href="https://firebase.google.com/docs/hosting" target="_blank" rel="noreferrer">Firebase Hosting Docs</a>
+      <a class="button" href="https://github.com/marketplace/actions/deploy-to-firebase-hosting" target="_blank" rel="noreferrer">GitHub Action</a>
+    </div>
+    <footer>
+      Update <code>public/index.html</code>, commit, and push. CI will deploy to your live channel.
+    </footer>
+  </main>
+</body>
+</html>
+
+
