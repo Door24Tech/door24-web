@@ -1,11 +1,12 @@
-# Door24 Web - Minimal Firebase Hosting Scaffold
+# Door24 Web - Vite + React on Firebase Hosting
 
-This repo is a minimal static site configured for Firebase Hosting with GitHub Actions deployments and ready for a custom domain.
+This repo now uses Vite + React (TypeScript) and deploys the built app to Firebase Hosting via GitHub Actions.
 
 ## What's included
-- `public/index.html` - minimal landing page
+- `src/` React app using Vite
+- `index.html` Vite entry
 - `firebase.json` and `.firebaserc` - Hosting config (set your project ID)
-- `.github/workflows/firebase-hosting-deploy.yml` - CI to deploy on push to `main`
+- `.github/workflows/firebase-hosting-deploy.yml` - CI: install, build, deploy on push to `main`
 - `.gitignore`
 
 ## Prerequisites
@@ -39,6 +40,17 @@ The workflow deploys Hosting on each push to `main`.
 3. In your DNS provider, add the A/AAAA (or CNAME) records
 4. Wait for verification; HTTPS certs are automatic
 
+## Local development
+```bash
+npm ci
+npm run dev
+```
+
+## Build
+```bash
+npm run build
+```
+
 ## Local preview (optional)
 ```bash
 firebase emulators:start --only hosting
@@ -47,4 +59,4 @@ firebase hosting:channel:deploy preview
 ```
 
 ## Updating content
-Edit `public/index.html`, commit, and push. CI redeploys automatically.
+Edit files under `src/`, commit, and push. CI builds and redeploys automatically.

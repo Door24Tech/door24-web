@@ -22,6 +22,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+
+      - name: Build
+        run: npm run build
+
       - name: Install Firebase CLI
         run: |
           npm --version

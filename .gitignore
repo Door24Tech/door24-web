@@ -6,6 +6,7 @@ pnpm-debug.log*
 
 # Node
 node_modules/
+dist/
 
 # macOS / Windows
 .DS_Store
