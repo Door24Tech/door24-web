@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Door24 Web
 
-## Getting Started
+Door24’s marketing site built with Next.js 16, React 19, Tailwind CSS 4, and deployed on Firebase Hosting.
 
-First, run the development server:
+## Requirements
+
+- Node.js 20+
+- npm 10+
+- Firebase CLI (`npm install -g firebase-tools`, optional for local deploys)
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The dev server runs at [http://localhost:3000](http://localhost:3000). The main entry is `src/app/page.tsx`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start   # serve the production build locally
+```
 
-## Learn More
+## Firebase Hosting
 
-To learn more about Next.js, take a look at the following resources:
+1. Set the Firebase project ID in `.firebaserc`.
+2. Authenticate locally if you want to deploy from your machine:
+   ```bash
+   firebase login
+   firebase deploy --only hosting
+   ```
+3. For CI/CD, add one of the following secrets to the GitHub repo:
+   - `FIREBASE_SERVICE_ACCOUNT`: contents of a Firebase service account JSON with Hosting Admin rights.
+   - `FIREBASE_TOKEN`: output from `firebase login:ci`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pushes to `main` trigger the GitHub Actions workflow in `.github/workflows/firebase-hosting-deploy.yml`, which builds and deploys automatically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+- `src/app` – App Router pages and layout
+- `public` – Static assets
+- `firebase.json` / `.firebaserc` – Firebase Hosting configuration
+- `.github/workflows` – CI/CD pipelines
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Create a feature branch.
+2. Commit changes (`npm run lint` and `npm run build` should pass first).
+3. Open a pull request targeting `main`.
