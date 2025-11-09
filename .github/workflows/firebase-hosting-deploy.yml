@@ -32,6 +32,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
           projectId: door-24-website
-          args: --only hosting:door-24-website
+          channelId: live
+          target: door-24-website
