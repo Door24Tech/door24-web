@@ -128,7 +128,7 @@ export default function Mission() {
               unoptimized
               priority
             />
-            <span className="hidden xs:inline">Door 24</span>
+            <span>Door 24</span>
           </Link>
 
           <nav className="flex items-center gap-3 text-xs font-medium text-[var(--door24-muted)] sm:gap-6 sm:text-sm">
