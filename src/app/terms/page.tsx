@@ -1,45 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export default function Terms() {
   return (
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[var(--door24-background)]/80 backdrop-blur-md">
-        <nav className="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-4 sm:px-8 sm:py-5">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
-          >
-            <Image
-              src="/assets/door-24-logo.png"
-              alt="Door 24 logo"
-              width={36}
-              height={36}
-              className="h-7 w-7 object-contain sm:h-9 sm:w-9"
-              unoptimized
-              priority
-            />
-            <span>Door 24</span>
-          </Link>
-
-          <div className="flex items-center gap-6 text-sm sm:gap-8">
-            <Link
-              href="/mission"
-              className="text-[var(--door24-foreground)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-            >
-              Our Mission
-            </Link>
-            <Link
-              href="/#top"
-              className="rounded-xl bg-gradient-to-r from-[var(--door24-primary-start)] to-[var(--door24-primary-end)] px-4 py-2 text-sm font-semibold text-white transition hover:shadow-lg hover:shadow-[rgba(107,91,255,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)] sm:px-5 sm:py-2.5"
-            >
-              Get Early Access
-            </Link>
-          </div>
-        </nav>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="mx-auto max-w-[880px] px-4 py-16 sm:px-8 sm:py-24">
