@@ -103,13 +103,13 @@ export default function Home() {
         <section className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
           <div className="flex flex-col gap-3 sm:gap-4 lg:gap-6">
             <span className="mx-auto w-fit rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[var(--door24-muted)] sm:px-4 sm:text-xs sm:tracking-[0.35em]">
-              Pre-Launch Access
+              Reserve Your Spot
             </span>
             <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
-              Community Recovery, Reimagined.
+              Community Recovery, Not Counting Recovery.
             </h1>
             <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
-              Door 24 helps you break free from old patterns and build a life that feels free, focused, and real.
+              Door 24 rewires the recovery experience through connection, tools that adapt, and progress that compounds.
             </p>
           </div>
 
