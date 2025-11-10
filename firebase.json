@@ -1,7 +1,12 @@
 {
   "hosting": {
     "site": "door-24-website",
-    "source": "."
+    "public": "out",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }
 

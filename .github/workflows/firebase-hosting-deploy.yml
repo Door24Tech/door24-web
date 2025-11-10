@@ -34,8 +34,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: door-24-website
           channelId: live
-          # If you mapped a hosting target, put that name here.
-          # If you did NOT set targets, you can remove this line and rely on firebase.json "site".
           target: door-24-website
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
