@@ -119,6 +119,7 @@ export default function Home() {
               width={36}
               height={36}
               className="h-9 w-9 object-contain sm:h-11 sm:w-11"
+              unoptimized
               priority
             />
             <span className="hidden xs:inline">Door 24</span>
