@@ -103,7 +103,7 @@ export default function Home() {
         <section className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
           <div className="flex flex-col gap-6 sm:gap-8">
             <span className="mx-auto w-fit rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[var(--door24-muted)] sm:px-4 sm:text-xs sm:tracking-[0.35em]">
-              Reserve Your Spot
+              Join the Waitlist
             </span>
             <div className="flex flex-col gap-4 sm:gap-5">
               <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
