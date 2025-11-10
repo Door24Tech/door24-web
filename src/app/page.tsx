@@ -116,9 +116,9 @@ export default function Home() {
             <Image
               src="/assets/door-24-logo.png"
               alt="Door 24 logo"
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full border border-white/30 bg-white/10 p-1 object-contain"
+              width={44}
+              height={44}
+              className="h-11 w-11 object-contain"
               priority
             />
             Door 24
