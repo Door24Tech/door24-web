@@ -106,7 +106,7 @@ export default function Home() {
               Pre-Launch Access
             </span>
             <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
-              Community Recovery, Not Counting Recovery.
+              Community Recovery, Reimagined.
             </h1>
             <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
               Door 24 is the community-powered recovery app with daily
