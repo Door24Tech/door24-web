@@ -111,9 +111,6 @@ export default function Home() {
             <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
               Door 24 helps you break free from old patterns and build a life that feels free, focused, and real.
             </p>
-            <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
-              Connect with people who get it. Grow daily with tools that keep your mind clear and your progress steady.
-            </p>
           </div>
 
           <form
