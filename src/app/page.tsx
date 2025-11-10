@@ -165,7 +165,7 @@ export default function Home() {
             <span aria-hidden className="hidden sm:inline">
               •
             </span>
-            <span>iOS & Android at launch</span>
+            <span>iOS at launch</span>
           </div>
         </section>
       </main>
