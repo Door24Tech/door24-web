@@ -114,7 +114,7 @@ export default function Home() {
             className="flex items-center gap-3 text-sm font-semibold tracking-[0.18em] uppercase text-[var(--door24-muted)]"
           >
             <Image
-              src="/assets/Door-24-Logo.png"
+              src="/assets/door-24-logo.png"
               alt="Door 24 logo"
               width={40}
               height={40}

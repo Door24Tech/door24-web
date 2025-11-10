@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "Door 24",
     images: [
       {
-        url: "/assets/Door-24-Logo.png",
+        url: "/assets/door-24-logo.png",
         width: 1024,
         height: 1024,
         alt: "Door 24 logo",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "Door 24 — Community Recovery, Not Counting Recovery",
     description:
       "Join the Door 24 waitlist to get early access to the community-powered recovery app and receive the free Reset Pack.",
-    images: ["/assets/Door-24-Logo.png"],
+    images: ["/assets/door-24-logo.png"],
   },
 };
 
