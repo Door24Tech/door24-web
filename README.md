@@ -41,6 +41,7 @@ Pushes to `main` trigger the GitHub Actions workflow in `.github/workflows/fireb
 ## Project Structure
 
 - `src/app` – App Router pages and layout
+- `src/app/page.tsx` – Waitlist landing experience (also re-exported at `/waitlist`)
 - `public` – Static assets
 - `firebase.json` / `.firebaserc` – Firebase Hosting configuration
 - `.github/workflows` – CI/CD pipelines
@@ -50,3 +51,14 @@ Pushes to `main` trigger the GitHub Actions workflow in `.github/workflows/fireb
 1. Create a feature branch.
 2. Commit changes (`npm run lint` and `npm run build` should pass first).
 3. Open a pull request targeting `main`.
+
+## Waitlist Landing Experience
+
+The default home route renders the Door 24 waitlist experience:
+
+- Hero headline with the tagline “Community Recovery, Not Counting Recovery.”
+- Highlights on the value of the platform.
+- Early-access waitlist form with name, email, organization, and context fields. Submit transitions are simulated client-side until the production integration is ready.
+- Soft-glow animated background elements defined in `src/app/globals.css`.
+
+To customize the form, edit the inputs and submission handling in `src/app/page.tsx`. The `/waitlist` route re-exports the same component so both `/` and `/waitlist` stay in sync.
