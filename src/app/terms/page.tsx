@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 export default function Terms() {
   return (
@@ -150,34 +151,7 @@ export default function Terms() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/10 bg-[var(--door24-card)] py-8 sm:py-12">
-        <div className="mx-auto flex max-w-[1080px] flex-col items-center gap-6 px-4 text-center sm:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-[var(--door24-muted)] sm:gap-6">
-            <Link
-              href="/mission"
-              className="transition hover:text-[var(--door24-foreground)]"
-            >
-              Our Mission
-            </Link>
-            <Link
-              href="/terms"
-              className="transition hover:text-[var(--door24-foreground)]"
-            >
-              Terms
-            </Link>
-            <Link
-              href="/privacy"
-              className="transition hover:text-[var(--door24-foreground)]"
-            >
-              Privacy
-            </Link>
-          </div>
-          <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
-            © 2025 Door 24 Technologies. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
