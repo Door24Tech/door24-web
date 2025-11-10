@@ -84,7 +84,7 @@ export default function Home() {
               href="/mission"
               className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
             >
-              Mission
+              Our Mission
             </Link>
             <a
               href="#top"
@@ -177,7 +177,7 @@ export default function Home() {
                       href="/mission"
                       className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
                     >
-                      Mission
+                      Our Mission
                     </Link>
                     <Link
                       href="/contact"

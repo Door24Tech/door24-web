@@ -136,19 +136,13 @@ export default function Mission() {
               href="/mission"
               className="text-[var(--door24-foreground)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
             >
-              Mission
-            </Link>
-            <Link
-              href="/#faq"
-              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-            >
-              FAQ
+              Our Mission
             </Link>
             <a
-              href="/#final-cta"
+              href="/"
               className="door24-gradient rounded-full px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(24,208,194,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-end)] sm:px-5 sm:py-2 sm:text-sm"
             >
-              Get Early Access
+              Join Waitlist
             </a>
           </nav>
         </div>
@@ -331,7 +325,7 @@ export default function Mission() {
               href="/mission"
               className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
             >
-              Mission
+              Our Mission
             </Link>
             <Link
               href="/contact"
