@@ -101,17 +101,19 @@ export default function Home() {
         className="relative mx-auto flex min-h-[calc(100vh-80px)] max-w-[1080px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20 lg:px-12"
       >
         <section className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
-          <div className="flex flex-col gap-3 sm:gap-4 lg:gap-6">
+          <div className="flex flex-col gap-6 sm:gap-8">
             <span className="mx-auto w-fit rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[var(--door24-muted)] sm:px-4 sm:text-xs sm:tracking-[0.35em]">
               Reserve Your Spot
             </span>
-            <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
-              Community Recovery,<br />
-              Not Counting Recovery.
-            </h1>
-            <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
-              Door 24 rewires the recovery experience through connection, tools that adapt, and progress that compounds.
-            </p>
+            <div className="flex flex-col gap-4 sm:gap-5">
+              <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
+                Community Recovery,<br />
+                Not Counting Recovery.
+              </h1>
+              <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
+                Door 24 rewires the recovery experience through connection, tools that adapt, and progress that compounds.
+              </p>
+            </div>
           </div>
 
           <form
