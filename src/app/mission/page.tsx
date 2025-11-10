@@ -117,14 +117,14 @@ export default function Mission() {
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-12">
           <Link
             href="/"
-            className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-muted)] sm:gap-3 sm:text-sm"
+            className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
           >
             <Image
               src="/assets/door-24-logo.png"
               alt="Door 24 logo"
               width={36}
               height={36}
-              className="h-9 w-9 object-contain sm:h-11 sm:w-11"
+              className="h-7 w-7 object-contain sm:h-9 sm:w-9"
               unoptimized
               priority
             />
