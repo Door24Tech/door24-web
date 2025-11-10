@@ -1,274 +1,465 @@
 'use client';
 
+import Image from "next/image";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
-
-const highlights = [
-  {
-    title: "Unified resident experiences",
-    description:
-      "Streamlined access, visitor management, and incident response from a single platform.",
-  },
-  {
-    title: "Real-time community pulse",
-    description:
-      "Understand trends with operational analytics that help teams respond before issues escalate.",
-  },
-  {
-    title: "Recovery without spreadsheets",
-    description:
-      "Automations built for property teams mean no more manual counts, follow-up calls, or data chaos.",
-  },
-];
-
-const steps = [
-  {
-    title: "Reserve your spot",
-    description:
-      "Share how your community operates today so we can tailor the onboarding experience.",
-  },
-  {
-    title: "Preview the platform",
-    description:
-      "Get early access walkthroughs, invite teammates, and explore the resident journey.",
-  },
-  {
-    title: "Launch with confidence",
-    description:
-      "Partner with Door 24 specialists to migrate data, integrate hardware, and train your staff.",
-  },
-];
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
-export default function Home() {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [message, setMessage] = useState<string>("");
+type FormState = {
+  status: FormStatus;
+  message: string;
+};
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+const pillars = [
+  {
+    title: "Community that sticks",
+    description:
+      "Honest connection through groups, forums, and friend feeds that feel real.",
+  },
+  {
+    title: "Daily Alignments",
+    description:
+      "Small steps that keep you grounded and moving forward every day.",
+  },
+  {
+    title: "24-Minute Rescue",
+    description:
+      "Guided protocol to ride out urges and win the moment when it counts.",
+  },
+];
+
+const faqs = [
+  {
+    question: "When are you launching?",
+    answer:
+      "We’re targeting Q1 2026. Everyone on the waitlist gets first access and founder-only perks.",
+  },
+  {
+    question: "Which platforms will you support?",
+    answer:
+      "Door 24 will be available on iOS and Android at launch, with a web companion experience to follow.",
+  },
+  {
+    question: "Is this only for sobriety?",
+    answer:
+      "No. You can choose Sober or Cut-Back mode — the same supportive community is there either way.",
+  },
+];
+
+const successMessage = "Check your inbox for the Reset Pack.";
+
+export default function Home() {
+  const [heroForm, setHeroForm] = useState<FormState>({
+    status: "idle",
+    message: "No spam. Anonymous by default. Opt out anytime.",
+  });
+  const [offerForm, setOfferForm] = useState<FormState>({
+    status: "idle",
+    message: "Join the waitlist to receive your pack and first access.",
+  });
+  const [finalForm, setFinalForm] = useState<FormState>({
+    status: "idle",
+    message: "We’ll send your Reset Pack + early-access details.",
+  });
+
+  const [accordionOpen, setAccordionOpen] = useState<number | null>(0);
+
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+    setState: (state: FormState) => void
+  ) => {
     event.preventDefault();
-    setStatus("loading");
-    setMessage("");
+    setState({ status: "loading", message: "" });
 
     const formData = new FormData(event.currentTarget);
-    const name = formData.get("name")?.toString().trim();
     const email = formData.get("email")?.toString().trim();
 
-    if (!name || !email) {
-      setStatus("error");
-      setMessage("Please provide both your name and a valid email address.");
+    if (!email || !/.+@.+\..+/.test(email)) {
+      setState({
+        status: "error",
+        message: "Please enter a valid email address.",
+      });
       return;
     }
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1400));
       event.currentTarget.reset();
-      setStatus("success");
-      setMessage("Thanks for joining the waitlist. We’ll be in touch shortly.");
+      setState({
+        status: "success",
+        message: successMessage,
+      });
     } catch (error) {
       console.error(error);
-      setStatus("error");
-      setMessage("Something went wrong. Please try again in a moment.");
+      setState({
+        status: "error",
+        message: "Something went wrong. Please try again in a moment.",
+      });
     }
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-zinc-950 text-zinc-100">
+    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,#1a2450_0%,#0b1020_55%)] text-[var(--door24-foreground)]">
       <div className="pointer-events-none absolute inset-0">
-        <div className="animate-float-slow absolute -top-40 right-10 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl" />
-        <div className="animate-float-medium absolute left-[-10%] top-64 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="animate-pulse-glow absolute bottom-[-20%] right-[-10%] h-96 w-96 rounded-full bg-teal-400/20 blur-3xl" />
+        <div className="animate-float-slow absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[rgba(107,91,255,0.2)] blur-3xl" />
+        <div className="animate-float-medium absolute bottom-[-20%] left-[5%] h-[26rem] w-[26rem] rounded-full bg-[rgba(24,208,194,0.18)] blur-3xl" />
+        <div className="animate-pulse-glow absolute right-[-15%] top-[15%] h-[22rem] w-[22rem] rounded-full bg-[rgba(76,229,177,0.18)] blur-3xl" />
       </div>
 
-      <main className="relative mx-auto flex max-w-6xl flex-col gap-24 px-6 pb-28 pt-24 sm:px-12 lg:px-16">
-        <header className="flex flex-col gap-12 lg:flex-row lg:items-end">
-          <div className="flex flex-1 flex-col gap-6">
-            <span className="w-fit rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm font-semibold uppercase tracking-[0.35em] text-indigo-200">
-              Door 24
+      <header className="sticky top-0 z-20 border-b border-white/5 bg-[rgba(11,16,32,0.9)] backdrop-blur-sm">
+        <div className="mx-auto flex max-w-[1080px] items-center justify-between px-6 py-4 sm:px-10 lg:px-12">
+          <Link
+            href="#top"
+            className="flex items-center gap-3 text-sm font-semibold tracking-[0.18em] uppercase text-[var(--door24-muted)]"
+          >
+            <Image
+              src="/assets/Door-24-Logo.png"
+              alt="Door 24 logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full border border-white/10 object-cover"
+              priority
+            />
+            Door 24
+          </Link>
+
+          <nav className="flex items-center gap-6 text-sm font-medium text-[var(--door24-muted)]">
+            <Link
+              href="#about"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              About
+            </Link>
+            <Link
+              href="#faq"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              FAQ
+            </Link>
+            <Link
+              href="/privacy"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              Privacy
+            </Link>
+            <a
+              href="#final-cta"
+              className="door24-gradient rounded-full px-5 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(24,208,194,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-end)]"
+            >
+              Get Early Access
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <main
+        id="top"
+        className="relative mx-auto flex max-w-[1080px] flex-col gap-24 px-6 pb-24 pt-16 sm:px-10 sm:pt-20 lg:px-12"
+      >
+        <section className="flex flex-col items-center gap-10 text-center">
+          <div className="flex flex-col gap-4 sm:gap-6">
+            <span className="mx-auto w-fit rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)]">
+              Pre-Launch Access
             </span>
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-[3.5rem]">
               Community Recovery, Not Counting Recovery.
             </h1>
-            <p className="max-w-2xl text-lg leading-8 text-zinc-300">
-              Door 24 transforms multi-family communities with resilient access
-              control, proactive insights, and thoughtful resident experiences.
-              Join the waitlist to get early access, launch support, and
-              first-look product updates.
+            <p className="mx-auto max-w-2xl text-lg leading-8 text-[var(--door24-muted)]">
+              Door 24 is the community-powered recovery app with daily
+              alignments, real-time support, and groups that actually feel like
+              home.
             </p>
-            <div className="flex flex-col gap-4 text-sm font-medium text-zinc-300 sm:flex-row sm:items-center">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_4px_rgba(16,185,129,0.45)]" />
-                Early adopter onboarding begins Q1 2026
-              </div>
-              <div className="flex items-center gap-3">
-                <span aria-hidden className="text-zinc-500">
-                  —
-                </span>
-                Flexible integrations with existing hardware partners
-              </div>
-            </div>
           </div>
 
-          <aside className="flex-1 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-indigo-500/10 backdrop-blur-xl sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-200">
-              What you’ll receive
-            </p>
-            <ul className="mt-4 space-y-3 text-sm leading-6 text-zinc-300">
-              <li>• First look at resident and staff mobile experiences</li>
-              <li>• Launch playbooks proven across multifamily portfolios</li>
-              <li>• Invitations to private community recovery roundtables</li>
-            </ul>
-          </aside>
-        </header>
-
-        <section className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-start">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Why communities are joining Door 24
-              </h2>
-              <p className="text-lg leading-8 text-zinc-300">
-                Operational resilience for the staff. Intelligent, human
-                experiences for residents. Compliance certainty for leadership.
-              </p>
-            </div>
-            <dl className="grid gap-6 sm:grid-cols-2">
-              {highlights.map((item) => (
-                <div
-                  key={item.title}
-                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-                >
-                  <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="animate-float-fast absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl" />
-                  </div>
-                  <dt className="text-base font-semibold text-white">
-                    {item.title}
-                  </dt>
-                  <dd className="mt-3 text-sm leading-6 text-zinc-300">
-                    {item.description}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="relative rounded-3xl border border-white/10 bg-white/[0.08] p-6 shadow-2xl shadow-indigo-500/10 backdrop-blur">
-            <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight text-white">
-                  Join the waitlist
-                </h2>
-                <p className="text-sm leading-6 text-zinc-400">
-                  We’ll tailor the rollout based on your community’s needs.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <label className="block">
-                  <span className="text-sm font-medium text-zinc-300">
-                    Full name
-                  </span>
-                  <input
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-base text-white outline-none transition focus:border-white/40 focus:bg-white/15 focus:ring-2 focus:ring-indigo-400/50"
-                    type="text"
-                    name="name"
-                    placeholder="Jordan Lee"
-                    required
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-sm font-medium text-zinc-300">
-                    Work email
-                  </span>
-                  <input
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-base text-white outline-none transition focus:border-white/40 focus:bg-white/15 focus:ring-2 focus:ring-indigo-400/50"
-                    type="email"
-                    name="email"
-                    placeholder="jordan@community.com"
-                    required
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-sm font-medium text-zinc-300">
-                    Property or organization
-                  </span>
-                  <input
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-base text-white outline-none transition focus:border-white/40 focus:bg-white/15 focus:ring-2 focus:ring-indigo-400/50"
-                    type="text"
-                    name="organization"
-                    placeholder="The Atrium Residences"
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-sm font-medium text-zinc-300">
-                    What challenges should we solve first?
-                  </span>
-                  <textarea
-                    className="mt-2 h-28 w-full resize-none rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-base text-white outline-none transition focus:border-white/40 focus:bg-white/15 focus:ring-2 focus:ring-indigo-400/50"
-                    name="challenges"
-                    placeholder="Share a quick snapshot so we can tailor the experience."
-                  />
-                </label>
-              </div>
-
+          <form
+            className="flex w-full flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-[rgba(107,91,255,0.12)] backdrop-blur"
+            onSubmit={(event) => handleSubmit(event, setHeroForm)}
+            aria-label="Join the Door 24 waitlist"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <label className="w-full text-left text-sm font-medium text-[var(--door24-muted)] sm:flex-1">
+                Email
+                <input
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-base text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                  type="email"
+                  name="email"
+                  placeholder="you@email.com"
+                  required
+                />
+              </label>
               <button
                 type="submit"
-                disabled={status === "loading"}
-                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:shadow-xl hover:shadow-indigo-500/40 disabled:cursor-not-allowed disabled:opacity-70"
+                disabled={heroForm.status === "loading"}
+                className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 sm:mt-auto sm:w-auto"
               >
-                <span className="absolute inset-0 translate-y-[110%] bg-white/20 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
+                <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
                 <span className="relative">
-                  {status === "loading" ? "Joining…" : "Join the waitlist"}
+                  {heroForm.status === "loading" ? "Joining…" : "Join the Waitlist"}
                 </span>
               </button>
+            </div>
+            <div
+              aria-live="polite"
+              className={`text-sm ${
+                heroForm.status === "success"
+                  ? "text-[var(--door24-accent)]"
+                  : heroForm.status === "error"
+                    ? "text-[var(--door24-error)]"
+                    : "text-[var(--door24-muted)]"
+              }`}
+            >
+              {heroForm.message}
+            </div>
+          </form>
 
-              <p
-                aria-live="polite"
-                className={`text-sm leading-6 ${
-                  status === "success"
-                    ? "text-emerald-300"
-                    : status === "error"
-                      ? "text-rose-300"
-                      : "text-zinc-400"
-                }`}
-              >
-                {message ||
-                  "We respect your inbox. Expect thoughtful updates, not noise."}
-              </p>
-            </form>
+          <div className="flex flex-col gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:flex-row sm:items-center sm:gap-6">
+            <span>Anonymous</span>
+            <span aria-hidden className="hidden sm:inline">
+              •
+            </span>
+            <span>No ads</span>
+            <span aria-hidden className="hidden sm:inline">
+              •
+            </span>
+            <span>iOS & Android at launch</span>
           </div>
         </section>
 
-        <section className="space-y-10">
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              How early access works
+        <div
+          id="about"
+          className="h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent"
+        />
+
+        <section className="grid gap-8 lg:grid-cols-3">
+          {pillars.map((pillar) => (
+            <article
+              key={pillar.title}
+              className="rounded-3xl border border-white/10 bg-[rgba(20,27,44,0.7)] p-6 shadow-lg shadow-[rgba(24,208,194,0.1)] transition hover:-translate-y-1 hover:border-white/20 hover:shadow-[rgba(24,208,194,0.25)]"
+            >
+              <h2 className="text-lg font-semibold text-[var(--door24-foreground)]">
+                {pillar.title}
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-[var(--door24-muted)]">
+                {pillar.description}
+              </p>
+            </article>
+          ))}
+        </section>
+
+        <section className="grid gap-10 rounded-[32px] border border-white/10 bg-[rgba(20,27,44,0.8)] p-8 shadow-[0_40px_80px_rgba(0,0,0,0.45)] lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:p-12">
+          <div className="space-y-6">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--door24-muted)]">
+              Founding Member Offer
+            </span>
+            <h2 className="text-3xl font-semibold text-[var(--door24-foreground)]">
+              Get the Door 24 Reset Pack (free)
             </h2>
-            <p className="max-w-3xl text-lg leading-8 text-zinc-300">
-              We partner with early adopters to co-create best-in-class recovery
-              experiences. Here’s what to expect once you join the list.
+            <ul className="space-y-3 text-sm leading-6 text-[var(--door24-muted)]">
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[var(--door24-primary-end)]" />
+                24-Minute Urge Rescue audio (MP3)
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[var(--door24-primary-end)]" />
+                Daily Alignments template (PDF)
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[var(--door24-primary-end)]" />
+                Community starter guide (PDF)
+              </li>
+            </ul>
+            <p className="text-sm leading-6 text-[var(--door24-muted)]">
+              Join the waitlist to receive your pack and first access when we
+              launch.
             </p>
           </div>
-          <ol className="grid gap-6 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <li
-                key={step.title}
-                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-              >
-                <div className="absolute right-6 top-6 text-4xl font-semibold text-indigo-300/40">
-                  {(index + 1).toString().padStart(2, "0")}
+
+          <form
+            className="rounded-2xl border border-white/10 bg-black/20 p-6 backdrop-blur"
+            onSubmit={(event) => handleSubmit(event, setOfferForm)}
+            aria-label="Request the Door 24 Reset Pack"
+          >
+            <label className="block text-sm font-medium text-[var(--door24-muted)]">
+              Email
+              <input
+                className="mt-2 w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-base text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                required
+              />
+            </label>
+            <button
+              type="submit"
+              disabled={offerForm.status === "loading"}
+              className="door24-gradient group relative mt-4 inline-flex w-full items-center justify-center overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
+              <span className="relative">
+                {offerForm.status === "loading"
+                  ? "Sending…"
+                  : "Send My Reset Pack"}
+              </span>
+            </button>
+            <p
+              aria-live="polite"
+              className={`mt-3 text-sm ${
+                offerForm.status === "success"
+                  ? "text-[var(--door24-accent)]"
+                  : offerForm.status === "error"
+                    ? "text-[var(--door24-error)]"
+                    : "text-[var(--door24-muted)]"
+              }`}
+            >
+              {offerForm.message}
+            </p>
+          </form>
+        </section>
+
+        <section
+          id="faq"
+          className="space-y-6 rounded-[32px] border border-white/10 bg-[rgba(11,16,32,0.65)] p-8 shadow-[0_24px_64px_rgba(0,0,0,0.45)] sm:p-10"
+        >
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)]">
+              FAQ
+            </span>
+            <h2 className="mt-3 text-3xl font-semibold text-[var(--door24-foreground)]">
+              Top questions from early members
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, index) => {
+              const isOpen = accordionOpen === index;
+              return (
+                <div
+                  key={faq.question}
+                  className="overflow-hidden rounded-2xl border border-white/10 bg-[rgba(20,27,44,0.7)]"
+                >
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setAccordionOpen((prev) => (prev === index ? null : index))
+                    }
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-[var(--door24-foreground)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                  >
+                    {faq.question}
+                    <span
+                      aria-hidden
+                      className={`text-2xl font-semibold transition ${
+                        isOpen ? "text-[var(--door24-primary-end)]" : ""
+                      }`}
+                    >
+                      {isOpen ? "–" : "+"}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5 text-sm leading-6 text-[var(--door24-muted)]">
+                      {faq.answer}
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-lg font-semibold text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-zinc-300">
-                  {step.description}
-                </p>
-              </li>
-            ))}
-          </ol>
+              );
+            })}
+          </div>
+        </section>
+
+        <section
+          id="final-cta"
+          className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[rgba(20,27,44,0.75)] px-6 py-12 text-center shadow-[0_30px_80px_rgba(0,0,0,0.5)] sm:px-12"
+        >
+          <div className="pointer-events-none absolute inset-0">
+            <div className="animate-float-fast absolute -top-10 left-1/4 h-48 w-48 rounded-full bg-[rgba(107,91,255,0.2)] blur-3xl" />
+            <div className="animate-float-medium absolute bottom-[-15%] right-1/4 h-56 w-56 rounded-full bg-[rgba(24,208,194,0.18)] blur-3xl" />
+          </div>
+          <div className="relative flex flex-col items-center gap-6">
+            <h2 className="text-3xl font-semibold sm:text-4xl">
+              Be a Founding Member of Door 24.
+            </h2>
+            <p className="max-w-xl text-base text-[var(--door24-muted)]">
+              We’ll send your Reset Pack + early-access details.
+            </p>
+            <form
+              className="flex w-full flex-col gap-3 sm:w-fit sm:flex-row"
+              onSubmit={(event) => handleSubmit(event, setFinalForm)}
+              aria-label="Join the Door 24 waitlist from the footer"
+            >
+              <label className="w-full text-left text-sm font-medium text-[var(--door24-muted)] sm:w-64">
+                Email
+                <input
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-base text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                  type="email"
+                  name="email"
+                  placeholder="you@email.com"
+                  required
+                />
+              </label>
+              <button
+                type="submit"
+                disabled={finalForm.status === "loading"}
+                className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 sm:mt-auto sm:w-auto"
+              >
+                <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
+                <span className="relative">
+                  {finalForm.status === "loading"
+                    ? "Joining…"
+                    : "Join the Waitlist"}
+                </span>
+              </button>
+            </form>
+            <p
+              aria-live="polite"
+              className={`text-sm ${
+                finalForm.status === "success"
+                  ? "text-[var(--door24-accent)]"
+                  : finalForm.status === "error"
+                    ? "text-[var(--door24-error)]"
+                    : "text-[var(--door24-muted)]"
+              }`}
+            >
+              {finalForm.message}
+            </p>
+          </div>
         </section>
       </main>
+
+      <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)]">
+        <div className="mx-auto flex max-w-[1080px] flex-col gap-6 px-6 py-8 text-sm text-[var(--door24-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-12">
+          <div className="flex items-center gap-8">
+            <Link
+              href="#about"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/terms"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/privacy"
+              className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
+            >
+              Privacy
+            </Link>
+          </div>
+          <p className="text-xs text-[var(--door24-muted)]">
+            © {new Date().getFullYear()} Door 24 Technologies. All rights
+            reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
