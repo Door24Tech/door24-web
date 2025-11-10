@@ -106,7 +106,8 @@ export default function Home() {
               Reserve Your Spot
             </span>
             <h1 className="px-2 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl xl:text-[3.5rem]">
-              Community Recovery, Not Counting Recovery.
+              Community Recovery,<br />
+              Not Counting Recovery.
             </h1>
             <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
               Door 24 rewires the recovery experience through connection, tools that adapt, and progress that compounds.
