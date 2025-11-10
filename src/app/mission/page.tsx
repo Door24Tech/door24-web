@@ -155,7 +155,7 @@ export default function Mission() {
       </header>
 
       <main className="relative">
-        <section className="relative flex min-h-[85vh] items-center justify-center px-4 py-16 sm:min-h-[90vh] sm:px-8 sm:py-24">
+        <section className="relative flex min-h-[75vh] items-center justify-center px-4 py-12 sm:min-h-[80vh] sm:px-8 sm:py-16">
           <div className="text-center">
             <h1 className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:mb-6 sm:text-sm">
               Our Mission
@@ -172,13 +172,13 @@ export default function Mission() {
         <section
           id="the-mission"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-32"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
         >
-          <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:gap-16">
+          <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-12">
             <div className="lg:sticky lg:top-32 lg:self-start">
               <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl">The Mission</h2>
             </div>
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-5 sm:space-y-6">
               {missionStatements.map((statement, index) => (
                 <p
                   key={index}
@@ -201,12 +201,12 @@ export default function Mission() {
         <section
           id="how-we-do-it"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-32"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
         >
-          <h2 className="mb-12 text-center text-2xl font-bold sm:mb-16 sm:text-3xl lg:text-4xl">
+          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
             How We Do It
           </h2>
-          <div className="space-y-8 sm:space-y-12">
+          <div className="space-y-6 sm:space-y-8">
             {howWeDoIt.map((item, index) => (
               <div
                 key={item.title}
@@ -235,16 +235,16 @@ export default function Mission() {
         <section
           id="philosophy"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-32"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
         >
-          <h2 className="mb-12 text-center text-2xl font-bold sm:mb-16 sm:text-3xl lg:text-4xl">
+          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
             Our Philosophy
           </h2>
           <div className="space-y-0">
             {philosophy.map((item, index) => (
               <div
                 key={item.headline}
-                className={`border-b border-white/5 py-10 transition-all duration-700 last:border-b-0 sm:py-12 lg:py-16 ${
+                className={`border-b border-white/5 py-8 transition-all duration-700 last:border-b-0 sm:py-10 lg:py-12 ${
                   isVisible("philosophy")
                     ? "translate-y-0 opacity-100"
                     : "translate-y-12 opacity-0"
@@ -269,12 +269,12 @@ export default function Mission() {
         <section
           id="why-we-exist"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-32"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
         >
-          <h2 className="mb-12 text-center text-2xl font-bold sm:mb-16 sm:text-3xl lg:text-4xl">
+          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
             Why We Exist
           </h2>
-          <div className="mx-auto max-w-3xl space-y-5 sm:space-y-6">
+          <div className="mx-auto max-w-3xl space-y-4 sm:space-y-5">
             {whyWeExist.map((line, index) => (
               <p
                 key={index}
@@ -295,7 +295,7 @@ export default function Mission() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden bg-[rgba(11,16,32,0.95)] px-4 py-16 sm:px-8 sm:py-20 lg:py-24">
+        <section className="relative overflow-hidden bg-[rgba(11,16,32,0.95)] px-4 py-12 sm:px-8 sm:py-16 lg:py-20">
           <div className="pointer-events-none absolute inset-0">
             <div className="animate-float-fast absolute -top-10 left-1/4 h-40 w-40 rounded-full bg-[rgba(107,91,255,0.2)] blur-3xl sm:h-48 sm:w-48" />
             <div className="animate-float-medium absolute bottom-[-15%] right-1/4 h-44 w-44 rounded-full bg-[rgba(24,208,194,0.18)] blur-3xl sm:h-56 sm:w-56" />
