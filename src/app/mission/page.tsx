@@ -397,25 +397,39 @@ export default function Mission() {
           </div>
         </section>
 
+        {/* Divider */}
+        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+
         {/* CTA */}
-        <section className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12">
-          <div className="text-center">
-            <h2 className="mb-6 text-2xl font-semibold sm:text-3xl">
+        <section
+          id="join-us"
+          data-animate
+          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+        >
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
               Join Us
-            </h2>
-            <p className="mb-4 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
+            </span>
+          </div>
+          <div className="space-y-6 sm:space-y-7">
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] transition-all duration-700 ease-out sm:text-xl sm:leading-relaxed">
               We are rewiring the human operating system.
             </p>
-            <p className="mb-10 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
+            <p className="text-lg leading-relaxed text-[var(--door24-muted)] transition-all duration-700 ease-out sm:text-xl sm:leading-relaxed">
               This is the work that matters. This is the frontier that scales.
             </p>
-            <Link
-              href="/"
-              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-4 sm:text-lg"
-            >
-              <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
-              <span className="relative">Join the Movement</span>
-            </Link>
+            <div className="pt-4">
+              <Link
+                href="/"
+                className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-4 sm:text-lg"
+              >
+                <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
+                <span className="relative">Join the Movement</span>
+              </Link>
+            </div>
           </div>
         </section>
       </main>
