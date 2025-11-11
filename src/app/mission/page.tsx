@@ -1,9 +1,9 @@
 'use client';
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import WaitlistModal from "../components/WaitlistModal";
 
 const missionStatements = [
   "We build products, experiences, and communities that transform how humans think, heal, and thrive.",
@@ -72,6 +72,7 @@ const whyWeExist = [
 
 export default function Mission() {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -422,19 +423,20 @@ export default function Mission() {
               This is the work that matters. This is the frontier that scales.
             </p>
             <div className="pt-4">
-              <Link
-                href="/"
-                className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-4 sm:text-lg"
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-5 sm:py-2.5 sm:text-base"
               >
                 <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
                 <span className="relative">Join the Movement</span>
-              </Link>
+              </button>
             </div>
           </div>
         </section>
       </main>
 
       <Footer />
+      <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
