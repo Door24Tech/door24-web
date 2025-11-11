@@ -58,7 +58,7 @@ export default function BlogAdmin() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/blog/login");
+      router.replace("/blog/login");
     }
   }, [user, loading, router]);
 

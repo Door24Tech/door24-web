@@ -7,6 +7,13 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 
 export default function BlogLogin() {
+  const { user, loading: authLoading, login } = useAuth();
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     // Add noindex meta tag for SEO
     const metaRobots = document.createElement('meta');
@@ -18,12 +25,33 @@ export default function BlogLogin() {
       document.head.removeChild(metaRobots);
     };
   }, []);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
-  const router = useRouter();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace("/blog/admin");
+    }
+  }, [user, authLoading, router]);
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+        <Header />
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20">
+          <div className="text-center">
+            <p className="text-[var(--door24-muted)]">Loading...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Don't render login form if already logged in (will redirect)
+  if (user) {
+    return null;
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +60,7 @@ export default function BlogLogin() {
 
     try {
       await login(email, password);
-      router.push("/blog/admin");
+      router.replace("/blog/admin");
     } catch (err: any) {
       setError(err.message || "Failed to sign in. Please check your credentials.");
     } finally {
