@@ -50,19 +50,19 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       aria-labelledby="waitlist-modal-title"
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-modal-backdrop" />
       
       {/* Modal Content */}
       <div
         ref={modalRef}
         tabIndex={-1}
-        className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8"
+        className="relative w-full max-w-lg rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8 animate-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-[var(--door24-muted)] transition hover:bg-white/10 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+          className="absolute right-4 top-4 rounded-full p-2 text-[var(--door24-muted)] transition hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
           aria-label="Close modal"
         >
           <svg

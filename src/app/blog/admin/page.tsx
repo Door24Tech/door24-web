@@ -372,19 +372,20 @@ export default function BlogAdmin() {
               </span>
               <button
                 onClick={() => setShowCategoryManager(!showCategoryManager)}
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold transition hover:bg-white/10 sm:px-6 sm:py-2.5"
+                className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] sm:px-6 sm:py-2.5"
               >
                 {showCategoryManager ? "Hide" : "Manage"} Categories
               </button>
               <button
                 onClick={handleNewPost}
-                className="door24-gradient rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl sm:px-6 sm:py-2.5"
+                className="door24-gradient group relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] sm:px-6 sm:py-2.5"
               >
-                New Post
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                <span className="relative z-10">New Post</span>
               </button>
               <button
                 onClick={logout}
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold transition hover:bg-white/10 sm:px-6 sm:py-2.5"
+                className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] sm:px-6 sm:py-2.5"
               >
                 Logout
               </button>
@@ -393,7 +394,7 @@ export default function BlogAdmin() {
 
           {/* Category Manager */}
           {showCategoryManager && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold">Manage Categories</h2>
                 <button
@@ -402,15 +403,16 @@ export default function BlogAdmin() {
                     setIsCreatingCategory(true);
                     setCategoryFormData({ name: "", slug: "", description: "" });
                   }}
-                  className="door24-gradient rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl"
+                  className="door24-gradient group relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)]"
                 >
-                  New Category
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                  <span className="relative z-10">New Category</span>
                 </button>
               </div>
 
               {/* Category Form */}
               {(editingCategory || isCreatingCategory) && (
-                <form onSubmit={handleCategorySubmit} className="mb-6 space-y-4 p-4 rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)]">
+                <form onSubmit={handleCategorySubmit} className="mb-6 space-y-4 p-4 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)]">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label className="block text-sm font-medium mb-2">Category Name</label>
@@ -419,7 +421,7 @@ export default function BlogAdmin() {
                         value={categoryFormData.name}
                         onChange={(e) => handleCategoryNameChange(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                         placeholder="Category name"
                       />
                     </div>
@@ -430,7 +432,7 @@ export default function BlogAdmin() {
                         value={categoryFormData.slug}
                         onChange={(e) => setCategoryFormData({ ...categoryFormData, slug: e.target.value })}
                         required
-                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm font-mono outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                         placeholder="category-slug"
                       />
                     </div>
@@ -441,7 +443,7 @@ export default function BlogAdmin() {
                       type="text"
                       value={categoryFormData.description}
                       onChange={(e) => setCategoryFormData({ ...categoryFormData, description: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="Brief description"
                     />
                   </div>
@@ -449,9 +451,12 @@ export default function BlogAdmin() {
                     <button
                       type="submit"
                       disabled={savingCategory}
-                      className="door24-gradient rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                      className="door24-gradient group relative overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
                     >
-                      {savingCategory ? "Saving..." : editingCategory ? "Update Category" : "Create Category"}
+                      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                      <span className="relative z-10">
+                        {savingCategory ? "Saving..." : editingCategory ? "Update Category" : "Create Category"}
+                      </span>
                     </button>
                     <button
                       type="button"
@@ -460,7 +465,7 @@ export default function BlogAdmin() {
                         setIsCreatingCategory(false);
                         setCategoryFormData({ name: "", slug: "", description: "" });
                       }}
-                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
+                      className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)]"
                     >
                       Cancel
                     </button>
@@ -476,7 +481,7 @@ export default function BlogAdmin() {
                   categories.map((category) => (
                     <div
                       key={category.id}
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
+                      className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
                     >
                       <div>
                         <h3 className="font-semibold">{category.name}</h3>
@@ -488,7 +493,7 @@ export default function BlogAdmin() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEditCategory(category)}
-                          className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition hover:bg-white/10"
+                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
                         >
                           Edit
                         </button>
@@ -508,13 +513,13 @@ export default function BlogAdmin() {
 
           {/* Scheduled Posts Preview */}
           {scheduledPosts.length > 0 && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
               <h2 className="text-2xl font-semibold mb-6">Scheduled Posts</h2>
               <div className="space-y-4">
                 {scheduledPosts.map((post) => (
                   <div
                     key={post.id}
-                    className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
+                    className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3">
@@ -530,7 +535,7 @@ export default function BlogAdmin() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(post)}
-                        className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition hover:bg-white/10"
+                        className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
                       >
                         Edit
                       </button>
@@ -543,7 +548,7 @@ export default function BlogAdmin() {
 
           {/* Editor */}
           {showEditor && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold">
                   {editingPost ? "Edit Post" : "Create New Post"}
@@ -551,7 +556,7 @@ export default function BlogAdmin() {
                 <button
                   type="button"
                   onClick={() => setShowPreview(!showPreview)}
-                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
+                  className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
                 >
                   {showPreview ? "Edit" : "Preview"}
                 </button>
@@ -581,7 +586,7 @@ export default function BlogAdmin() {
                         value={formData.title}
                         onChange={(e) => handleTitleChange(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                         placeholder="Blog post title"
                       />
                     </div>
@@ -592,7 +597,7 @@ export default function BlogAdmin() {
                         <select
                           value={formData.category}
                           onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                          className="w-full appearance-none rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 pr-10 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                          className="w-full appearance-none rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pr-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                         >
                           <option value="">No category</option>
                           {categories.map((cat) => (
@@ -617,7 +622,7 @@ export default function BlogAdmin() {
                       value={formData.slug}
                       onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                       required
-                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm font-mono outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="blog-post-slug"
                     />
                     <p className="mt-1 text-xs text-[var(--door24-muted)]">
@@ -632,7 +637,7 @@ export default function BlogAdmin() {
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                       required
                       rows={2}
-                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="Brief description for SEO and previews"
                     />
                   </div>
@@ -655,7 +660,7 @@ export default function BlogAdmin() {
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                       required
                       rows={16}
-                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm font-mono outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="Write your blog post content here (markdown supported)"
                     />
                     <p className="mt-2 text-xs text-[var(--door24-muted)]">
@@ -669,17 +674,17 @@ export default function BlogAdmin() {
                       type="text"
                       value={formData.tags}
                       onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="recovery, community, wellness"
                     />
                   </div>
 
                   {/* SEO Section - Collapsible */}
-                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] overflow-hidden">
+                  <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] overflow-hidden">
                     <button
                       type="button"
                       onClick={() => setShowSEO(!showSEO)}
-                      className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition"
+                      className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--door24-surface)] transition"
                     >
                       <h3 className="text-sm font-semibold text-[var(--door24-foreground)]">SEO Settings</h3>
                       <svg
@@ -693,7 +698,7 @@ export default function BlogAdmin() {
                     </button>
                     
                     {showSEO && (
-                      <div className="p-4 pt-0 space-y-4 border-t border-white/10">
+                      <div className="p-4 pt-0 space-y-4 border-t border-[var(--door24-border)]">
                         {/* SEO Preview Box */}
                         <div>
                           <h4 className="text-xs font-semibold mb-4 pt-2 text-[var(--door24-foreground)] uppercase tracking-wider">Preview</h4>
@@ -732,7 +737,7 @@ export default function BlogAdmin() {
                               type="text"
                               value={formData.seoTitle}
                               onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                               placeholder="Leave empty to use post title"
                             />
                             <p className="mt-1 text-xs text-[var(--door24-muted)]">
@@ -745,7 +750,7 @@ export default function BlogAdmin() {
                               value={formData.seoDescription}
                               onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                               rows={2}
-                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                               placeholder="Leave empty to use post description"
                             />
                             <p className="mt-1 text-xs text-[var(--door24-muted)]">
@@ -759,7 +764,7 @@ export default function BlogAdmin() {
                                 type="text"
                                 value={formData.seoKeywords}
                                 onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
-                                className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                                className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                                 placeholder="keyword1, keyword2, keyword3"
                               />
                             </div>
@@ -769,7 +774,7 @@ export default function BlogAdmin() {
                                 type="text"
                                 value={formData.seoAuthor}
                                 onChange={(e) => setFormData({ ...formData, seoAuthor: e.target.value })}
-                                className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                                className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                                 placeholder="Leave empty to use your email"
                               />
                             </div>
@@ -790,13 +795,13 @@ export default function BlogAdmin() {
                   </div>
 
                   {/* Scheduling */}
-                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
+                  <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4">
                     <label className="flex items-center gap-2 mb-4">
                       <input
                         type="checkbox"
                         checked={formData.published}
                         onChange={(e) => setFormData({ ...formData, published: e.target.checked, scheduledDate: "", scheduledTime: "" })}
-                        className="rounded border-white/10"
+                        className="rounded border-[var(--door24-border)]"
                       />
                       <span className="text-sm font-medium">Publish immediately</span>
                     </label>
@@ -811,7 +816,7 @@ export default function BlogAdmin() {
                               value={formData.scheduledDate}
                               onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
                               min={new Date().toISOString().split('T')[0]}
-                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 pl-10 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
                             />
                             <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -825,7 +830,7 @@ export default function BlogAdmin() {
                               type="time"
                               value={formData.scheduledTime}
                               onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
-                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 pl-10 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
                             />
                             <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -845,9 +850,12 @@ export default function BlogAdmin() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="door24-gradient rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                      className="door24-gradient group relative overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
                     >
-                      {saving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
+                      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                      <span className="relative z-10">
+                        {saving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
+                      </span>
                     </button>
                     <button
                       type="button"
@@ -856,7 +864,7 @@ export default function BlogAdmin() {
                         setEditingPost(null);
                         setShowPreview(false);
                       }}
-                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
+                      className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)]"
                     >
                       Cancel
                     </button>
@@ -867,7 +875,7 @@ export default function BlogAdmin() {
           )}
 
           {/* Posts List */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+          <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
             <h2 className="text-2xl font-semibold mb-6">All Posts</h2>
             {loadingPosts ? (
               <p className="text-[var(--door24-muted)]">Loading posts...</p>
@@ -878,7 +886,7 @@ export default function BlogAdmin() {
                 {posts.map((post) => (
                   <div
                     key={post.id}
-                    className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
+                    className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
@@ -897,7 +905,7 @@ export default function BlogAdmin() {
                           </span>
                         )}
                         {post.category && (
-                          <span className="rounded-full bg-white/5 px-2 py-1 text-xs text-[var(--door24-muted)]">
+                          <span className="rounded-full bg-[var(--door24-surface)] px-2 py-1 text-xs text-[var(--door24-muted)]">
                             {post.category}
                           </span>
                         )}
@@ -914,7 +922,7 @@ export default function BlogAdmin() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(post)}
-                        className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition hover:bg-white/10"
+                        className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
                       >
                         Edit
                       </button>

@@ -109,8 +109,8 @@ export default function RSSFeed() {
         margin: 0,
         padding: "1rem",
         fontSize: "12px",
-        backgroundColor: "#0b1020",
-        color: "#f7f9fc",
+        backgroundColor: "#1a1a1a",
+        color: "#ffffff",
       }}
       dangerouslySetInnerHTML={{ __html: rssXml }}
     />

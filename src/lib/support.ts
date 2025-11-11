@@ -74,7 +74,7 @@ export async function sendSupportEmailNotification(
         subject: `New Support Inquiry: ${inquiryType}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #6b5bff;">New Support Inquiry</h2>
+            <h2 style="color: #6b46c2;">New Support Inquiry</h2>
             <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
               <p><strong>Name:</strong> ${escapeHtml(name)}</p>
               <p><strong>Email:</strong> ${escapeHtml(email)}</p>

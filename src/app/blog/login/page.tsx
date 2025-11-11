@@ -73,44 +73,47 @@ export default function BlogLogin() {
         <Header />
 
         <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12">
-          <form
-            onSubmit={handleSubmit}
-            className="w-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8"
-          >
-              <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-[var(--door24-foreground)] mb-2"
-                  >
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                  />
-                </div>
+                 <form
+                   onSubmit={handleSubmit}
+                   className="w-full rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8"
+                   suppressHydrationWarning
+                 >
+                     <div className="space-y-4">
+                       <div>
+                         <label
+                           htmlFor="email"
+                           className="block text-sm font-medium text-[var(--door24-foreground)] mb-2"
+                         >
+                           Email
+                         </label>
+                         <input
+                           id="email"
+                           type="email"
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}
+                           required
+                           suppressHydrationWarning
+                           className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                         />
+                       </div>
 
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-[var(--door24-foreground)] mb-2"
-                  >
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                  />
-                </div>
+                       <div>
+                         <label
+                           htmlFor="password"
+                           className="block text-sm font-medium text-[var(--door24-foreground)] mb-2"
+                         >
+                           Password
+                         </label>
+                         <input
+                           id="password"
+                           type="password"
+                           value={password}
+                           onChange={(e) => setPassword(e.target.value)}
+                           required
+                           suppressHydrationWarning
+                           className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                         />
+                       </div>
 
                 {error && (
                   <div className="rounded-xl bg-[var(--door24-error)]/10 border border-[var(--door24-error)]/20 p-3 text-sm text-[var(--door24-error)]">
@@ -121,10 +124,10 @@ export default function BlogLogin() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="door24-gradient group relative w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70"
+                  className="door24-gradient group relative w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
-                  <span className="relative">
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                  <span className="relative z-10">
                     {loading ? "Signing in..." : "Sign In"}
                   </span>
                 </button>

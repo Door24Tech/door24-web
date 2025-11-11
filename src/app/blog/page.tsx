@@ -2,9 +2,10 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import LoadingSpinner from "../components/LoadingSpinner";
+import AnimatedImage from "../components/AnimatedImage";
 import { getAllBlogPosts, getCategories, type BlogPost, type Category } from "@/lib/blog";
 
 export default function Blog() {
@@ -13,6 +14,10 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  
+  const maxVisibleCategories = 3;
+  const visibleCategories = showAllCategories ? categories : categories.slice(0, maxVisibleCategories);
 
   useEffect(() => {
     loadData();
@@ -55,19 +60,19 @@ export default function Blog() {
       <main className="mx-auto w-full max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-12 w-full">
           {/* Header Section with Search */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between w-full">
             <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
-            <div className="flex items-center gap-4">
-              {/* Search Bar - Compact with icon */}
-              <div className="relative w-64 sm:w-72">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)]">
+            <div className="flex items-center gap-3">
+              {/* Search Bar - Refined and minimal */}
+              <div className="relative w-full sm:w-64">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)] pointer-events-none">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    strokeWidth={1.5}
+                    strokeWidth={2}
                     stroke="currentColor"
-                    className="h-5 w-5"
+                    className="h-4 w-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -81,26 +86,25 @@ export default function Blog() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search articles..."
-                  className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] pl-10 pr-4 py-2.5 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                  className="w-full h-9 rounded-lg border border-[var(--door24-border)]/50 bg-[var(--door24-surface)]/50 pl-9 pr-4 text-sm text-[var(--door24-foreground)] placeholder:text-[var(--door24-muted)] outline-none transition-all duration-200 focus:border-[var(--door24-primary-end)]/50 focus:bg-[var(--door24-surface)] focus:shadow-sm focus:shadow-[rgba(139,92,246,0.1)] sm:text-base"
                 />
               </div>
-              {/* RSS Feed Link - Subtle and integrated */}
+              {/* RSS Feed Link - Clean icon button */}
               <Link
                 href="/blog/rss.xml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-1.5 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="flex items-center justify-center h-9 w-9 rounded-lg border border-[var(--door24-border)]/50 bg-[var(--door24-surface)]/50 text-[var(--door24-muted)] transition-all duration-200 hover:border-[var(--door24-primary-end)]/50 hover:bg-[var(--door24-surface)] hover:text-[var(--door24-primary-end)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label="Subscribe to RSS Feed"
               >
-                <span className="hidden sm:inline">RSS</span>
-                <Image
-                  src="/assets/Rss-Icon.svg"
-                  alt="RSS Feed"
-                  width={12}
-                  height={12}
-                  className="w-3 h-3 transition-transform group-hover:scale-110"
-                  unoptimized
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                >
+                  <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                </svg>
               </Link>
             </div>
           </div>
@@ -108,41 +112,56 @@ export default function Blog() {
           {/* Category Filters */}
           {categories.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-medium uppercase tracking-wider text-[var(--door24-muted)] sm:text-sm">
-                Filter:
-              </span>
               <button
                 onClick={() => setSelectedCategory("")}
-                className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all sm:text-sm ${
+                className={`px-3 py-1 text-xs font-medium transition-colors duration-200 sm:text-sm ${
                   selectedCategory === ""
-                    ? "door24-gradient text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)]"
-                    : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:border-white/20 hover:bg-white/10"
+                    ? "text-[var(--door24-foreground)]"
+                    : "text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
                 }`}
               >
                 All Posts
               </button>
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.name)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all sm:text-sm ${
-                    selectedCategory === category.name
-                      ? "door24-gradient text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)]"
-                      : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:border-white/20 hover:bg-white/10"
-                  }`}
-                >
-                  {category.name}
-                </button>
+              {categories.length > 0 && <span className="text-[var(--door24-muted)]">•</span>}
+              {visibleCategories.map((category, index) => (
+                <span key={category.id} className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSelectedCategory(category.name)}
+                    className={`px-3 py-1 text-xs font-medium transition-colors duration-200 sm:text-sm ${
+                      selectedCategory === category.name
+                        ? "text-[var(--door24-foreground)]"
+                        : "text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                  {index < visibleCategories.length - 1 && (
+                    <span className="text-[var(--door24-muted)]">•</span>
+                  )}
+                </span>
               ))}
+              {categories.length > maxVisibleCategories && (
+                <>
+                  {!showAllCategories && visibleCategories.length > 0 && (
+                    <span className="text-[var(--door24-muted)]">•</span>
+                  )}
+                  <button
+                    onClick={() => setShowAllCategories(!showAllCategories)}
+                    className="px-3 py-1 text-xs font-medium text-[var(--door24-muted)] transition-colors duration-200 hover:text-[var(--door24-foreground)] sm:text-sm"
+                  >
+                    {showAllCategories ? "Show less" : `+${categories.length - maxVisibleCategories} more`}
+                  </button>
+                </>
+              )}
             </div>
           )}
 
           {loading ? (
-            <div className="text-center">
-              <p className="text-[var(--door24-muted)]">Loading posts...</p>
+            <div className="flex items-center justify-center py-12">
+              <LoadingSpinner size="lg" />
             </div>
           ) : filteredPosts.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur text-center">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-8 backdrop-blur text-center">
               <p className="text-[var(--door24-muted)]">
                 {searchQuery || selectedCategory
                   ? "No posts match your filters."
@@ -155,22 +174,21 @@ export default function Blog() {
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] backdrop-blur transition-all duration-300 ease-out hover:border-[var(--door24-border-hover)] hover:bg-[var(--door24-surface-hover)] hover:-translate-y-1 hover:shadow-xl hover:shadow-[rgba(139,92,246,0.15)]"
                 >
                   {post.featuredImage && (
                     <div className="relative h-48 w-full overflow-hidden sm:h-64">
-                      <Image
+                      <AnimatedImage
                         src={post.featuredImage}
                         alt={post.title}
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        unoptimized
                       />
                     </div>
                   )}
                   <div className="p-6">
                     {post.category && (
-                      <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[var(--door24-muted)] mb-3">
+                      <span className="inline-block rounded-full bg-[var(--door24-surface)] px-3 py-1 text-xs font-medium text-[var(--door24-muted)] mb-3 transition-all duration-200 hover:scale-105 hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-primary-end)] hover:shadow-md hover:shadow-[rgba(139,92,246,0.2)] cursor-default">
                         {post.category}
                       </span>
                     )}

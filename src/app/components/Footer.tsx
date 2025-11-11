@@ -97,7 +97,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm w-full">
+    <footer className="border-t border-[var(--door24-border)] bg-[var(--door24-overlay)] backdrop-blur-sm w-full">
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Brand Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -128,7 +128,7 @@ export default function Footer() {
               className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
-              <div className="flex h-10 items-center gap-2 rounded-lg border border-white/20 bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-2.5 sm:px-5">
+              <div className="flex h-10 items-center gap-2 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-2.5 sm:px-5">
                 <Image
                   src="/assets/App-Store-Apple-Logo.svg"
                   alt="Apple logo"
@@ -162,7 +162,7 @@ export default function Footer() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-xs text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-sm"
+                    className="relative inline-block text-xs text-[var(--door24-muted)] transition-colors duration-200 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-sm after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[var(--door24-primary-end)] after:transition-all after:duration-300 hover:after:w-full"
                   >
                     {link.label}
                   </Link>
@@ -185,7 +185,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative rounded-lg p-2 text-[var(--door24-muted)] transition-all hover:bg-white/5 hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="group relative rounded-lg p-2 text-[var(--door24-muted)] transition-all hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label={`Follow us on ${social.name}`}
               >
                 {social.icon}

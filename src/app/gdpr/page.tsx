@@ -144,7 +144,7 @@ export default function GDPR() {
                 To exercise any of your GDPR rights, please contact us at{" "}
                 <a
                   href="mailto:privacy@door24.app"
-                  className="text-[var(--door24-accent)] underline transition hover:text-[var(--door24-primary-end)]"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   privacy@door24.app
                 </a>
@@ -167,7 +167,7 @@ export default function GDPR() {
                   href="https://edpb.europa.eu/about-edpb/about-edpb/members_en"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--door24-accent)] underline transition hover:text-[var(--door24-primary-end)]"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   edpb.europa.eu
                 </a>
@@ -182,7 +182,7 @@ export default function GDPR() {
                 contact our Data Protection Officer at{" "}
                 <a
                   href="mailto:privacy@door24.app"
-                  className="text-[var(--door24-accent)] underline transition hover:text-[var(--door24-primary-end)]"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   privacy@door24.app
                 </a>
@@ -207,7 +207,7 @@ export default function GDPR() {
                 protection rights, please contact us at{" "}
                 <a
                   href="mailto:privacy@door24.app"
-                  className="text-[var(--door24-accent)] underline transition hover:text-[var(--door24-primary-end)]"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   privacy@door24.app
                 </a>

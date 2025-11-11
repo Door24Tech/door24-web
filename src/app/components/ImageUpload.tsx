@@ -69,7 +69,7 @@ export default function ImageUpload({ onUploadComplete, currentImage, label = "F
           <img
             src={preview}
             alt="Preview"
-            className="w-full h-48 object-cover rounded-xl border border-white/10"
+            className="w-full h-48 object-cover rounded-xl border border-[var(--door24-border)]"
           />
           <button
             type="button"
@@ -84,7 +84,7 @@ export default function ImageUpload({ onUploadComplete, currentImage, label = "F
       ) : (
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center cursor-pointer hover:border-white/40 transition"
+          className="border-2 border-dashed border-[var(--door24-border-hover)] rounded-xl p-8 text-center cursor-pointer hover:border-[var(--door24-border-hover)] transition"
         >
           <input
             ref={fileInputRef}

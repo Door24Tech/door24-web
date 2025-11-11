@@ -94,8 +94,8 @@ export default function Support() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[880px] px-4 py-8 sm:px-8 sm:py-12">
-        <div className="flex flex-col gap-12">
+      <main className="mx-auto max-w-[880px] px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
+        <div className="flex flex-col gap-16">
           {/* Title */}
           <div className="flex flex-col gap-4">
             <h1 className="text-4xl font-bold sm:text-5xl">Support</h1>
@@ -105,25 +105,25 @@ export default function Support() {
           </div>
 
           {/* FAQ Section */}
-          <section>
-            <h2 className="mb-6 text-2xl font-semibold sm:text-3xl">Frequently Asked Questions</h2>
-            <div className="flex flex-col gap-4">
+          <section className="flex flex-col gap-6">
+            <h2 className="text-2xl font-semibold sm:text-3xl">Frequently Asked Questions</h2>
+            <div className="flex flex-col gap-3">
               {faqs.map((faq, index) => (
                 <div
                   key={index}
-                  className="rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-white/20 sm:p-6"
+                  className="group rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 transition-all duration-200 hover:border-[var(--door24-border-hover)] hover:bg-[var(--door24-surface-hover)] hover:shadow-lg hover:shadow-[rgba(107,70,198,0.1)] sm:p-6"
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="flex w-full items-start justify-between gap-4 text-left"
                     aria-expanded={openFaq === index}
                   >
-                    <h3 className="text-base font-semibold text-[var(--door24-foreground)] sm:text-lg">
+                    <h3 className="text-base font-semibold text-[var(--door24-foreground)] transition-colors duration-200 group-hover:text-[var(--door24-primary-end)] sm:text-lg">
                       {faq.question}
                     </h3>
                     <svg
-                      className={`h-5 w-5 flex-shrink-0 text-[var(--door24-muted)] transition-transform ${
-                        openFaq === index ? "rotate-180" : ""
+                      className={`h-5 w-5 flex-shrink-0 text-[var(--door24-muted)] transition-all duration-200 ${
+                        openFaq === index ? "rotate-180 text-[var(--door24-primary-end)]" : "group-hover:text-[var(--door24-foreground)]"
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -134,7 +134,7 @@ export default function Support() {
                     </svg>
                   </button>
                   {openFaq === index && (
-                    <p className="mt-4 text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base">
+                    <p className="mt-4 text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base animate-fade-in">
                       {faq.answer}
                     </p>
                   )}
@@ -144,17 +144,19 @@ export default function Support() {
           </section>
 
           {/* Contact Form Section */}
-          <section>
-            <h2 className="mb-6 text-2xl font-semibold sm:text-3xl">Contact Us</h2>
-            <p className="mb-6 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
-              Can't find what you're looking for? Send us a message and we'll help you out.
-            </p>
+          <section className="flex flex-col gap-6">
+            <div>
+              <h2 className="mb-3 text-2xl font-semibold sm:text-3xl">Contact Us</h2>
+              <p className="text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
+                Can't find what you're looking for? Send us a message and we'll help you out.
+              </p>
+            </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-[rgba(107,91,255,0.12)] backdrop-blur sm:p-8"
+              className="flex flex-col gap-6 rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 shadow-lg shadow-[rgba(107,70,198,0.12)] backdrop-blur transition-all duration-200 hover:shadow-xl hover:shadow-[rgba(107,70,198,0.18)] sm:p-8"
               suppressHydrationWarning
             >
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-5">
                 {/* Name Field */}
                 <label className="flex flex-col gap-2">
                   <span className="text-sm font-medium text-[var(--door24-foreground)] sm:text-base">
@@ -164,7 +166,7 @@ export default function Support() {
                     type="text"
                     name="name"
                     required
-                    className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                    className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                     placeholder="Your name"
                     suppressHydrationWarning
                   />
@@ -179,7 +181,7 @@ export default function Support() {
                     type="email"
                     name="email"
                     required
-                    className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                    className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                     placeholder="you@email.com"
                     suppressHydrationWarning
                   />
@@ -193,7 +195,7 @@ export default function Support() {
                   <select
                     name="inquiryType"
                     required
-                    className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                    className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                     suppressHydrationWarning
                   >
                     <option value="">Select an option</option>
@@ -214,7 +216,7 @@ export default function Support() {
                     name="message"
                     required
                     rows={6}
-                    className="resize-none rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                    className="resize-none rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                     placeholder="Your message..."
                     suppressHydrationWarning
                   />
@@ -225,10 +227,10 @@ export default function Support() {
               <button
                 type="submit"
                 disabled={formState.status === "loading"}
-                className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8 sm:py-3.5"
+                className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:w-auto sm:px-8 sm:py-3.5"
               >
-                <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
-                <span className="relative">
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                <span className="relative z-10">
                   {formState.status === "loading" ? "Sending…" : "Send Message"}
                 </span>
               </button>

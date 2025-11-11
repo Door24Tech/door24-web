@@ -42,21 +42,21 @@ export default function NotFound() {
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
             <Link
               href="/"
-              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3 sm:text-base"
+              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3 sm:text-base"
             >
-              <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
-              <span className="relative">Return Home</span>
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+              <span className="relative z-10">Return Home</span>
             </Link>
             <Link
               href="/mission"
-              className="group relative inline-flex overflow-hidden rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:px-8 sm:py-3 sm:text-base"
+              className="group relative inline-flex overflow-hidden rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] transition hover:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:px-8 sm:py-3 sm:text-base"
             >
               <span className="relative">Our Mission</span>
             </Link>
           </div>
 
           {/* Fun Message */}
-          <div className="mt-2 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-5">
+          <div className="mt-2 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 backdrop-blur sm:p-5">
             <p className="text-xs italic leading-relaxed text-[var(--door24-muted)] sm:text-sm">
               "Sometimes the path less traveled leads to unexpected discoveries. Let's find your way back together."
             </p>

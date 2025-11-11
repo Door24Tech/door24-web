@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import AnimatedImage from "../../components/AnimatedImage";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllBlogPosts, type BlogPost } from "@/lib/blog";
@@ -90,8 +92,8 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
         <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
-          <div className="text-center">
-            <p className="text-[var(--door24-muted)]">Loading...</p>
+          <div className="flex items-center justify-center py-12">
+            <LoadingSpinner size="lg" />
           </div>
         </main>
         <Footer />
@@ -111,9 +113,10 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             </p>
             <Link
               href="/blog"
-              className="door24-gradient inline-block rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl"
+              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)]"
             >
-              Back to Blog
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+              <span className="relative z-10">Back to Blog</span>
             </Link>
           </div>
         </main>
@@ -131,20 +134,20 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
           {/* Back link */}
           <Link
             href="/blog"
-            className="text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)]"
+            className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)]"
           >
-            ← Back to Blog
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+            <span className="relative z-10">← Back to Blog</span>
           </Link>
 
           {/* Featured Image */}
           {post.featuredImage && (
             <div className="relative h-64 w-full overflow-hidden rounded-2xl sm:h-96">
-              <Image
+              <AnimatedImage
                 src={post.featuredImage}
                 alt={post.title}
                 fill
                 className="object-cover"
-                unoptimized
                 priority
               />
             </div>
@@ -153,7 +156,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
           {/* Post header */}
           <div className="flex flex-col gap-4">
             {post.category && (
-              <span className="inline-block w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[var(--door24-muted)]">
+              <span className="inline-block w-fit rounded-full bg-[var(--door24-surface-hover)] px-3 py-1 text-xs font-medium text-[var(--door24-muted)] transition-all duration-200 hover:scale-105 hover:bg-[var(--door24-primary-end)]/20 hover:text-[var(--door24-primary-end)] hover:shadow-md hover:shadow-[rgba(139,92,246,0.2)] cursor-default">
                 {post.category}
               </span>
             )}
@@ -209,10 +212,10 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                   <img src={src || ""} alt={alt} className="rounded-xl my-6 w-full" />
                 ),
                 code: ({ children }) => (
-                  <code className="bg-white/5 px-2 py-1 rounded text-sm font-mono">{children}</code>
+                  <code className="bg-[var(--door24-surface)] px-2 py-1 rounded text-sm font-mono">{children}</code>
                 ),
                 pre: ({ children }) => (
-                  <pre className="bg-white/5 p-4 rounded-xl overflow-x-auto my-4">{children}</pre>
+                  <pre className="bg-[var(--door24-surface)] p-4 rounded-xl overflow-x-auto my-4">{children}</pre>
                 ),
               }}
             >
@@ -222,11 +225,11 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-8 border-t border-white/10">
+            <div className="flex flex-wrap gap-2 pt-8 border-t border-[var(--door24-border)]">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-white/5 px-3 py-1 text-xs text-[var(--door24-muted)]"
+                  className="rounded-full bg-[var(--door24-surface)] px-3 py-1 text-xs text-[var(--door24-muted)] transition-all duration-200 hover:scale-105 hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-primary-end)] hover:shadow-md hover:shadow-[rgba(139,92,246,0.2)] cursor-default"
                 >
                   #{tag}
                 </span>

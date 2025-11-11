@@ -106,7 +106,7 @@ export default function Terms() {
                 contact us at{" "}
                 <a
                   href="mailto:legal@door24.app"
-                  className="text-[var(--door24-accent)] underline transition hover:text-[var(--door24-primary-end)]"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   legal@door24.app
                 </a>

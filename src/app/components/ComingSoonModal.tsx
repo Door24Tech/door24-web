@@ -82,7 +82,7 @@ export default function ComingSoonModal({
 
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center gap-1">
-      <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/20 bg-black/40 text-lg font-semibold text-[var(--door24-foreground)] backdrop-blur sm:h-14 sm:w-14 sm:text-xl">
+      <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--door24-border-hover)] bg-black/40 text-lg font-semibold text-[var(--door24-foreground)] backdrop-blur sm:h-14 sm:w-14 sm:text-xl">
         {String(value).padStart(2, '0')}
       </div>
       <span className="text-xs text-[var(--door24-muted)] uppercase tracking-wider sm:text-sm">
@@ -100,17 +100,17 @@ export default function ComingSoonModal({
       aria-labelledby="coming-soon-modal-title"
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-modal-backdrop" />
 
       {/* Modal Content */}
       <div
-        className="relative z-10 w-full max-w-md rounded-2xl border border-white/10 bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8"
+        className="relative z-10 w-full max-w-md rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8 animate-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-[var(--door24-muted)] transition hover:bg-white/10 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+          className="absolute right-4 top-4 rounded-full p-2 text-[var(--door24-muted)] transition hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
           aria-label="Close modal"
         >
           <svg
@@ -163,10 +163,10 @@ export default function ComingSoonModal({
               // Navigate to homepage and scroll to waitlist
               window.location.href = '/#top';
             }}
-            className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3.5"
+            className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3.5"
           >
-            <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
-            <span className="relative">Join the Waitlist</span>
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+            <span className="relative z-10">Join the Waitlist</span>
           </button>
         </div>
       </div>
