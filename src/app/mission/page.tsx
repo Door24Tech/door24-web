@@ -40,7 +40,7 @@ const philosophy = [
   {
     headline: "Healing is intelligence.",
     description:
-      "The mind possesses an innate capacity to repair and evolve itself. Recovery is not a deficit to manage — it is the activation of latent human potential.",
+      "The mind possesses an innate capacity to repair and evolve itself. Recovery is not a deficit to manage. It is the activation of latent human potential.",
   },
   {
     headline: "Community is medicine.",
@@ -61,9 +61,9 @@ const philosophy = [
 
 const whyWeExist = [
   "Humanity is waking up to the cost of distraction, disconnection, and dependency.",
-  "We are more connected than ever — and lonelier than ever.",
-  "We have more information than ever — and less clarity than ever.",
-  "We have more tools for productivity — and less peace than ever.",
+  "We are more connected than ever, and lonelier than ever.",
+  "We have more information than ever, and less clarity than ever.",
+  "We have more tools for productivity, and less peace than ever.",
   "Door 24 exists to correct this imbalance.",
   "We are building the infrastructure for human flourishing in the age of infinite noise.",
   "This is not self-help. This is self-evolution.",
@@ -146,7 +146,7 @@ export default function Mission() {
               The Human System Is Breaking
             </h2>
             <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-muted)] sm:text-xl">
-              Technology has advanced faster than we have — and humanity is paying the price.
+              Technology has advanced faster than we have, and humanity is paying the price.
             </p>
             <div className="space-y-5 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
               <p
@@ -229,7 +229,7 @@ export default function Mission() {
                 }`}
                 style={{ transitionDelay: "800ms" }}
               >
-                And the result is clear —{' '}
+                And the result is clear:{' '}
                 <span className="font-semibold text-[var(--door24-foreground)]">
                   a species more connected than ever, and somehow lonelier than ever.
                 </span>
@@ -242,7 +242,7 @@ export default function Mission() {
                 }`}
                 style={{ transitionDelay: "900ms" }}
               >
-                Door 24 was born from this collapse — a new kind of technology built not to consume us, but to restore us.
+                Door 24 was born from this collapse. A new kind of technology built not to consume us, but to restore us.
               </p>
             </div>
           </div>
