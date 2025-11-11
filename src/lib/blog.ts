@@ -28,6 +28,7 @@ export interface BlogPost {
   tags?: string[];
   category?: string;
   featuredImage?: string;
+  coverImage?: string;
 }
 
 export interface Category {

@@ -54,11 +54,8 @@ export default function Blog() {
 
       <main className="mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24">
         <div className="flex flex-col gap-12">
-          <div className="text-center">
+          <div className="text-left">
             <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
-            <p className="mt-4 text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
-              Insights, updates, and stories from Door 24.
-            </p>
           </div>
 
           {/* Search and Filters */}
@@ -125,38 +122,38 @@ export default function Blog() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8">
               {filteredPosts.map((post) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden backdrop-blur transition hover:border-white/20 hover:bg-white/10"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
                 >
-                  {post.featuredImage && (
-                    <div className="relative h-48 w-full overflow-hidden">
+                  {post.coverImage && (
+                    <div className="relative h-48 w-full overflow-hidden sm:h-64">
                       <Image
-                        src={post.featuredImage}
+                        src={post.coverImage}
                         alt={post.title}
                         fill
-                        className="object-cover transition group-hover:scale-105"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                         unoptimized
                       />
                     </div>
                   )}
                   <div className="p-6">
                     {post.category && (
-                      <span className="inline-block rounded-full bg-white/10 px-2 py-1 text-xs text-[var(--door24-muted)] mb-3">
+                      <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[var(--door24-muted)] mb-3">
                         {post.category}
                       </span>
                     )}
-                    <h2 className="text-xl font-semibold mb-2 group-hover:text-[var(--door24-primary-end)] transition">
+                    <h2 className="text-2xl font-semibold mb-3 group-hover:text-[var(--door24-primary-end)] transition-colors sm:text-3xl">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-[var(--door24-muted)] line-clamp-3 mb-4">
+                    <p className="text-sm text-[var(--door24-muted)] line-clamp-2 mb-4 sm:text-base">
                       {post.description}
                     </p>
                     {post.publishedAt && (
-                      <p className="text-xs text-[var(--door24-muted)]">
+                      <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
                         {post.publishedAt instanceof Date
                           ? post.publishedAt.toLocaleDateString("en-US", {
                               year: "numeric",

@@ -47,6 +47,7 @@ export default function BlogAdmin() {
     tags: "",
     category: "",
     featuredImage: "",
+    coverImage: "",
   });
   const [categoryFormData, setCategoryFormData] = useState({
     name: "",
@@ -123,6 +124,7 @@ export default function BlogAdmin() {
         tags: tagsArray,
         category: formData.category || undefined,
         featuredImage: formData.featuredImage || undefined,
+        coverImage: formData.coverImage || undefined,
       };
 
       if (editingPost?.id) {
@@ -143,6 +145,7 @@ export default function BlogAdmin() {
         tags: "",
         category: "",
         featuredImage: "",
+        coverImage: "",
       });
       setEditingPost(null);
       setShowEditor(false);
@@ -181,6 +184,7 @@ export default function BlogAdmin() {
       tags: post.tags?.join(", ") || "",
       category: post.category || "",
       featuredImage: post.featuredImage || "",
+      coverImage: post.coverImage || "",
     });
     setShowEditor(true);
     setShowPreview(false);
@@ -213,6 +217,7 @@ export default function BlogAdmin() {
       tags: "",
       category: "",
       featuredImage: "",
+      coverImage: "",
     });
     setShowEditor(true);
     setShowPreview(false);
@@ -589,10 +594,24 @@ export default function BlogAdmin() {
                     />
                   </div>
 
-                  <ImageUpload
-                    onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
-                    currentImage={formData.featuredImage}
-                  />
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Featured Image (for blog post page)</label>
+                    <ImageUpload
+                      onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
+                      currentImage={formData.featuredImage}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Cover Image (wide banner for blog listing page)</label>
+                    <p className="text-xs text-[var(--door24-muted)] mb-2">
+                      Recommended: Wide image (16:9 or similar aspect ratio) for the blog listing preview
+                    </p>
+                    <ImageUpload
+                      onUploadComplete={(url) => setFormData({ ...formData, coverImage: url })}
+                      currentImage={formData.coverImage}
+                    />
+                  </div>
 
                   <div>
                     <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
