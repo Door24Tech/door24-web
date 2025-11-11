@@ -59,7 +59,7 @@ export default function Blog() {
             <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
             <div className="flex items-center gap-4">
               {/* Search Bar - Compact with icon */}
-              <div className="relative w-full max-w-xs">
+              <div className="relative w-64 sm:w-72">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
