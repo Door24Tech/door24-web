@@ -107,7 +107,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label={`Follow us on ${social.name}`}
               >
                 {social.icon}
