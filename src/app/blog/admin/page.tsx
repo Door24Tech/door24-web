@@ -633,7 +633,7 @@ export default function BlogAdmin() {
                   <div>
                     <label className="block text-sm font-medium mb-2">Featured Image</label>
                     <p className="text-xs text-[var(--door24-muted)] mb-2">
-                      Used for blog post page and listing previews. Recommended: Wide image (16:9 aspect ratio)
+                      Used for blog post page and listing previews. Recommended: 1200×675px (16:9 aspect ratio)
                     </p>
                     <ImageUpload
                       onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
