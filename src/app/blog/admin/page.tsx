@@ -36,6 +36,7 @@ export default function BlogAdmin() {
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [showSEO, setShowSEO] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -559,101 +560,6 @@ export default function BlogAdmin() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* SEO Preview Box */}
-                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
-                    <h3 className="text-sm font-semibold mb-3 text-[var(--door24-foreground)]">SEO Preview</h3>
-                    <div className="bg-white rounded-lg p-4 text-gray-900">
-                      <div className="flex items-start gap-3">
-                        {(formData.seoImage || formData.featuredImage) && (
-                          <img
-                            src={formData.seoImage || formData.featuredImage || ""}
-                            alt="Preview"
-                            className="w-32 h-20 object-cover rounded flex-shrink-0"
-                          />
-                        )}
-                        <div className="flex-1 min-w-0">
-                          {/* Title - bold, larger, at top */}
-                          <div className="text-lg font-bold text-blue-600 mb-1 line-clamp-2 leading-tight">
-                            {formData.seoTitle || formData.title || "Your Title"}
-                          </div>
-                          {/* Description - smaller, regular weight, below title */}
-                          <div className="text-sm text-gray-700 mb-1 line-clamp-2 leading-snug">
-                            {formData.seoDescription || formData.description || "Your description will appear here"}
-                          </div>
-                          {/* URL - light grey, smaller, at bottom */}
-                          <div className="text-xs text-gray-500 truncate">
-                            door24.app/blog/{formData.slug || "your-slug"}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* SEO Metadata Section */}
-                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
-                    <h3 className="text-sm font-semibold mb-4 text-[var(--door24-foreground)]">SEO Metadata</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">SEO Title</label>
-                        <input
-                          type="text"
-                          value={formData.seoTitle}
-                          onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                          className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                          placeholder="Leave empty to use post title"
-                        />
-                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
-                          {formData.seoTitle.length}/60 characters
-                        </p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">SEO Description</label>
-                        <textarea
-                          value={formData.seoDescription}
-                          onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
-                          rows={2}
-                          className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                          placeholder="Leave empty to use post description"
-                        />
-                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
-                          {formData.seoDescription.length}/160 characters
-                        </p>
-                      </div>
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">SEO Keywords</label>
-                          <input
-                            type="text"
-                            value={formData.seoKeywords}
-                            onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
-                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                            placeholder="keyword1, keyword2, keyword3"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">SEO Author</label>
-                          <input
-                            type="text"
-                            value={formData.seoAuthor}
-                            onChange={(e) => setFormData({ ...formData, seoAuthor: e.target.value })}
-                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                            placeholder="Leave empty to use your email"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">SEO Social Image</label>
-                        <p className="text-xs text-[var(--door24-muted)] mb-2">
-                          Image for social media sharing (Open Graph). Recommended: 1200x630px
-                        </p>
-                        <ImageUpload
-                          onUploadComplete={(url) => setFormData({ ...formData, seoImage: url })}
-                          currentImage={formData.seoImage}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
                       <label className="block text-sm font-medium mb-2">Title</label>
@@ -746,6 +652,121 @@ export default function BlogAdmin() {
                       className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="recovery, community, wellness"
                     />
+                  </div>
+
+                  {/* SEO Section - Collapsible */}
+                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setShowSEO(!showSEO)}
+                      className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition"
+                    >
+                      <h3 className="text-sm font-semibold text-[var(--door24-foreground)]">SEO Settings</h3>
+                      <svg
+                        className={`h-5 w-5 text-[var(--door24-foreground)] transition-transform ${showSEO ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    
+                    {showSEO && (
+                      <div className="p-4 pt-0 space-y-4 border-t border-white/10">
+                        {/* SEO Preview Box */}
+                        <div>
+                          <h4 className="text-xs font-semibold mb-3 text-[var(--door24-foreground)] uppercase tracking-wider">Preview</h4>
+                          <div className="bg-white rounded-lg p-4 text-gray-900">
+                            <div className="flex items-start gap-3">
+                              {(formData.seoImage || formData.featuredImage) && (
+                                <img
+                                  src={formData.seoImage || formData.featuredImage || ""}
+                                  alt="Preview"
+                                  className="w-32 h-20 object-cover rounded flex-shrink-0"
+                                />
+                              )}
+                              <div className="flex-1 min-w-0">
+                                {/* Title - bold, larger, at top */}
+                                <div className="text-lg font-bold text-blue-600 mb-1 line-clamp-2 leading-tight">
+                                  {formData.seoTitle || formData.title || "Your Title"}
+                                </div>
+                                {/* Description - smaller, regular weight, below title */}
+                                <div className="text-sm text-gray-700 mb-1 line-clamp-2 leading-snug">
+                                  {formData.seoDescription || formData.description || "Your description will appear here"}
+                                </div>
+                                {/* URL - light grey, smaller, at bottom */}
+                                <div className="text-xs text-gray-500 truncate">
+                                  door24.app/blog/{formData.slug || "your-slug"}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* SEO Metadata Fields */}
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium mb-2">SEO Title</label>
+                            <input
+                              type="text"
+                              value={formData.seoTitle}
+                              onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
+                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                              placeholder="Leave empty to use post title"
+                            />
+                            <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                              {formData.seoTitle.length}/60 characters
+                            </p>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-2">SEO Description</label>
+                            <textarea
+                              value={formData.seoDescription}
+                              onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
+                              rows={2}
+                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                              placeholder="Leave empty to use post description"
+                            />
+                            <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                              {formData.seoDescription.length}/160 characters
+                            </p>
+                          </div>
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div>
+                              <label className="block text-sm font-medium mb-2">SEO Keywords</label>
+                              <input
+                                type="text"
+                                value={formData.seoKeywords}
+                                onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
+                                className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                                placeholder="keyword1, keyword2, keyword3"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium mb-2">SEO Author</label>
+                              <input
+                                type="text"
+                                value={formData.seoAuthor}
+                                onChange={(e) => setFormData({ ...formData, seoAuthor: e.target.value })}
+                                className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                                placeholder="Leave empty to use your email"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-2">SEO Social Image</label>
+                            <p className="text-xs text-[var(--door24-muted)] mb-2">
+                              Image for social media sharing (Open Graph). Recommended: 1200x630px
+                            </p>
+                            <ImageUpload
+                              onUploadComplete={(url) => setFormData({ ...formData, seoImage: url })}
+                              currentImage={formData.seoImage}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Scheduling */}
