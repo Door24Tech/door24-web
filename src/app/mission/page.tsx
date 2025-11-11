@@ -117,7 +117,8 @@ export default function Mission() {
               </span>
             </div>
             <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-              Upgrade the Human Operating System
+              Upgrade the Human<br />
+              Operating System
             </h1>
             <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg">
               Building the world's leading ecosystem for conscious evolution.
