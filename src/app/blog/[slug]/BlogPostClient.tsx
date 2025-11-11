@@ -23,6 +23,56 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     }
   }, [slug]);
 
+  // Update SEO meta tags when post loads
+  useEffect(() => {
+    if (post) {
+      const title = post.seoTitle || post.title;
+      const description = post.seoDescription || post.description;
+      const keywords = post.seoKeywords || post.tags?.join(", ") || "";
+      const author = post.seoAuthor || post.author || "Door 24";
+      const image = post.seoImage || post.featuredImage || "/assets/door-24-logo.png";
+      const url = `https://door24.app/blog/${post.slug}`;
+
+      // Update document title
+      document.title = `${title} | Door 24`;
+
+      // Remove existing meta tags if they exist
+      const existingTags = document.querySelectorAll('meta[data-blog-seo]');
+      existingTags.forEach(tag => tag.remove());
+
+      // Create and add meta tags
+      const metaTags = [
+        { name: 'description', content: description },
+        { name: 'keywords', content: keywords },
+        { name: 'author', content: author },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:image', content: image },
+        { property: 'og:url', content: url },
+        { property: 'og:type', content: 'article' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: image },
+      ];
+
+      metaTags.forEach(tag => {
+        const meta = document.createElement('meta');
+        if (tag.name) meta.setAttribute('name', tag.name);
+        if (tag.property) meta.setAttribute('property', tag.property);
+        meta.setAttribute('content', tag.content);
+        meta.setAttribute('data-blog-seo', 'true');
+        document.head.appendChild(meta);
+      });
+
+      // Cleanup function
+      return () => {
+        const tagsToRemove = document.querySelectorAll('meta[data-blog-seo]');
+        tagsToRemove.forEach(tag => tag.remove());
+      };
+    }
+  }, [post]);
+
   const loadPost = async () => {
     try {
       const posts = await getAllBlogPosts(true);
