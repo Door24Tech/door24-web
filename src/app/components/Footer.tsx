@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const socialLinks = [
@@ -76,6 +77,65 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
+        {/* Brand Section */}
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
+            >
+              <Image
+                src="/assets/door-24-logo.png"
+                alt="Door 24 logo"
+                width={32}
+                height={32}
+                className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+                unoptimized
+              />
+              <span>Door 24</span>
+            </Link>
+            <p className="text-sm text-[var(--door24-muted)] sm:text-base">
+              Community Recovery, Not Counting Recovery
+            </p>
+          </div>
+
+          {/* App Store Badge */}
+          <div className="flex flex-col gap-3">
+            <a
+              href="https://apps.apple.com/app/door24"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              aria-label="Download Door 24 on the App Store"
+            >
+              <div className="flex h-10 items-center gap-2 rounded-lg border border-white/20 bg-black/40 px-3 py-2 backdrop-blur sm:h-12 sm:px-4">
+                {/* Apple Logo */}
+                <svg
+                  width="18"
+                  height="20"
+                  viewBox="0 0 18 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-auto sm:h-6"
+                >
+                  <path
+                    d="M13.5 0c.2 2.1-.6 3.5-1.6 4.6-1.1 1.2-2.6 2.2-4.4 2.1-.2-2 .7-3.5 1.7-4.6C9.8.9 11.3.1 13.5 0zm1.3 5.3c1.5-.1 2.9.9 3.6.9s2.8-1.1 4.6-1c.4 0 .8.2 1.1.4-3.8 2.2-3.2 7.8.7 9.8-.4 1-1.1 2.1-1.9 3.1-1.2 1.4-2.6 2.8-4.5 2.7-1.8 0-2.5-.9-4.7-.9-2.2 0-2.9.9-4.7.9-1.8.1-3.3-1.2-4.5-2.7C-.1 15.2 2.1 10.4 2.1 7.5c0-2.6 1.4-4.8 3.5-6.1.8-.5 1.8-.8 2.8-1 .4-.1.8-.2 1.2-.2 1.3-.1 2.5.3 3.6.3.9 0 2-.4 3.2-.4z"
+                    fill="white"
+                  />
+                </svg>
+                <div className="flex flex-col">
+                  <span className="text-[10px] leading-tight text-white opacity-90 sm:text-xs">
+                    Download on the
+                  </span>
+                  <span className="text-xs font-semibold leading-tight text-white sm:text-sm">
+                    App Store
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
         {/* Links Section */}
         <div className="mb-10 grid grid-cols-1 gap-8 sm:grid-cols-3 lg:gap-12">
           {linkGroups.map((group) => (
@@ -101,8 +161,8 @@ export default function Footer() {
         {/* Divider */}
         <div className="mb-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-        {/* Social Media & Copyright Section */}
-        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+        {/* Social Media, Contact & Copyright Section */}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           {/* Social Media Icons */}
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
@@ -119,10 +179,21 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Copyright */}
-          <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
-            © 2025 Door 24 Technologies. All Rights Reserved.
-          </p>
+          {/* Support Email & Copyright */}
+          <div className="flex flex-col gap-2 text-center sm:text-right">
+            <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
+              Need help?{' '}
+              <a
+                href="mailto:support@door24.app"
+                className="text-[var(--door24-foreground)] transition hover:text-[var(--door24-primary-end)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              >
+                support@door24.app
+              </a>
+            </p>
+            <p className="text-xs text-[var(--door24-muted)]">
+              © 2025 Door 24 Technologies. All Rights Reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
