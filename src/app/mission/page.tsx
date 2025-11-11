@@ -15,25 +15,21 @@ const missionStatements = [
 
 const howWeDoIt = [
   {
-    icon: "🧠",
     title: "Transformative Tools",
     description:
       "We create software that rebuilds focus, discipline, and identity from the ground up. Every feature is anchored in neuroscience and designed with deep empathy. Our adaptive intelligence learns your patterns and evolves with you, supporting genuine, lasting change.",
   },
   {
-    icon: "⚙️",
     title: "A New Model of Recovery",
     description:
       "We've moved beyond counting days. We're building momentum. Small, intentional actions that compound into transformation. Progress becomes tangible: something you see, feel, and sustain.",
   },
   {
-    icon: "💡",
     title: "Human Tech, Not Hype",
     description:
       "Our systems are context-aware. They observe behavior, surface insights, and respond in real time. This is technology that strengthens self-awareness rather than supplanting it. We amplify human capacity, not replace it.",
   },
   {
-    icon: "🌍",
     title: "Beyond the Screen",
     description:
       "Immersive retreats. Sound-based restoration. Live gatherings where people reconnect face-to-face. The physical world becomes your training ground for mental resilience and growth.",
@@ -87,7 +83,7 @@ export default function Mission() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     const sections = document.querySelectorAll("[data-animate]");
@@ -107,84 +103,78 @@ export default function Mission() {
   const isVisible = (id: string) => visibleSections.has(id);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,#1a2450_0%,#0b1020_55%)] text-[var(--door24-foreground)]">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="animate-float-slow absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[rgba(107,91,255,0.15)] blur-3xl" />
-        <div className="animate-float-medium absolute bottom-[-20%] left-[5%] h-[26rem] w-[26rem] rounded-full bg-[rgba(24,208,194,0.12)] blur-3xl" />
-        <div className="animate-pulse-glow absolute right-[-15%] top-[15%] h-[22rem] w-[22rem] rounded-full bg-[rgba(76,229,177,0.12)] blur-3xl" />
-      </div>
-
+    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
       <main className="relative">
-        <section className="relative flex min-h-[75vh] items-center justify-center px-4 py-12 sm:min-h-[80vh] sm:px-8 sm:py-16">
+        {/* Hero */}
+        <section className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-20 lg:px-12">
           <div className="text-center">
-            <h1 className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:mb-6 sm:text-sm">
+            <h1 className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
               Our Mission
             </h1>
-            <p className="mx-auto max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+            <h2 className="mx-auto max-w-4xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl xl:text-6xl">
               Upgrade the Human Operating System
-            </p>
-            <p className="mx-auto mt-6 max-w-2xl text-sm text-[var(--door24-muted)] opacity-0 animate-fade-in-up sm:mt-8 sm:text-base lg:text-lg" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base lg:text-lg">
               Building the world's leading ecosystem for conscious evolution.
             </p>
           </div>
         </section>
 
+        {/* The Mission */}
         <section
           id="the-mission"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
-          <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-12">
-            <div className="lg:sticky lg:top-32 lg:self-start">
-              <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl">The Mission</h2>
-            </div>
-            <div className="space-y-5 sm:space-y-6">
-              {missionStatements.map((statement, index) => (
-                <p
-                  key={index}
-                  className={`text-base leading-relaxed text-[var(--door24-muted)] transition-all duration-700 sm:text-lg sm:leading-relaxed lg:text-xl lg:leading-relaxed ${
-                    isVisible("the-mission")
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0"
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  {statement}
-                </p>
-              ))}
-            </div>
+          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
+            The Mission
+          </h2>
+          <div className="space-y-6 sm:space-y-7">
+            {missionStatements.map((statement, index) => (
+              <p
+                key={index}
+                className={`text-lg leading-relaxed text-[var(--door24-foreground)] transition-all duration-500 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed ${
+                  isVisible("the-mission")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: `${index * 50}ms` }}
+              >
+                {statement}
+              </p>
+            ))}
           </div>
         </section>
 
-        <div className="mx-auto h-px max-w-[1080px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* Divider */}
+        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
 
+        {/* How We Do It */}
         <section
           id="how-we-do-it"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
-          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
+          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
             How We Do It
           </h2>
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-8 sm:space-y-10">
             {howWeDoIt.map((item, index) => (
               <div
                 key={item.title}
-                className={`group relative rounded-2xl border border-white/10 bg-[rgba(20,27,44,0.5)] p-6 transition-all duration-700 hover:scale-[1.02] hover:border-white/20 hover:bg-[rgba(20,27,44,0.7)] hover:shadow-xl hover:shadow-[rgba(24,208,194,0.15)] sm:rounded-3xl sm:p-8 lg:p-10 ${
+                className={`transition-all duration-500 ${
                   isVisible("how-we-do-it")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-12 opacity-0"
+                    : "translate-y-4 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ transitionDelay: `${index * 75}ms` }}
               >
-                <div className="absolute left-0 top-0 h-1 w-full rounded-t-2xl bg-gradient-to-r from-[var(--door24-primary-start)] to-[var(--door24-primary-end)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:rounded-t-3xl" />
-                <div className="mb-4 text-3xl sm:text-4xl">{item.icon}</div>
-                <h3 className="mb-3 text-xl font-semibold sm:mb-4 sm:text-2xl">
+                <h3 className="mb-3 text-xl font-semibold text-[var(--door24-foreground)] sm:text-2xl">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base sm:leading-relaxed">
+                <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -192,64 +182,66 @@ export default function Mission() {
           </div>
         </section>
 
-        <div className="mx-auto h-px max-w-[1080px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* Divider */}
+        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
 
+        {/* Philosophy */}
         <section
           id="philosophy"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
-          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
+          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
             Our Philosophy
           </h2>
-          <div className="space-y-0">
+          <div className="space-y-8 sm:space-y-10">
             {philosophy.map((item, index) => (
               <div
                 key={item.headline}
-                className={`border-b border-white/5 py-8 transition-all duration-700 last:border-b-0 sm:py-10 lg:py-12 ${
+                className={`transition-all duration-500 ${
                   isVisible("philosophy")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-12 opacity-0"
-                } ${index % 2 === 1 ? "bg-[rgba(20,27,44,0.3)]" : ""}`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: `${index * 75}ms` }}
               >
-                <div className="mx-auto max-w-3xl px-4 sm:px-6">
-                  <h3 className="mb-4 font-serif text-2xl font-semibold italic leading-tight sm:mb-6 sm:text-3xl lg:text-4xl">
-                    {item.headline}
-                  </h3>
-                  <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+                <h3 className="mb-3 text-2xl font-semibold italic leading-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl">
+                  {item.headline}
+                </h3>
+                <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
+                  {item.description}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        <div className="mx-auto h-px max-w-[1080px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* Divider */}
+        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
 
+        {/* Why We Exist */}
         <section
           id="why-we-exist"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
-          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl lg:mb-12 lg:text-4xl">
+          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
             Why We Exist
           </h2>
-          <div className="mx-auto max-w-3xl space-y-4 sm:space-y-5">
+          <div className="space-y-4 sm:space-y-5">
             {whyWeExist.map((line, index) => (
               <p
                 key={index}
-                className={`text-center text-base leading-relaxed transition-all duration-700 sm:text-lg sm:leading-relaxed lg:text-xl lg:leading-relaxed ${
-                  line.includes("Door 24 exists")
-                    ? "font-bold text-[var(--door24-foreground)]"
+                className={`text-lg leading-relaxed transition-all duration-500 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed ${
+                  line.includes("Door 24 exists") || line.includes("This is not")
+                    ? "font-semibold text-[var(--door24-foreground)]"
                     : "text-[var(--door24-muted)]"
                 } ${
                   isVisible("why-we-exist")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
+                    : "translate-y-4 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 {line}
               </p>
@@ -257,26 +249,20 @@ export default function Mission() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden bg-[rgba(11,16,32,0.95)] px-4 py-12 sm:px-8 sm:py-16 lg:py-20">
-          <div className="pointer-events-none absolute inset-0">
-            <div className="animate-float-fast absolute -top-10 left-1/4 h-40 w-40 rounded-full bg-[rgba(107,91,255,0.2)] blur-3xl sm:h-48 sm:w-48" />
-            <div className="animate-float-medium absolute bottom-[-15%] right-1/4 h-44 w-44 rounded-full bg-[rgba(24,208,194,0.18)] blur-3xl sm:h-56 sm:w-56" />
-          </div>
-          <div className="relative mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold sm:mb-8 sm:text-4xl lg:text-5xl">
+        {/* CTA */}
+        <section className="relative mx-auto max-w-[900px] px-4 py-16 sm:px-8 sm:py-20 lg:px-12">
+          <div className="text-center">
+            <h2 className="mb-4 text-2xl font-semibold sm:text-3xl lg:text-4xl">
               Join Us
             </h2>
-            <p className="mb-4 text-lg leading-relaxed text-[var(--door24-muted)] sm:mb-6 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed">
+            <p className="mb-6 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
               We are rewiring the human operating system.
             </p>
-            <p className="mb-4 text-lg leading-relaxed text-[var(--door24-muted)] sm:mb-6 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed">
+            <p className="mb-8 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
               This is the work that matters. This is the frontier that scales.
             </p>
-            <p className="mb-8 text-xl font-semibold sm:mb-10 sm:text-2xl lg:text-3xl">
-              Door 24. Technology for Human Freedom.
-            </p>
             <Link
-              href="/#final-cta"
+              href="/"
               className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-3 text-base font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)] transition hover:shadow-xl hover:shadow-[rgba(24,208,194,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-4 sm:text-lg"
             >
               <span className="absolute inset-0 translate-y-[110%] bg-white/15 transition-transform duration-500 ease-out group-hover:translate-y-[-10%]" />
@@ -290,4 +276,3 @@ export default function Mission() {
     </div>
   );
 }
-
