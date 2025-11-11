@@ -52,7 +52,7 @@ export default function WaitlistForm() {
 
   return (
     <form
-      className="flex w-full max-w-2xl flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-[rgba(107,91,255,0.12)] backdrop-blur sm:p-6"
+      className="flex w-full flex-col gap-3"
       onSubmit={handleSubmit}
       aria-label="Join the Door 24 waitlist"
       suppressHydrationWarning
