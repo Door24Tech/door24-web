@@ -21,6 +21,17 @@ service cloud.firestore {
                     && request.resource.data.status == "active";
       allow update, delete: if false; // No updates or deletes via client (admin can do via console)
     }
+    
+    // Support submissions - public write (anyone can submit), authenticated read (admin only)
+    match /support/{submissionId} {
+      allow read: if request.auth != null; // Only authenticated admins can read
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.inquiryType is string
+                    && request.resource.data.message is string
+                    && request.resource.data.status == "new";
+      allow update, delete: if false; // No updates or deletes via client (admin can do via console)
+    }
   }
 }
 

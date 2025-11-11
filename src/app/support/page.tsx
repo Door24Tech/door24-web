@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { saveSupportSubmission, sendSupportEmailNotification } from "@/lib/support";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -68,17 +69,22 @@ export default function Support() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1400));
+      // Save to Firestore and send email notification (both run in parallel)
+      await Promise.all([
+        saveSupportSubmission(name, email, inquiryType, message),
+        sendSupportEmailNotification(name, email, inquiryType, message),
+      ]);
+      
       event.currentTarget.reset();
       setFormState({
         status: "success",
         message: "Thank you for reaching out! We'll get back to you within 24-48 hours.",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setFormState({
         status: "error",
-        message: "Something went wrong. Please try again in a moment.",
+        message: error.message || "Something went wrong. Please try again in a moment.",
       });
     }
   };
