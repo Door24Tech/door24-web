@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -14,28 +15,26 @@ import {
   updateBlogPost, 
   deleteBlogPost,
   getCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  getScheduledPosts,
   generateSlug,
-  type BlogPost 
+  type BlogPost,
+  type Category
 } from "@/lib/blog";
-
-const commonCategories = [
-  "Recovery",
-  "Community",
-  "Wellness",
-  "Technology",
-  "Updates",
-  "Resources",
-  "Stories",
-  "Tips",
-];
 
 export default function BlogAdmin() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [scheduledPosts, setScheduledPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [showEditor, setShowEditor] = useState(false);
+  const [showCategoryManager, setShowCategoryManager] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -43,11 +42,19 @@ export default function BlogAdmin() {
     content: "",
     description: "",
     published: false,
+    scheduledDate: "",
+    scheduledTime: "",
     tags: "",
     category: "",
     featuredImage: "",
   });
+  const [categoryFormData, setCategoryFormData] = useState({
+    name: "",
+    slug: "",
+    description: "",
+  });
   const [saving, setSaving] = useState(false);
+  const [savingCategory, setSavingCategory] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -57,17 +64,23 @@ export default function BlogAdmin() {
 
   useEffect(() => {
     if (user) {
-      loadPosts();
+      loadData();
     }
   }, [user]);
 
-  const loadPosts = async () => {
+  const loadData = async () => {
     try {
       setLoadingPosts(true);
-      const allPosts = await getAllBlogPosts(false);
+      const [allPosts, scheduled, allCategories] = await Promise.all([
+        getAllBlogPosts(false),
+        getScheduledPosts(),
+        getCategories(),
+      ]);
       setPosts(allPosts);
+      setScheduledPosts(scheduled);
+      setCategories(allCategories);
     } catch (error) {
-      console.error("Error loading posts:", error);
+      console.error("Error loading data:", error);
     } finally {
       setLoadingPosts(false);
     }
@@ -91,12 +104,21 @@ export default function BlogAdmin() {
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0);
 
+      // Handle scheduling
+      let scheduledDate: Timestamp | null = null;
+      if (formData.scheduledDate && formData.scheduledTime) {
+        const dateTime = new Date(`${formData.scheduledDate}T${formData.scheduledTime}`);
+        scheduledDate = Timestamp.fromDate(dateTime);
+      }
+
       const postData = {
         title: formData.title,
         slug: formData.slug,
         content: formData.content,
         description: formData.description,
-        published: formData.published,
+        published: formData.published && !scheduledDate, // Can't be both published and scheduled
+        publishedAt: formData.published && !scheduledDate ? Timestamp.now() : null,
+        scheduledDate: scheduledDate,
         author: user?.email || "Door 24",
         tags: tagsArray,
         category: formData.category || undefined,
@@ -116,6 +138,8 @@ export default function BlogAdmin() {
         content: "",
         description: "",
         published: false,
+        scheduledDate: "",
+        scheduledTime: "",
         tags: "",
         category: "",
         featuredImage: "",
@@ -123,7 +147,7 @@ export default function BlogAdmin() {
       setEditingPost(null);
       setShowEditor(false);
       setShowPreview(false);
-      await loadPosts();
+      await loadData();
     } catch (error: any) {
       console.error("Error saving post:", error);
       alert(`Error saving post: ${error.message}`);
@@ -134,12 +158,26 @@ export default function BlogAdmin() {
 
   const handleEdit = (post: BlogPost) => {
     setEditingPost(post);
+    
+    // Extract scheduled date/time if exists
+    let scheduledDate = "";
+    let scheduledTime = "";
+    if (post.scheduledDate) {
+      const date = post.scheduledDate instanceof Date
+        ? post.scheduledDate
+        : new Date((post.scheduledDate as any).toMillis?.() || post.scheduledDate.seconds * 1000);
+      scheduledDate = date.toISOString().split('T')[0];
+      scheduledTime = date.toTimeString().slice(0, 5);
+    }
+
     setFormData({
       title: post.title,
       slug: post.slug,
       content: post.content,
       description: post.description,
       published: post.published || false,
+      scheduledDate,
+      scheduledTime,
       tags: post.tags?.join(", ") || "",
       category: post.category || "",
       featuredImage: post.featuredImage || "",
@@ -155,7 +193,7 @@ export default function BlogAdmin() {
 
     try {
       await deleteBlogPost(id);
-      await loadPosts();
+      await loadData();
     } catch (error: any) {
       console.error("Error deleting post:", error);
       alert(`Error deleting post: ${error.message}`);
@@ -170,12 +208,91 @@ export default function BlogAdmin() {
       content: "",
       description: "",
       published: false,
+      scheduledDate: "",
+      scheduledTime: "",
       tags: "",
       category: "",
       featuredImage: "",
     });
     setShowEditor(true);
     setShowPreview(false);
+  };
+
+  const handleCategoryNameChange = (name: string) => {
+    setCategoryFormData({
+      ...categoryFormData,
+      name,
+      slug: editingCategory ? categoryFormData.slug : generateSlug(name),
+    });
+  };
+
+  const handleCategorySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingCategory(true);
+
+    try {
+      const categoryData = {
+        name: categoryFormData.name,
+        slug: categoryFormData.slug,
+        description: categoryFormData.description || undefined,
+      };
+
+      if (editingCategory?.id) {
+        await updateCategory(editingCategory.id, categoryData);
+      } else {
+        await createCategory(categoryData);
+      }
+
+      setCategoryFormData({
+        name: "",
+        slug: "",
+        description: "",
+      });
+      setEditingCategory(null);
+      await loadData();
+    } catch (error: any) {
+      console.error("Error saving category:", error);
+      alert(`Error saving category: ${error.message}`);
+    } finally {
+      setSavingCategory(false);
+    }
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setEditingCategory(category);
+    setCategoryFormData({
+      name: category.name,
+      slug: category.slug,
+      description: category.description || "",
+    });
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this category? Posts using this category will lose their category.")) {
+      return;
+    }
+
+    try {
+      await deleteCategory(id);
+      await loadData();
+    } catch (error: any) {
+      console.error("Error deleting category:", error);
+      alert(`Error deleting category: ${error.message}`);
+    }
+  };
+
+  const formatScheduledDate = (scheduledDate: Timestamp | null) => {
+    if (!scheduledDate) return "";
+    const date = scheduledDate instanceof Date
+      ? scheduledDate
+      : new Date((scheduledDate as any).toMillis?.() || scheduledDate.seconds * 1000);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
   };
 
   if (loading) {
@@ -215,6 +332,12 @@ export default function BlogAdmin() {
                 {user.email}
               </span>
               <button
+                onClick={() => setShowCategoryManager(!showCategoryManager)}
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold transition hover:bg-white/10 sm:px-6 sm:py-2.5"
+              >
+                {showCategoryManager ? "Hide" : "Manage"} Categories
+              </button>
+              <button
                 onClick={handleNewPost}
                 className="door24-gradient rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl sm:px-6 sm:py-2.5"
               >
@@ -228,6 +351,154 @@ export default function BlogAdmin() {
               </button>
             </div>
           </div>
+
+          {/* Category Manager */}
+          {showCategoryManager && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold">Manage Categories</h2>
+                <button
+                  onClick={() => {
+                    setEditingCategory(null);
+                    setCategoryFormData({ name: "", slug: "", description: "" });
+                  }}
+                  className="door24-gradient rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl"
+                >
+                  New Category
+                </button>
+              </div>
+
+              {/* Category Form */}
+              {(editingCategory || (!editingCategory && categoryFormData.name)) && (
+                <form onSubmit={handleCategorySubmit} className="mb-6 space-y-4 p-4 rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)]">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Category Name</label>
+                      <input
+                        type="text"
+                        value={categoryFormData.name}
+                        onChange={(e) => handleCategoryNameChange(e.target.value)}
+                        required
+                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        placeholder="Category name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Slug</label>
+                      <input
+                        type="text"
+                        value={categoryFormData.slug}
+                        onChange={(e) => setCategoryFormData({ ...categoryFormData, slug: e.target.value })}
+                        required
+                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        placeholder="category-slug"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Description (optional)</label>
+                    <input
+                      type="text"
+                      value={categoryFormData.description}
+                      onChange={(e) => setCategoryFormData({ ...categoryFormData, description: e.target.value })}
+                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="Brief description"
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <button
+                      type="submit"
+                      disabled={savingCategory}
+                      className="door24-gradient rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {savingCategory ? "Saving..." : editingCategory ? "Update Category" : "Create Category"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingCategory(null);
+                        setCategoryFormData({ name: "", slug: "", description: "" });
+                      }}
+                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Categories List */}
+              <div className="space-y-2">
+                {categories.length === 0 ? (
+                  <p className="text-[var(--door24-muted)]">No categories yet. Create your first category!</p>
+                ) : (
+                  categories.map((category) => (
+                    <div
+                      key={category.id}
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
+                    >
+                      <div>
+                        <h3 className="font-semibold">{category.name}</h3>
+                        {category.description && (
+                          <p className="text-sm text-[var(--door24-muted)]">{category.description}</p>
+                        )}
+                        <p className="text-xs text-[var(--door24-muted)] mt-1">Slug: {category.slug}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEditCategory(category)}
+                          className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition hover:bg-white/10"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => category.id && handleDeleteCategory(category.id)}
+                          className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Scheduled Posts Preview */}
+          {scheduledPosts.length > 0 && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
+              <h2 className="text-2xl font-semibold mb-6">Scheduled Posts</h2>
+              <div className="space-y-4">
+                {scheduledPosts.map((post) => (
+                  <div
+                    key={post.id}
+                    className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="font-semibold">{post.title}</h3>
+                        <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-1 text-xs text-[var(--door24-primary-start)]">
+                          Scheduled
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm text-[var(--door24-muted)]">
+                        {formatScheduledDate(post.scheduledDate)}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(post)}
+                        className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition hover:bg-white/10"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Editor */}
           {showEditor && (
@@ -281,10 +552,10 @@ export default function BlogAdmin() {
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       >
-                        <option value="">Select a category</option>
-                        {commonCategories.map((cat) => (
-                          <option key={cat} value={cat}>
-                            {cat}
+                        <option value="">No category</option>
+                        {categories.map((cat) => (
+                          <option key={cat.id} value={cat.name}>
+                            {cat.name}
                           </option>
                         ))}
                       </select>
@@ -349,16 +620,46 @@ export default function BlogAdmin() {
                     />
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <label className="flex items-center gap-2">
+                  {/* Scheduling */}
+                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
+                    <label className="flex items-center gap-2 mb-4">
                       <input
                         type="checkbox"
                         checked={formData.published}
-                        onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                        onChange={(e) => setFormData({ ...formData, published: e.target.checked, scheduledDate: "", scheduledTime: "" })}
                         className="rounded border-white/10"
                       />
-                      <span className="text-sm">Publish immediately</span>
+                      <span className="text-sm font-medium">Publish immediately</span>
                     </label>
+                    
+                    {!formData.published && (
+                      <div className="grid gap-4 sm:grid-cols-2 mt-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Schedule Date</label>
+                          <input
+                            type="date"
+                            value={formData.scheduledDate}
+                            onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
+                            min={new Date().toISOString().split('T')[0]}
+                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Schedule Time</label>
+                          <input
+                            type="time"
+                            value={formData.scheduledTime}
+                            onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
+                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    {formData.scheduledDate && formData.scheduledTime && (
+                      <p className="mt-2 text-xs text-[var(--door24-muted)]">
+                        Will be published on: {new Date(`${formData.scheduledDate}T${formData.scheduledTime}`).toLocaleString()}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex gap-4">
@@ -401,11 +702,15 @@ export default function BlogAdmin() {
                     className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4"
                   >
                     <div className="flex-1">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
                         <h3 className="font-semibold">{post.title}</h3>
                         {post.published ? (
                           <span className="rounded-full bg-[var(--door24-accent)]/20 px-2 py-1 text-xs text-[var(--door24-accent)]">
                             Published
+                          </span>
+                        ) : post.scheduledDate ? (
+                          <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-1 text-xs text-[var(--door24-primary-start)]">
+                            Scheduled
                           </span>
                         ) : (
                           <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-1 text-xs text-[var(--door24-muted)]">
@@ -421,6 +726,11 @@ export default function BlogAdmin() {
                       <p className="mt-1 text-sm text-[var(--door24-muted)]">
                         /blog/{post.slug}
                       </p>
+                      {post.scheduledDate && (
+                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                          Scheduled: {formatScheduledDate(post.scheduledDate)}
+                        </p>
+                      )}
                     </div>
                     <div className="flex gap-2">
                       <button

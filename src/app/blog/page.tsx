@@ -5,11 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { getAllBlogPosts, getCategories, type BlogPost } from "@/lib/blog";
+import { getAllBlogPosts, getCategories, type BlogPost, type Category } from "@/lib/blog";
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -85,15 +85,15 @@ export default function Blog() {
               </button>
               {categories.map((category) => (
                 <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.name)}
                   className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
-                    selectedCategory === category
+                    selectedCategory === category.name
                       ? "door24-gradient text-[var(--door24-foreground)]"
                       : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:bg-white/10"
                   }`}
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </div>
