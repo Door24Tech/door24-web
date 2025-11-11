@@ -108,15 +108,17 @@ export default function Mission() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-20 lg:px-12">
+        <section className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12">
           <div className="text-center">
-            <h1 className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
-              Our Mission
-            </h1>
-            <h2 className="mx-auto max-w-4xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl xl:text-6xl">
+            <div className="mb-4 inline-block">
+              <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
+                Our Mission
+              </span>
+            </div>
+            <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
               Upgrade the Human Operating System
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base lg:text-lg">
+            </h1>
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg">
               Building the world's leading ecosystem for conscious evolution.
             </p>
           </div>
@@ -126,106 +128,116 @@ export default function Mission() {
         <section
           id="human-system-breaking"
           data-animate
-          className="relative bg-gradient-to-b from-[var(--door24-background)] to-[#141b2c] py-16 sm:py-20 lg:py-24"
+          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-background)] via-[#141b2c] to-[var(--door24-background)] py-20 sm:py-24 lg:py-28"
         >
-          <div className="mx-auto max-w-[800px] px-4 sm:px-8 lg:px-12">
-            <h2 className="mb-4 text-4xl font-bold leading-tight text-[var(--door24-foreground)] sm:text-5xl lg:text-6xl xl:text-7xl">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[rgba(107,91,255,0.08)] blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-[rgba(24,208,194,0.06)] blur-3xl" />
+          </div>
+          <div className="relative mx-auto max-w-[800px] px-4 sm:px-8 lg:px-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
+                The Crisis
+              </span>
+            </div>
+            <h2 className="mb-6 text-2xl font-bold leading-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl">
               The Human System Is Breaking
             </h2>
-            <p className="mb-8 text-xl font-medium leading-relaxed text-[var(--door24-muted)] sm:text-2xl lg:text-3xl">
+            <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-muted)] sm:text-xl">
               Technology has advanced faster than we have — and humanity is paying the price.
             </p>
-            <div className="space-y-6 text-lg leading-[1.8] text-[var(--door24-muted)] sm:text-xl sm:leading-[1.8]">
+            <div className="space-y-5 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "100ms" }}
               >
                 Overdoses. Anxiety. Isolation. Endless scrolling.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "200ms" }}
               >
                 We built machines that outpace our minds, but never taught the mind to keep up.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "300ms" }}
               >
-                <span className="font-semibold text-[var(--door24-foreground)]">
+                <span className="relative font-semibold text-[var(--door24-foreground)]">
                   Attention has become the new currency, and most of us are broke.
                 </span>
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "400ms" }}
               >
                 We chase connection through screens and find only noise.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "500ms" }}
               >
                 We've confused stimulation for satisfaction, and progress for peace.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "600ms" }}
               >
                 Our health systems treat symptoms.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "700ms" }}
               >
                 Our tech companies monetize distraction.
               </p>
               <p
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "800ms" }}
               >
-                And the result is clear —{" "}
+                And the result is clear —{' '}
                 <span className="font-semibold text-[var(--door24-foreground)]">
                   a species more connected than ever, and somehow lonelier than ever.
                 </span>
               </p>
               <p
-                className={`mt-8 text-xl font-medium leading-relaxed text-[var(--door24-foreground)] transition-all duration-500 sm:text-2xl ${
+                className={`mt-10 border-l-2 border-[var(--door24-primary-start)] pl-6 text-lg font-medium leading-relaxed text-[var(--door24-foreground)] transition-all duration-700 ease-out sm:text-xl ${
                   isVisible("human-system-breaking")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
                 style={{ transitionDelay: "900ms" }}
               >
@@ -239,21 +251,24 @@ export default function Mission() {
         <section
           id="the-mission"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
+          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
-          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
-            The Mission
-          </h2>
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
+              The Mission
+            </span>
+          </div>
           <div className="space-y-6 sm:space-y-7">
             {missionStatements.map((statement, index) => (
               <p
                 key={index}
-                className={`text-lg leading-relaxed text-[var(--door24-foreground)] transition-all duration-500 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed ${
+                className={`text-lg leading-relaxed text-[var(--door24-foreground)] transition-all duration-700 ease-out sm:text-xl sm:leading-relaxed ${
                   isVisible("the-mission")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 50}ms` }}
+                style={{ transitionDelay: `${index * 75}ms` }}
               >
                 {statement}
               </p>
@@ -262,32 +277,42 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
+        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
 
         {/* How We Do It */}
         <section
           id="how-we-do-it"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
+          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
-          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
-            How We Do It
-          </h2>
-          <div className="space-y-8 sm:space-y-10">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
+              How We Do It
+            </span>
+          </div>
+          <div className="space-y-10 sm:space-y-12">
             {howWeDoIt.map((item, index) => (
               <div
                 key={item.title}
-                className={`transition-all duration-500 ${
+                className={`group transition-all duration-700 ease-out ${
                   isVisible("how-we-do-it")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 75}ms` }}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <h3 className="mb-3 text-xl font-semibold text-[var(--door24-foreground)] sm:text-2xl">
-                  {item.title}
-                </h3>
-                <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
+                <div className="mb-3 flex items-baseline gap-3">
+                  <span className="text-sm font-mono font-semibold text-[var(--door24-primary-start)]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-xl font-semibold text-[var(--door24-foreground)] sm:text-2xl">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="ml-8 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -296,29 +321,34 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
+        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
 
         {/* Philosophy */}
         <section
           id="philosophy"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
+          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
-          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
-            Our Philosophy
-          </h2>
-          <div className="space-y-8 sm:space-y-10">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
+              Our Philosophy
+            </span>
+          </div>
+          <div className="space-y-10 sm:space-y-12">
             {philosophy.map((item, index) => (
               <div
                 key={item.headline}
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-700 ease-out ${
                   isVisible("philosophy")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 75}ms` }}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <h3 className="mb-3 text-2xl font-semibold italic leading-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl">
+                <h3 className="mb-4 text-2xl font-semibold italic leading-tight text-[var(--door24-foreground)] sm:text-3xl">
                   {item.headline}
                 </h3>
                 <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
@@ -330,31 +360,36 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="mx-auto h-px max-w-[900px] bg-white/5" />
+        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
 
         {/* Why We Exist */}
         <section
           id="why-we-exist"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
+          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
-          <h2 className="mb-8 text-xl font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)] sm:text-2xl">
-            Why We Exist
-          </h2>
-          <div className="space-y-4 sm:space-y-5">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
+              Why We Exist
+            </span>
+          </div>
+          <div className="space-y-5 sm:space-y-6">
             {whyWeExist.map((line, index) => (
               <p
                 key={index}
-                className={`text-lg leading-relaxed transition-all duration-500 sm:text-xl sm:leading-relaxed lg:text-2xl lg:leading-relaxed ${
+                className={`text-lg leading-relaxed transition-all duration-700 ease-out sm:text-xl sm:leading-relaxed ${
                   line.includes("Door 24 exists") || line.includes("This is not")
                     ? "font-semibold text-[var(--door24-foreground)]"
                     : "text-[var(--door24-muted)]"
                 } ${
                   isVisible("why-we-exist")
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
+                    : "translate-y-6 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 50}ms` }}
+                style={{ transitionDelay: `${index * 75}ms` }}
               >
                 {line}
               </p>
@@ -363,15 +398,15 @@ export default function Mission() {
         </section>
 
         {/* CTA */}
-        <section className="relative mx-auto max-w-[900px] px-4 py-16 sm:px-8 sm:py-20 lg:px-12">
+        <section className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12">
           <div className="text-center">
-            <h2 className="mb-4 text-2xl font-semibold sm:text-3xl lg:text-4xl">
+            <h2 className="mb-6 text-2xl font-semibold sm:text-3xl">
               Join Us
             </h2>
-            <p className="mb-6 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
+            <p className="mb-4 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
               We are rewiring the human operating system.
             </p>
-            <p className="mb-8 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
+            <p className="mb-10 text-lg leading-relaxed text-[var(--door24-muted)] sm:text-xl sm:leading-relaxed">
               This is the work that matters. This is the frontier that scales.
             </p>
             <Link
