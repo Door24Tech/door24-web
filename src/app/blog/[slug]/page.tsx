@@ -138,10 +138,9 @@ export default function BlogPost() {
           </div>
 
           {/* Post content */}
-          <div className="prose prose-invert prose-lg max-w-none">
+          <div className="prose prose-invert prose-lg max-w-none text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
-              className="text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8"
               components={{
                 h1: ({ children }) => <h1 className="text-4xl font-bold mt-8 mb-4">{children}</h1>,
                 h2: ({ children }) => <h2 className="text-3xl font-bold mt-6 mb-3">{children}</h2>,
