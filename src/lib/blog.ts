@@ -181,10 +181,17 @@ export async function createCategory(category: Omit<Category, "id" | "createdAt"
     throw new Error("Firestore is not initialized");
   }
 
-  const categoryData = {
-    ...category,
+  // Remove undefined values to avoid Firestore errors
+  const categoryData: any = {
+    name: category.name,
+    slug: category.slug,
     createdAt: serverTimestamp(),
   };
+  
+  // Only include description if it exists and is not empty
+  if (category.description && category.description.trim()) {
+    categoryData.description = category.description.trim();
+  }
 
   const docRef = await addDoc(collection(db, "categories"), categoryData);
   return docRef.id;
@@ -195,7 +202,26 @@ export async function updateCategory(id: string, category: Partial<Category>): P
     throw new Error("Firestore is not initialized");
   }
 
-  await updateDoc(doc(db, "categories", id), category);
+  // Remove undefined values to avoid Firestore errors
+  const updateData: any = {};
+  
+  if (category.name !== undefined) {
+    updateData.name = category.name;
+  }
+  if (category.slug !== undefined) {
+    updateData.slug = category.slug;
+  }
+  // Only include description if it's explicitly provided (even if empty string)
+  if (category.description !== undefined) {
+    if (category.description.trim()) {
+      updateData.description = category.description.trim();
+    } else {
+      // If empty string, delete the field
+      updateData.description = null;
+    }
+  }
+
+  await updateDoc(doc(db, "categories", id), updateData);
 }
 
 export async function deleteCategory(id: string): Promise<void> {

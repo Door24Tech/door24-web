@@ -260,11 +260,19 @@ export default function BlogAdmin() {
     setSavingCategory(true);
 
     try {
-      const categoryData = {
+      const categoryData: {
+        name: string;
+        slug: string;
+        description?: string;
+      } = {
         name: categoryFormData.name,
         slug: categoryFormData.slug,
-        description: categoryFormData.description || undefined,
       };
+      
+      // Only include description if it's not empty
+      if (categoryFormData.description && categoryFormData.description.trim()) {
+        categoryData.description = categoryFormData.description.trim();
+      }
 
       if (editingCategory?.id) {
         await updateCategory(editingCategory.id, categoryData);
