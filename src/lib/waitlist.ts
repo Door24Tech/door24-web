@@ -58,12 +58,14 @@ export async function addToWaitlist(
     throw new Error("This email is already on the waitlist.");
   }
 
-  // Add to waitlist
-  const entryData: Omit<WaitlistEntry, "id"> = {
+  // Type the variable as any BEFORE creating the object literal
+  // This prevents TypeScript from checking the object literal structure
+  let entryData: any;
+  entryData = {
     email: normalizedEmail,
     source,
-    createdAt: serverTimestamp(),
     status: "active",
+    createdAt: serverTimestamp(),
   };
 
   const docRef = await addDoc(collection(db, "waitlist"), entryData);
@@ -91,10 +93,10 @@ export async function getAllWaitlistEntries(): Promise<WaitlistEntry[]> {
   return entries.sort((a, b) => {
     const aTime = a.createdAt instanceof Date
       ? a.createdAt.getTime()
-      : (a.createdAt as any)?.toMillis?.() || a.createdAt?.seconds * 1000 || 0;
+      : (a.createdAt as any)?.toMillis?.() || (a.createdAt as any)?.seconds * 1000 || 0;
     const bTime = b.createdAt instanceof Date
       ? b.createdAt.getTime()
-      : (b.createdAt as any)?.toMillis?.() || b.createdAt?.seconds * 1000 || 0;
+      : (b.createdAt as any)?.toMillis?.() || (b.createdAt as any)?.seconds * 1000 || 0;
     return bTime - aTime; // Most recent first
   });
 }

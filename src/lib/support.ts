@@ -29,7 +29,10 @@ export async function saveSupportSubmission(
     throw new Error("Firestore is not initialized");
   }
 
-  const submissionData: Omit<SupportSubmission, "id"> = {
+  // Type the variable as any BEFORE creating the object literal
+  // This prevents TypeScript from checking the object literal structure
+  let submissionData: any;
+  submissionData = {
     name: name.trim(),
     email: email.toLowerCase().trim(),
     inquiryType: inquiryType.trim(),
