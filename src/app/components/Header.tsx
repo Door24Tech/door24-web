@@ -14,14 +14,14 @@ export default function Header() {
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-12">
           <Link
             href="/"
-            className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
+            className="flex items-center gap-2 text-lg font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] leading-none sm:gap-2.5 sm:text-xl"
           >
             <Image
               src="/assets/door-24-logo.png"
               alt="Door 24 logo"
-              width={36}
-              height={36}
-              className="h-7 w-7 object-contain sm:h-9 sm:w-9"
+              width={28}
+              height={28}
+              className="h-6 w-6 object-contain sm:h-8 sm:w-8"
               unoptimized
               priority
             />

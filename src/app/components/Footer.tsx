@@ -104,14 +104,14 @@ export default function Footer() {
           <div className="flex flex-col gap-1.5">
             <Link
               href="/"
-              className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
+              className="flex items-center gap-2 text-lg font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] leading-none sm:gap-2.5 sm:text-xl"
             >
               <Image
                 src="/assets/door-24-logo.png"
                 alt="Door 24 logo"
                 width={32}
                 height={32}
-                className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+                className="h-6 w-6 object-contain sm:h-8 sm:w-8"
                 unoptimized
               />
               <span>Door 24</span>
