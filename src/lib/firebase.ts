@@ -1,7 +1,7 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, Firestore } from "firebase/firestore";
-import { getStorage, Storage } from "firebase/storage";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
 // Firebase config with safe defaults for build time
 const firebaseConfig = {
@@ -17,7 +17,7 @@ const firebaseConfig = {
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 let db: Firestore | undefined;
-let storage: Storage | undefined;
+let storage: FirebaseStorage | undefined;
 
 if (typeof window !== "undefined" && firebaseConfig.apiKey) {
   // Only initialize on client side and if config is valid

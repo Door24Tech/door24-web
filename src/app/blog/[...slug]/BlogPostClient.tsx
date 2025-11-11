@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/Header";
@@ -10,9 +9,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllBlogPosts, type BlogPost } from "@/lib/blog";
 
-export default function BlogPost() {
-  const params = useParams();
-  const slug = params?.slug as string;
+interface BlogPostClientProps {
+  slug: string;
+}
+
+export default function BlogPostClient({ slug }: BlogPostClientProps) {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
 
