@@ -108,21 +108,7 @@ export default function Footer() {
               className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
-              <div className="flex h-10 items-center gap-2 rounded-lg border border-white/20 bg-black/40 px-3 py-2 backdrop-blur sm:h-12 sm:px-4">
-                {/* Apple Logo */}
-                <svg
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-auto sm:h-6"
-                >
-                  <path
-                    d="M14.5 0c.2 2.1-.6 3.5-1.6 4.6-1.1 1.2-2.6 2.2-4.4 2.1-.2-2 .7-3.5 1.7-4.6C10.8.9 12.3.1 14.5 0zm1.3 5.3c1.5-.1 2.9.9 3.6.9s2.8-1.1 4.6-1c.4 0 .8.2 1.1.4-3.8 2.2-3.2 7.8.7 9.8-.4 1-1.1 2.1-1.9 3.1-1.2 1.4-2.6 2.8-4.5 2.7-1.8 0-2.5-.9-4.7-.9-2.2 0-2.9.9-4.7.9-1.8.1-3.3-1.2-4.5-2.7C1.4 15.2 3.6 10.4 3.6 7.5c0-2.6 1.4-4.8 3.5-6.1.8-.5 1.8-.8 2.8-1 .4-.1.8-.2 1.2-.2 1.3-.1 2.5.3 3.6.3.9 0 2-.4 3.1-.4z"
-                    fill="white"
-                  />
-                </svg>
+              <div className="flex h-10 items-center justify-center rounded-lg border border-white/20 bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:px-5">
                 <div className="flex flex-col">
                   <span className="text-[10px] leading-tight text-white opacity-90 sm:text-xs">
                     Download on the
