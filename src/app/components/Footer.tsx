@@ -116,7 +116,15 @@ export default function Footer() {
               className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
-              <div className="flex h-10 items-center justify-center rounded-lg border border-white/20 bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:px-5">
+              <div className="flex h-10 items-center gap-2 rounded-lg border border-white/20 bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-2.5 sm:px-5">
+                <Image
+                  src="/assets/App-Store-Apple-Logo.svg"
+                  alt="Apple logo"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 object-contain sm:h-6 sm:w-6"
+                  unoptimized
+                />
                 <div className="flex flex-col">
                   <span className="text-[10px] leading-tight text-white opacity-90 sm:text-xs">
                     Download on the
