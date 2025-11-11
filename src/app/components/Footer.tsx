@@ -1,5 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import ComingSoonModal from "./ComingSoonModal";
 
 const socialLinks = [
   {
@@ -74,6 +78,12 @@ const linkGroups = [
 ];
 
 export default function Footer() {
+  const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
+  
+  // Launch date: January 1st, 2026 at 8:00 AM PST
+  // PST is UTC-8, so 8 AM PST = 4 PM UTC (16:00)
+  const launchDate = new Date('2026-01-01T16:00:00Z');
+
   return (
     <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
@@ -101,10 +111,8 @@ export default function Footer() {
 
           {/* App Store Badge */}
           <div className="flex flex-col gap-3">
-            <a
-              href="https://apps.apple.com/app/door24"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setIsComingSoonOpen(true)}
               className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
@@ -118,7 +126,7 @@ export default function Footer() {
                   </span>
                 </div>
               </div>
-            </a>
+            </button>
           </div>
         </div>
 
@@ -182,6 +190,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <ComingSoonModal
+        isOpen={isComingSoonOpen}
+        onClose={() => setIsComingSoonOpen(false)}
+        launchDate={launchDate}
+      />
     </footer>
   );
 }
