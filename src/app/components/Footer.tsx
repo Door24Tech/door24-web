@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ComingSoonModal from "./ComingSoonModal";
 
 const socialLinks = [
@@ -79,20 +79,22 @@ const linkGroups = [
 
 export default function Footer() {
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
+  const [currentYear, setCurrentYear] = useState<number>(2025);
   
   // Launch date: January 1st, 2026 at 8:00 AM PST
   // PST is UTC-8, so 8 AM PST = 4 PM UTC (16:00)
   const launchDate = new Date('2026-01-01T16:00:00Z');
 
-  // Get current year in Los Angeles timezone
-  const getCurrentYear = () => {
-    const now = new Date();
-    // Los Angeles is America/Los_Angeles timezone
-    const laTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-    return laTime.getFullYear();
-  };
-
-  const currentYear = getCurrentYear();
+  // Get current year in Los Angeles timezone (client-side only to avoid hydration issues)
+  useEffect(() => {
+    const getCurrentYear = () => {
+      const now = new Date();
+      // Los Angeles is America/Los_Angeles timezone
+      const laTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+      return laTime.getFullYear();
+    };
+    setCurrentYear(getCurrentYear());
+  }, []);
 
   return (
     <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">

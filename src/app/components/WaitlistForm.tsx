@@ -55,7 +55,6 @@ export default function WaitlistForm() {
       className="flex w-full flex-col gap-3"
       onSubmit={handleSubmit}
       aria-label="Join the Door 24 waitlist"
-      suppressHydrationWarning
     >
       <div className="flex flex-col gap-3 sm:flex-row">
         <label className="w-full text-left text-sm font-medium text-[var(--door24-muted)] sm:flex-1">
@@ -66,7 +65,6 @@ export default function WaitlistForm() {
             name="email"
             placeholder="you@email.com"
             required
-            suppressHydrationWarning
           />
         </label>
         <button
