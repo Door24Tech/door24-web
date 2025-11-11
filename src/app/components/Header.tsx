@@ -4,9 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import WaitlistModal from "./WaitlistModal";
+import MobileMenu from "./MobileMenu";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -28,24 +38,48 @@ export default function Header() {
             <span>Door 24</span>
           </Link>
 
-          <nav className="flex items-center gap-3 text-xs font-medium text-[var(--door24-muted)] sm:gap-6 sm:text-sm">
-            <Link
-              href="/mission"
-              className="relative transition-colors duration-200 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[var(--door24-primary-end)] after:transition-all after:duration-300 hover:after:w-full"
-            >
-              Our Mission
-            </Link>
+          <nav className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="door24-gradient group relative rounded-full px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(139,92,246,0.25)] transition-all duration-300 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-end)] sm:px-5 sm:py-2 sm:text-sm"
+              className={`door24-gradient group relative rounded-full px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(139,92,246,0.25)] transition-all duration-300 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-end)] sm:px-5 sm:py-2 sm:text-sm ${
+                isMenuOpen ? 'opacity-80' : ''
+              }`}
             >
               <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-[rgba(139,92,246,0.4)] via-[rgba(107,70,198,0.6)] to-[rgba(139,92,246,0.4)] opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
               <span className="relative z-10">Join Waitlist</span>
+            </button>
+
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="relative min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[var(--door24-foreground)] transition-colors active:bg-[var(--door24-surface)] hover:bg-[var(--door24-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+            >
+              <div className="relative h-5 w-6">
+                {/* Hamburger Lines */}
+                <span
+                  className={`absolute left-0 top-0 h-0.5 w-6 bg-current transition-all duration-300 ${
+                    isMenuOpen ? 'top-2 rotate-45' : ''
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-2 h-0.5 w-6 bg-current transition-all duration-300 ${
+                    isMenuOpen ? 'opacity-0' : ''
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-4 h-0.5 w-6 bg-current transition-all duration-300 ${
+                    isMenuOpen ? 'top-2 -rotate-45' : ''
+                  }`}
+                />
+              </div>
             </button>
           </nav>
         </div>
       </header>
       <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <MobileMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </>
   );
 }

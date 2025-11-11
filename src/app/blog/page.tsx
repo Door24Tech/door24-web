@@ -57,13 +57,13 @@ export default function Blog() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
-        <div className="flex flex-col gap-12 w-full">
+      <main className="mx-auto w-full max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
+        <div className="flex flex-col gap-8 w-full">
           {/* Header Section with Search */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between w-full">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full">
             <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
-            <div className="flex items-center gap-3">
-              {/* Search Bar - Refined and minimal */}
+            <div className="flex items-center gap-2">
+              {/* Search Bar */}
               <div className="relative w-full sm:w-64">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)] pointer-events-none">
                   <svg
@@ -86,15 +86,15 @@ export default function Blog() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search articles..."
-                  className="w-full h-9 rounded-lg border border-[var(--door24-border)]/50 bg-[var(--door24-surface)]/50 pl-9 pr-4 text-sm text-[var(--door24-foreground)] placeholder:text-[var(--door24-muted)] outline-none transition-all duration-200 focus:border-[var(--door24-primary-end)]/50 focus:bg-[var(--door24-surface)] focus:shadow-sm focus:shadow-[rgba(139,92,246,0.1)] sm:text-base"
+                  className="w-full h-9 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] pl-9 pr-4 text-sm text-[var(--door24-foreground)] placeholder:text-[var(--door24-muted)] outline-none transition-all duration-200 focus:border-[var(--door24-primary-end)] focus:bg-[var(--door24-surface-hover)] focus:shadow-lg focus:shadow-[rgba(139,92,246,0.2)] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[var(--door24-primary-start)] sm:text-base"
                 />
               </div>
-              {/* RSS Feed Link - Clean icon button */}
+              {/* RSS Feed Link */}
               <Link
                 href="/blog/rss.xml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center h-9 w-9 rounded-lg border border-[var(--door24-border)]/50 bg-[var(--door24-surface)]/50 text-[var(--door24-muted)] transition-all duration-200 hover:border-[var(--door24-primary-end)]/50 hover:bg-[var(--door24-surface)] hover:text-[var(--door24-primary-end)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="flex items-center justify-center h-9 w-9 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] text-[var(--door24-muted)] transition-all duration-200 hover:border-[var(--door24-primary-end)] hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-primary-end)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label="Subscribe to RSS Feed"
               >
                 <svg
@@ -111,10 +111,10 @@ export default function Blog() {
 
           {/* Category Filters */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 -ml-3">
               <button
                 onClick={() => setSelectedCategory("")}
-                className={`px-3 py-1 text-xs font-medium transition-colors duration-200 sm:text-sm ${
+                className={`pl-3 pr-3 py-0.5 text-xs font-medium transition-colors duration-200 sm:text-sm ${
                   selectedCategory === ""
                     ? "text-[var(--door24-foreground)]"
                     : "text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
@@ -127,7 +127,7 @@ export default function Blog() {
                 <span key={category.id} className="flex items-center gap-2">
                   <button
                     onClick={() => setSelectedCategory(category.name)}
-                    className={`px-3 py-1 text-xs font-medium transition-colors duration-200 sm:text-sm ${
+                    className={`px-3 py-0.5 text-xs font-medium transition-colors duration-200 sm:text-sm ${
                       selectedCategory === category.name
                         ? "text-[var(--door24-foreground)]"
                         : "text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
@@ -147,7 +147,7 @@ export default function Blog() {
                   )}
                   <button
                     onClick={() => setShowAllCategories(!showAllCategories)}
-                    className="px-3 py-1 text-xs font-medium text-[var(--door24-muted)] transition-colors duration-200 hover:text-[var(--door24-foreground)] sm:text-sm"
+                    className="px-3 py-0.5 text-xs font-medium text-[var(--door24-muted)] transition-colors duration-200 hover:text-[var(--door24-foreground)] sm:text-sm"
                   >
                     {showAllCategories ? "Show less" : `+${categories.length - maxVisibleCategories} more`}
                   </button>

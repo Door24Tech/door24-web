@@ -64,18 +64,23 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
     >
       <div className="flex flex-col gap-3 sm:flex-row" suppressHydrationWarning>
         <div className="w-full sm:flex-1" suppressHydrationWarning>
-          <label htmlFor="waitlist-email" className="block text-left text-sm font-medium text-[var(--door24-muted)] mb-2" suppressHydrationWarning>
+          <label 
+            htmlFor="waitlist-email" 
+            className="block text-left text-sm font-medium text-[var(--door24-muted)] mb-2"
+          >
             Email
           </label>
-          <input
-            id="waitlist-email"
-            className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] sm:px-4 sm:py-3 sm:text-base"
-            type="email"
-            name="email"
-            placeholder="you@email.com"
-            required
-            suppressHydrationWarning
-          />
+          <div suppressHydrationWarning>
+            <input
+              id="waitlist-email"
+              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] sm:px-4 sm:py-3 sm:text-base"
+              type="email"
+              name="email"
+              placeholder="you@email.com"
+              required
+              suppressHydrationWarning
+            />
+          </div>
         </div>
         <button
           type="submit"
