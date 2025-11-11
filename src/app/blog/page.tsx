@@ -54,91 +54,87 @@ export default function Blog() {
 
       <main className="mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24">
         <div className="flex flex-col gap-12">
-          {/* Header Section */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
-            </div>
-            {/* RSS Feed Link - Subtle and integrated */}
-            <Link
-              href="/blog/rss.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
-              aria-label="Subscribe to RSS Feed"
-            >
-              <svg 
-                className="w-4 h-4 transition-transform group-hover:scale-110" 
-                fill="currentColor" 
-                viewBox="0 0 20 20"
+          {/* Header Section with Search */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
+            <div className="flex items-center gap-4">
+              {/* Search Bar - Compact with icon */}
+              <div className="relative w-full max-w-xs">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search articles..."
+                  className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] pl-10 pr-4 py-2.5 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                />
+              </div>
+              {/* RSS Feed Link - Subtle and integrated */}
+              <Link
+                href="/blog/rss.xml"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                aria-label="Subscribe to RSS Feed"
               >
-                <path d="M3.429 2.571c0 1.893 1.536 3.429 3.429 3.429 1.893 0 3.429-1.536 3.429-3.429S8.751.142 6.858.142 3.429 1.678 3.429 2.571zm12 0c0 1.893 1.536 3.429 3.429 3.429s3.429-1.536 3.429-3.429S19.322.142 17.429.142 15.429 1.678 15.429 2.571zM2.571 7.143c8.107 0 14.857 1.536 17.429 3.429v2.286c-2.571 1.893-9.322 3.429-17.429 3.429S2.571 13.75 0 12.857v-2.286c2.571-1.893 9.322-3.429 17.429-3.429zm0 5.714c6.107 0 11.143.893 12.857 1.536v1.536c-1.714.643-6.75 1.536-12.857 1.536S2.571 16.429.857 15.786v-1.536c1.714-.643 6.75-1.536 12.857-1.536z" />
-              </svg>
-              <span className="hidden sm:inline">RSS</span>
-            </Link>
+                <svg 
+                  className="w-4 h-4 transition-transform group-hover:scale-110" 
+                  fill="currentColor" 
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M3.429 2.571c0 1.893 1.536 3.429 3.429 3.429 1.893 0 3.429-1.536 3.429-3.429S8.751.142 6.858.142 3.429 1.678 3.429 2.571zm12 0c0 1.893 1.536 3.429 3.429 3.429s3.429-1.536 3.429-3.429S19.322.142 17.429.142 15.429 1.678 15.429 2.571zM2.571 7.143c8.107 0 14.857 1.536 17.429 3.429v2.286c-2.571 1.893-9.322 3.429-17.429 3.429S2.571 13.75 0 12.857v-2.286c2.571-1.893 9.322-3.429 17.429-3.429zm0 5.714c6.107 0 11.143.893 12.857 1.536v1.536c-1.714.643-6.75 1.536-12.857 1.536S2.571 16.429.857 15.786v-1.536c1.714-.643 6.75-1.536 12.857-1.536z" />
+                </svg>
+                <span className="hidden sm:inline">RSS</span>
+              </Link>
+            </div>
           </div>
 
-          {/* Search and Filters - Refined Design */}
-          <div className="flex flex-col gap-6">
-            {/* Search Bar - Compact with icon */}
-            <div className="relative max-w-md">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--door24-muted)]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search articles..."
-                className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] pl-10 pr-4 py-2.5 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-              />
-            </div>
-
-            {/* Category Filters - Elegant pill design */}
-            {categories.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-medium uppercase tracking-wider text-[var(--door24-muted)] sm:text-sm">
-                  Filter:
-                </span>
+          {/* Category Filters */}
+          {categories.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium uppercase tracking-wider text-[var(--door24-muted)] sm:text-sm">
+                Filter:
+              </span>
+              <button
+                onClick={() => setSelectedCategory("")}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all sm:text-sm ${
+                  selectedCategory === ""
+                    ? "door24-gradient text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)]"
+                    : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:border-white/20 hover:bg-white/10"
+                }`}
+              >
+                All Posts
+              </button>
+              {categories.map((category) => (
                 <button
-                  onClick={() => setSelectedCategory("")}
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.name)}
                   className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all sm:text-sm ${
-                    selectedCategory === ""
+                    selectedCategory === category.name
                       ? "door24-gradient text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)]"
                       : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:border-white/20 hover:bg-white/10"
                   }`}
                 >
-                  All Posts
+                  {category.name}
                 </button>
-                {categories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.name)}
-                    className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all sm:text-sm ${
-                      selectedCategory === category.name
-                        ? "door24-gradient text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,91,255,0.25)]"
-                        : "border border-white/10 bg-white/5 text-[var(--door24-muted)] hover:border-white/20 hover:bg-white/10"
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
 
           {loading ? (
             <div className="text-center">
