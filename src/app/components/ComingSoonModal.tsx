@@ -87,18 +87,19 @@ export default function ComingSoonModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="coming-soon-modal-title"
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
 
       {/* Modal Content */}
       <div
-        className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8"
+        className="relative z-10 w-full max-w-md rounded-2xl border border-white/10 bg-[var(--door24-background)] p-6 shadow-2xl sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
