@@ -688,7 +688,7 @@ export default function BlogAdmin() {
                               )}
                               <div className="flex-1 min-w-0">
                                 {/* Title - bold, larger, at top */}
-                                <div className="text-lg font-bold text-blue-600 mb-1 line-clamp-2 leading-tight">
+                                <div className="text-lg font-bold text-blue-600 mb-1 pt-1 line-clamp-2 leading-tight">
                                   {formData.seoTitle || formData.title || "Your Title"}
                                 </div>
                                 {/* Description - smaller, regular weight, below title */}
