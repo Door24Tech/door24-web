@@ -11,29 +11,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
 };
 
-// Validate that required config exists
-if (typeof window !== "undefined") {
-  const requiredVars = [
-    "NEXT_PUBLIC_FIREBASE_API_KEY",
-    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
-    "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
-  ];
-  
-  const missingVars = requiredVars.filter(
-    (varName) => !process.env[varName]
-  );
-  
-  if (missingVars.length > 0) {
-    console.error(
-      "Missing Firebase environment variables:",
-      missingVars.join(", ")
-    );
-    console.error(
-      "Please create a .env.local file with your Firebase configuration."
-    );
-  }
-}
-
 // Initialize Firebase
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
