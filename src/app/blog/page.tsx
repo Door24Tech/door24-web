@@ -157,10 +157,10 @@ export default function Blog() {
                   href={`/blog/${post.slug}`}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
                 >
-                  {post.coverImage && (
+                  {post.featuredImage && (
                     <div className="relative h-48 w-full overflow-hidden sm:h-64">
                       <Image
-                        src={post.coverImage}
+                        src={post.featuredImage}
                         alt={post.title}
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
