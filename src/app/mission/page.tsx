@@ -122,6 +122,119 @@ export default function Mission() {
           </div>
         </section>
 
+        {/* The Human System Is Breaking */}
+        <section
+          id="human-system-breaking"
+          data-animate
+          className="relative bg-gradient-to-b from-[var(--door24-background)] to-[#141b2c] py-16 sm:py-20 lg:py-24"
+        >
+          <div className="mx-auto max-w-[800px] px-4 sm:px-8 lg:px-12">
+            <h2 className="mb-4 text-4xl font-bold leading-tight text-[var(--door24-foreground)] sm:text-5xl lg:text-6xl xl:text-7xl">
+              The Human System Is Breaking
+            </h2>
+            <p className="mb-8 text-xl font-medium leading-relaxed text-[var(--door24-muted)] sm:text-2xl lg:text-3xl">
+              Technology has advanced faster than we have — and humanity is paying the price.
+            </p>
+            <div className="space-y-6 text-lg leading-[1.8] text-[var(--door24-muted)] sm:text-xl sm:leading-[1.8]">
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "100ms" }}
+              >
+                Overdoses. Anxiety. Isolation. Endless scrolling.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "200ms" }}
+              >
+                We built machines that outpace our minds, but never taught the mind to keep up.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "300ms" }}
+              >
+                <span className="font-semibold text-[var(--door24-foreground)]">
+                  Attention has become the new currency, and most of us are broke.
+                </span>
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "400ms" }}
+              >
+                We chase connection through screens and find only noise.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "500ms" }}
+              >
+                We've confused stimulation for satisfaction, and progress for peace.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "600ms" }}
+              >
+                Our health systems treat symptoms.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "700ms" }}
+              >
+                Our tech companies monetize distraction.
+              </p>
+              <p
+                className={`transition-all duration-500 ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "800ms" }}
+              >
+                And the result is clear —{" "}
+                <span className="font-semibold text-[var(--door24-foreground)]">
+                  a species more connected than ever, and somehow lonelier than ever.
+                </span>
+              </p>
+              <p
+                className={`mt-8 text-xl font-medium leading-relaxed text-[var(--door24-foreground)] transition-all duration-500 sm:text-2xl ${
+                  isVisible("human-system-breaking")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{ transitionDelay: "900ms" }}
+              >
+                Door 24 was born from this collapse — a new kind of technology built not to consume us, but to restore us.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* The Mission */}
         <section
           id="the-mission"
