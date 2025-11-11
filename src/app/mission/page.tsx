@@ -123,7 +123,7 @@ export default function Mission() {
               Our Mission
             </h1>
             <p className="mx-auto max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Technology for Human Freedom
+              Upgrade the Human Operating System
             </p>
             <p className="mx-auto mt-6 max-w-2xl text-sm text-[var(--door24-muted)] opacity-0 animate-fade-in-up sm:mt-8 sm:text-base lg:text-lg" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
               The future of recovery. The evolution of humanity.
