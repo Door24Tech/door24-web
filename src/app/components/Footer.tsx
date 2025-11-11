@@ -47,67 +47,71 @@ const socialLinks = [
   },
 ];
 
+const linkGroups = [
+  {
+    title: "Company",
+    links: [
+      { href: "/mission", label: "Our Mission" },
+      { href: "/support", label: "Support" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { href: "/blog", label: "Blog" },
+      { href: "/press-kit", label: "Press Kit" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/terms", label: "Terms" },
+      { href: "/privacy", label: "Privacy" },
+      { href: "/gdpr", label: "GDPR Compliance" },
+    ],
+  },
+];
+
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)]">
-      <div className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-10 lg:px-12">
+    <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">
+      <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Links Section */}
-        <div className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-[var(--door24-muted)] sm:gap-x-8 sm:text-sm">
-          <Link
-            href="/mission"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Our Mission
-          </Link>
-          <Link
-            href="/support"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Support
-          </Link>
-          <Link
-            href="/blog"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/press-kit"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Press Kit
-          </Link>
-          <Link
-            href="/terms"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Terms
-          </Link>
-          <Link
-            href="/privacy"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/gdpr"
-            className="transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--door24-primary-start)]"
-          >
-            GDPR Compliance
-          </Link>
+        <div className="mb-10 grid grid-cols-1 gap-8 sm:grid-cols-3 lg:gap-12">
+          {linkGroups.map((group) => (
+            <div key={group.title} className="flex flex-col gap-3">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--door24-foreground)] sm:text-sm">
+                {group.title}
+              </h3>
+              <nav className="flex flex-col gap-2.5">
+                {group.links.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-xs text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          ))}
         </div>
+
+        {/* Divider */}
+        <div className="mb-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Social Media & Copyright Section */}
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           {/* Social Media Icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="group relative rounded-lg p-2 text-[var(--door24-muted)] transition-all hover:bg-white/5 hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label={`Follow us on ${social.name}`}
               >
                 {social.icon}
