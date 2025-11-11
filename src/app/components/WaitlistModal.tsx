@@ -89,7 +89,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             Join the Waitlist
           </h2>
           <p className="mt-2 text-sm text-[var(--door24-muted)] sm:text-base">
-            Get early access to Door 24 and receive your free Reset Pack.
+            Get early access to Door 24 when we launch.
           </p>
         </div>
 

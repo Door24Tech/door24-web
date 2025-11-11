@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Door 24 — Community Recovery, Not Counting Recovery",
   description:
-    "Join the Door 24 waitlist to get early access to the community-powered recovery app and receive the free Reset Pack.",
+    "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
   metadataBase: new URL("https://door24.app"),
   openGraph: {
     title: "Door 24 — Community Recovery, Not Counting Recovery",

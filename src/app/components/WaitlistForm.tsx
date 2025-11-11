@@ -9,7 +9,7 @@ type FormState = {
   message: string;
 };
 
-const successMessage = "Check your inbox for the Reset Pack.";
+const successMessage = "You're on the list! We'll notify you when we launch.";
 
 const defaultMessage = "No spam. Anonymous by default. Opt out anytime.";
 
