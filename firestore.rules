@@ -32,6 +32,11 @@ service cloud.firestore {
                     && request.resource.data.status == "new";
       allow update, delete: if false; // No updates or deletes via client (admin can do via console)
     }
+    
+    // Blog drafts - authenticated read/write only (admin only)
+    match /blogDrafts/{draftId} {
+      allow read, write: if request.auth != null;
+    }
   }
 }
 

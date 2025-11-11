@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
@@ -20,6 +21,9 @@ import {
   deleteCategory,
   getScheduledPosts,
   generateSlug,
+  saveDraft,
+  getDraft,
+  deleteDraft,
   type BlogPost,
   type Category
 } from "@/lib/blog";
@@ -27,6 +31,7 @@ import {
 export default function BlogAdmin() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [scheduledPosts, setScheduledPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -43,12 +48,13 @@ export default function BlogAdmin() {
     slug: "",
     content: "",
     description: "",
-    published: false,
+    published: true, // Default to publish immediately
     scheduledDate: "",
     scheduledTime: "",
     tags: "",
     category: "",
     featuredImage: "",
+    author: "Door 24 Team", // Default author
     // SEO Metadata
     seoTitle: "",
     seoDescription: "",
@@ -63,6 +69,10 @@ export default function BlogAdmin() {
   });
   const [saving, setSaving] = useState(false);
   const [savingCategory, setSavingCategory] = useState(false);
+  const [currentDraftId, setCurrentDraftId] = useState<string | null>(null);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -75,6 +85,19 @@ export default function BlogAdmin() {
       loadData();
     }
   }, [user]);
+
+  // Load draft from URL parameter
+  useEffect(() => {
+    if (user) {
+      const draftId = searchParams.get('draft');
+      if (draftId) {
+        handleLoadDraft(draftId);
+        // Clean up URL
+        router.replace('/blog/admin');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, searchParams]);
 
   const loadData = async () => {
     try {
@@ -93,6 +116,72 @@ export default function BlogAdmin() {
       setLoadingPosts(false);
     }
   };
+
+  // Auto-save draft function
+  const autoSaveDraft = useCallback(async () => {
+    if (!user || !showEditor || editingPost) return; // Don't auto-save when editing existing post
+    
+    // Don't save if form is empty
+    if (!formData.title.trim() && !formData.content.trim()) return;
+
+    setSaveStatus("saving");
+    
+    try {
+      const draftId = await saveDraft({
+        draftId: currentDraftId || undefined,
+        title: formData.title,
+        slug: formData.slug || generateSlug(formData.title || "untitled"),
+        content: formData.content,
+        description: formData.description,
+        author: formData.author || "Door 24 Team",
+        tags: formData.tags.split(",").map(t => t.trim()).filter(t => t.length > 0),
+        category: formData.category || undefined,
+        featuredImage: formData.featuredImage || undefined,
+        seoTitle: formData.seoTitle || undefined,
+        seoDescription: formData.seoDescription || undefined,
+        seoKeywords: formData.seoKeywords || undefined,
+        seoAuthor: formData.seoAuthor || undefined,
+        seoImage: formData.seoImage || undefined,
+      });
+
+      setCurrentDraftId(draftId);
+      setSaveStatus("saved");
+      setLastSavedAt(new Date());
+
+      // Clear saved status after 3 seconds
+      setTimeout(() => {
+        setSaveStatus("idle");
+      }, 3000);
+    } catch (error) {
+      console.error("Error auto-saving draft:", error);
+      setSaveStatus("error");
+      setTimeout(() => {
+        setSaveStatus("idle");
+      }, 3000);
+    }
+  }, [user, showEditor, editingPost, formData, currentDraftId]);
+
+  // Auto-save effect with debouncing
+  useEffect(() => {
+    if (!showEditor || editingPost) return;
+
+    // Clear existing timeout
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+
+    // Set new timeout for auto-save (2 seconds after last change)
+    autoSaveTimeoutRef.current = setTimeout(() => {
+      autoSaveDraft();
+    }, 2000);
+
+    // Cleanup on unmount
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
+  }, [formData, showEditor, editingPost, autoSaveDraft]);
 
   const handleTitleChange = (title: string) => {
     setFormData({
@@ -128,7 +217,7 @@ export default function BlogAdmin() {
         published: formData.published && !scheduledDate, // Can't be both published and scheduled
         publishedAt: formData.published && !scheduledDate ? Timestamp.now() : null,
         scheduledDate: scheduledDate,
-        author: formData.seoAuthor || user?.email || "Door 24",
+        author: formData.author || "Door 24 Team",
         tags: tagsArray,
       };
 
@@ -136,7 +225,10 @@ export default function BlogAdmin() {
       if (formData.category && formData.category.trim()) {
         postData.category = formData.category.trim();
       }
-      if (formData.featuredImage && formData.featuredImage.trim()) {
+      // Always include featuredImage when updating (even if empty, to allow removal)
+      if (editingPost?.id) {
+        postData.featuredImage = formData.featuredImage?.trim() || null;
+      } else if (formData.featuredImage && formData.featuredImage.trim()) {
         postData.featuredImage = formData.featuredImage.trim();
       }
       if (formData.seoTitle && formData.seoTitle.trim()) {
@@ -156,9 +248,20 @@ export default function BlogAdmin() {
       }
 
       if (editingPost?.id) {
+        console.log("Updating post with data:", postData);
+        console.log("Featured image URL:", postData.featuredImage);
         await updateBlogPost(editingPost.id, postData);
       } else {
         await createBlogPost(postData);
+      }
+
+      // Delete draft if it was published
+      if (currentDraftId) {
+        try {
+          await deleteDraft(currentDraftId);
+        } catch (error) {
+          console.error("Error deleting draft after publishing:", error);
+        }
       }
 
       // Reset form and reload posts
@@ -167,12 +270,13 @@ export default function BlogAdmin() {
         slug: "",
         content: "",
         description: "",
-        published: false,
+        published: true, // Default to publish immediately
         scheduledDate: "",
         scheduledTime: "",
         tags: "",
         category: "",
         featuredImage: "",
+        author: "Door 24 Team",
         seoTitle: "",
         seoDescription: "",
         seoKeywords: "",
@@ -180,6 +284,9 @@ export default function BlogAdmin() {
         seoImage: "",
       });
       setEditingPost(null);
+      setCurrentDraftId(null);
+      setSaveStatus("idle");
+      setLastSavedAt(null);
       setShowEditor(false);
       setShowPreview(false);
       await loadData();
@@ -193,6 +300,9 @@ export default function BlogAdmin() {
 
   const handleEdit = (post: BlogPost) => {
     setEditingPost(post);
+    setCurrentDraftId(null); // Clear draft ID when editing existing post
+    setSaveStatus("idle");
+    setLastSavedAt(null);
     
     // Extract scheduled date/time if exists
     let scheduledDate = "";
@@ -216,6 +326,7 @@ export default function BlogAdmin() {
       tags: post.tags?.join(", ") || "",
       category: post.category || "",
       featuredImage: post.featuredImage || "",
+      author: post.author || "Door 24 Team",
       seoTitle: post.seoTitle || "",
       seoDescription: post.seoDescription || "",
       seoKeywords: post.seoKeywords || "",
@@ -242,6 +353,9 @@ export default function BlogAdmin() {
 
   const handleNewPost = () => {
     setEditingPost(null);
+    setCurrentDraftId(null);
+    setSaveStatus("idle");
+    setLastSavedAt(null);
     setFormData({
       title: "",
       slug: "",
@@ -262,6 +376,87 @@ export default function BlogAdmin() {
     setShowEditor(true);
     setShowPreview(false);
   };
+
+  const handleSaveAsDraftAndBack = async () => {
+    if (!user) return;
+    
+    setSaveStatus("saving");
+    try {
+      await saveDraft({
+        draftId: currentDraftId || undefined,
+        title: formData.title,
+        slug: formData.slug || generateSlug(formData.title || "untitled"),
+        content: formData.content,
+        description: formData.description,
+        author: formData.author || "Door 24 Team",
+        tags: formData.tags.split(",").map(t => t.trim()).filter(t => t.length > 0),
+        category: formData.category || undefined,
+        featuredImage: formData.featuredImage || undefined,
+        seoTitle: formData.seoTitle || undefined,
+        seoDescription: formData.seoDescription || undefined,
+        seoKeywords: formData.seoKeywords || undefined,
+        seoAuthor: formData.seoAuthor || undefined,
+        seoImage: formData.seoImage || undefined,
+      });
+      
+      // Navigate back to admin page
+      router.push("/blog/admin");
+    } catch (error: any) {
+      console.error("Error saving draft:", error);
+      setSaveStatus("error");
+      alert(`Error saving draft: ${error.message}`);
+      setTimeout(() => setSaveStatus("idle"), 3000);
+    }
+  };
+
+  const handleLoadDraft = async (draftId: string) => {
+    try {
+      const draft = await getDraft(draftId);
+      if (!draft) {
+        alert("Draft not found");
+        return;
+      }
+
+      setCurrentDraftId(draftId);
+      setEditingPost(null);
+      
+      // Extract scheduled date/time if exists
+      let scheduledDate = "";
+      let scheduledTime = "";
+      if (draft.scheduledDate) {
+        const date = draft.scheduledDate instanceof Date
+          ? draft.scheduledDate
+          : new Date((draft.scheduledDate as any).toMillis?.() || draft.scheduledDate.seconds * 1000);
+        scheduledDate = date.toISOString().split('T')[0];
+        scheduledTime = date.toTimeString().slice(0, 5);
+      }
+
+      setFormData({
+        title: draft.title || "",
+        slug: draft.slug || "",
+        content: draft.content || "",
+        description: draft.description || "",
+        published: false,
+        scheduledDate,
+        scheduledTime,
+        tags: draft.tags?.join(", ") || "",
+        category: draft.category || "",
+        featuredImage: draft.featuredImage || "",
+        author: draft.author || "Door 24 Team",
+        seoTitle: draft.seoTitle || "",
+        seoDescription: draft.seoDescription || "",
+        seoKeywords: draft.seoKeywords || "",
+        seoAuthor: draft.seoAuthor || "",
+        seoImage: draft.seoImage || "",
+      });
+      setShowEditor(true);
+      setShowPreview(false);
+    } catch (error: any) {
+      console.error("Error loading draft:", error);
+      alert(`Error loading draft: ${error.message}`);
+    }
+  };
+
 
   const handleCategoryNameChange = (name: string) => {
     setCategoryFormData({
@@ -375,33 +570,58 @@ export default function BlogAdmin() {
       <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-8">
           {/* Header */}
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex flex-col gap-2">
               <h1 className="text-3xl font-bold sm:text-4xl">Blog Admin</h1>
-              <p className="mt-2 text-sm text-[var(--door24-muted)] sm:text-base">
-                Manage your blog posts
-              </p>
+              {!showEditor && (
+                <div className="flex items-center gap-2 text-sm text-[var(--door24-muted)]">
+                  <Link
+                    href="/blog"
+                    className="group inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--door24-foreground)]"
+                    aria-label="Back to blog"
+                  >
+                    <svg 
+                      className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span>Back to Blog</span>
+                  </Link>
+                  <span className="text-[var(--door24-muted)]">/</span>
+                  <span>{user.email}</span>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-[var(--door24-muted)]">
-                {user.email}
-              </span>
+            <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={() => setShowCategoryManager(!showCategoryManager)}
-                className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] sm:px-6 sm:py-2.5"
+                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] sm:text-sm sm:px-3.5 sm:py-2"
+                title={showCategoryManager ? "Hide Categories" : "Manage Categories"}
               >
-                {showCategoryManager ? "Hide" : "Manage"} Categories
+                <span className="hidden sm:inline">{showCategoryManager ? "Hide" : "Manage"} Categories</span>
+                <span className="sm:hidden">Categories</span>
               </button>
               <button
                 onClick={handleNewPost}
-                className="door24-gradient group relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] sm:px-6 sm:py-2.5"
+                className="door24-gradient group relative overflow-hidden rounded-lg px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)] sm:text-sm sm:px-3.5 sm:py-2"
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                 <span className="relative z-10">New Post</span>
               </button>
               <button
+                onClick={() => router.push("/blog/admin/drafts")}
+                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] sm:text-sm sm:px-3.5 sm:py-2"
+                title="View Drafts"
+              >
+                Drafts
+              </button>
+              <button
                 onClick={logout}
-                className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] sm:px-6 sm:py-2.5"
+                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] sm:text-sm sm:px-3.5 sm:py-2"
+                title="Logout"
               >
                 Logout
               </button>
@@ -566,27 +786,105 @@ export default function BlogAdmin() {
           {showEditor && (
             <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold">
-                  {editingPost ? "Edit Post" : "Create New Post"}
-                </h2>
-                <button
-                  type="button"
-                  onClick={() => setShowPreview(!showPreview)}
-                  className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
-                >
-                  {showPreview ? "Edit" : "Preview"}
-                </button>
+                <div className="flex items-center gap-4">
+                  <h2 className="text-2xl font-semibold">
+                    {editingPost ? "Edit Post" : "Create New Post"}
+                  </h2>
+                  {!editingPost && (
+                    <div className="flex items-center gap-2 text-sm">
+                      {saveStatus === "saving" && (
+                        <span className="flex items-center gap-2 text-[var(--door24-muted)]">
+                          <div className="h-3 w-3 border-2 border-[var(--door24-primary-end)] border-t-transparent rounded-full animate-spin" />
+                          Saving...
+                        </span>
+                      )}
+                      {saveStatus === "saved" && (
+                        <span className="flex items-center gap-2 text-[var(--door24-success)]">
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Draft saved
+                          {lastSavedAt && (
+                            <span className="text-xs text-[var(--door24-muted)]">
+                              {lastSavedAt.toLocaleTimeString()}
+                            </span>
+                          )}
+                        </span>
+                      )}
+                      {saveStatus === "error" && (
+                        <span className="flex items-center gap-2 text-[var(--door24-error)]">
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Save failed
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  {!editingPost && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!user) return;
+                        setSaveStatus("saving");
+                        try {
+                          const draftId = await saveDraft({
+                            draftId: currentDraftId || undefined,
+                            title: formData.title,
+                            slug: formData.slug || generateSlug(formData.title || "untitled"),
+                            content: formData.content,
+                            description: formData.description,
+                            author: user.email || "Door 24",
+                            tags: formData.tags.split(",").map(t => t.trim()).filter(t => t.length > 0),
+                            category: formData.category || undefined,
+                            featuredImage: formData.featuredImage || undefined,
+                            seoTitle: formData.seoTitle || undefined,
+                            seoDescription: formData.seoDescription || undefined,
+                            seoKeywords: formData.seoKeywords || undefined,
+                            seoAuthor: formData.seoAuthor || undefined,
+                            seoImage: formData.seoImage || undefined,
+                          });
+                          setCurrentDraftId(draftId);
+                          setSaveStatus("saved");
+                          setLastSavedAt(new Date());
+                          await loadData();
+                          setTimeout(() => setSaveStatus("idle"), 3000);
+                        } catch (error: any) {
+                          console.error("Error saving draft:", error);
+                          setSaveStatus("error");
+                          alert(`Error saving draft: ${error.message}`);
+                          setTimeout(() => setSaveStatus("idle"), 3000);
+                        }
+                      }}
+                      disabled={saveStatus === "saving"}
+                      className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {saveStatus === "saving" ? "Saving..." : "Save"}
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowPreview(!showPreview)}
+                    className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                  >
+                    {showPreview ? "Edit" : "Preview"}
+                  </button>
+                </div>
               </div>
 
               {showPreview ? (
                 <div className="prose prose-invert max-w-none">
                   <h1>{formData.title}</h1>
                   {formData.featuredImage && (
-                    <img
-                      src={formData.featuredImage}
-                      alt={formData.title}
-                      className="w-full rounded-xl mb-6"
-                    />
+                    <div className="relative w-full aspect-video overflow-hidden rounded-xl mb-6 bg-[var(--door24-surface)]">
+                      <img
+                        src={formData.featuredImage}
+                        alt={formData.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   )}
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {formData.content}
@@ -596,15 +894,32 @@ export default function BlogAdmin() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Title</label>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="block text-sm font-medium">Title</label>
+                        {formData.title.length > 75 && (
+                          <span className="text-xs text-[var(--door24-warning)] flex items-center gap-1">
+                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            Title may be truncated on blog page ({formData.title.length}/75)
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         value={formData.title}
                         onChange={(e) => handleTitleChange(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className={`w-full rounded-xl border ${
+                          formData.title.length > 75 
+                            ? 'border-[var(--door24-warning)]/50' 
+                            : 'border-[var(--door24-border)]'
+                        } bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base`}
                         placeholder="Blog post title"
                       />
+                      <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                        {formData.title.length}/75 characters recommended (will display on 2 lines max)
+                      </p>
                     </div>
 
                     <div>
@@ -647,25 +962,43 @@ export default function BlogAdmin() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Description (SEO)</label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium">Description (SEO)</label>
+                      {formData.description.length > 150 && (
+                        <span className="text-xs text-[var(--door24-warning)] flex items-center gap-1">
+                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                          Description may be truncated ({formData.description.length}/150)
+                        </span>
+                      )}
+                    </div>
                     <textarea
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                       required
                       rows={2}
-                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className={`w-full rounded-xl border ${
+                        formData.description.length > 150 
+                          ? 'border-[var(--door24-warning)]/50' 
+                          : 'border-[var(--door24-border)]'
+                      } bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base`}
                       placeholder="Brief description for SEO and previews"
                     />
+                    <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                      {formData.description.length}/150 characters recommended (will display on 3 lines max)
+                    </p>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium mb-2">Featured Image</label>
                     <p className="text-xs text-[var(--door24-muted)] mb-2">
-                      Used for blog post page and listing previews. Recommended: 1200×675px (16:9 aspect ratio)
+                      Used for blog post listing previews. Recommended: 1080×1080px (square aspect ratio)
                     </p>
                     <ImageUpload
                       onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
                       currentImage={formData.featuredImage}
+                      label=""
                     />
                   </div>
 
@@ -692,6 +1025,17 @@ export default function BlogAdmin() {
                       onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                       className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
                       placeholder="recovery, community, wellness"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Author</label>
+                    <input
+                      type="text"
+                      value={formData.author}
+                      onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="Door 24 Team"
                     />
                   </div>
 
@@ -803,6 +1147,7 @@ export default function BlogAdmin() {
                             <ImageUpload
                               onUploadComplete={(url) => setFormData({ ...formData, seoImage: url })}
                               currentImage={formData.seoImage}
+                              label=""
                             />
                           </div>
                         </div>
@@ -810,80 +1155,121 @@ export default function BlogAdmin() {
                     )}
                   </div>
 
-                  {/* Scheduling */}
-                  <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4">
-                    <label className="flex items-center gap-2 mb-4">
-                      <input
-                        type="checkbox"
-                        checked={formData.published}
-                        onChange={(e) => setFormData({ ...formData, published: e.target.checked, scheduledDate: "", scheduledTime: "" })}
-                        className="rounded border-[var(--door24-border)]"
-                      />
-                      <span className="text-sm font-medium">Publish immediately</span>
-                    </label>
-                    
-                    {!formData.published && (
-                      <div className="grid gap-4 sm:grid-cols-2 mt-4">
-                        <div className="relative">
-                          <label className="block text-sm font-medium mb-2">Schedule Date</label>
-                          <div className="relative">
-                            <input
-                              type="date"
-                              value={formData.scheduledDate}
-                              onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
-                              min={new Date().toISOString().split('T')[0]}
-                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
-                            />
-                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <div className="relative">
-                          <label className="block text-sm font-medium mb-2">Schedule Time</label>
-                          <div className="relative">
-                            <input
-                              type="time"
-                              value={formData.scheduledTime}
-                              onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
-                              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
-                            />
-                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                        </div>
+                  {/* Publishing Options - Only show when creating new post */}
+                  {!editingPost && (
+                    <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4">
+                      <div className="space-y-3">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="publishOption"
+                            checked={formData.published}
+                            onChange={() => setFormData({ ...formData, published: true, scheduledDate: "", scheduledTime: "" })}
+                            className="w-4 h-4 text-[var(--door24-primary-end)] border-[var(--door24-border)] focus:ring-[var(--door24-primary-end)]"
+                          />
+                          <span className="text-sm font-medium">Publish immediately</span>
+                        </label>
+                        
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="publishOption"
+                            checked={!formData.published}
+                            onChange={() => setFormData({ ...formData, published: false })}
+                            className="w-4 h-4 text-[var(--door24-primary-end)] border-[var(--door24-border)] focus:ring-[var(--door24-primary-end)]"
+                          />
+                          <span className="text-sm font-medium">Schedule post</span>
+                        </label>
                       </div>
-                    )}
-                    {formData.scheduledDate && formData.scheduledTime && (
-                      <p className="mt-2 text-xs text-[var(--door24-muted)]">
-                        Will be published on: {new Date(`${formData.scheduledDate}T${formData.scheduledTime}`).toLocaleString()}
-                      </p>
-                    )}
-                  </div>
+                      
+                      {!formData.published && (
+                        <div className="grid gap-4 sm:grid-cols-2 mt-4">
+                          <div className="relative">
+                            <label className="block text-sm font-medium mb-2">Schedule Date</label>
+                            <div className="relative">
+                              <input
+                                type="date"
+                                value={formData.scheduledDate}
+                                onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
+                                min={new Date().toISOString().split('T')[0]}
+                                className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                              />
+                              <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                          </div>
+                          <div className="relative">
+                            <label className="block text-sm font-medium mb-2">Schedule Time</label>
+                            <div className="relative">
+                              <input
+                                type="time"
+                                value={formData.scheduledTime}
+                                onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
+                                className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 pl-10 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                              />
+                              <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {!formData.published && formData.scheduledDate && formData.scheduledTime && (
+                        <p className="mt-2 text-xs text-[var(--door24-muted)]">
+                          Will be published on: {new Date(`${formData.scheduledDate}T${formData.scheduledTime}`).toLocaleString()}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
-                  <div className="flex gap-4">
-                    <button
-                      type="submit"
-                      disabled={saving}
-                      className="door24-gradient group relative overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
-                    >
-                      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
-                      <span className="relative z-10">
-                        {saving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowEditor(false);
-                        setEditingPost(null);
-                        setShowPreview(false);
-                      }}
-                      className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)]"
-                    >
-                      Cancel
-                    </button>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex gap-4">
+                      <button
+                        type="submit"
+                        disabled={
+                          saving || 
+                          (!formData.published && (!formData.scheduledDate || !formData.scheduledTime))
+                        }
+                        className="door24-gradient group relative overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 disabled:bg-[var(--door24-surface)] disabled:shadow-none"
+                      >
+                        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                        <span className="relative z-10">
+                          {saving 
+                            ? "Saving..." 
+                            : editingPost 
+                              ? "Update Post" 
+                              : !formData.published && formData.scheduledDate && formData.scheduledTime
+                                ? "Schedule Post"
+                                : "Create Post"
+                          }
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowEditor(false);
+                          setEditingPost(null);
+                          setShowPreview(false);
+                        }}
+                        className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)]"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    {!editingPost && (
+                      <button
+                        type="button"
+                        onClick={handleSaveAsDraftAndBack}
+                        disabled={saveStatus === "saving"}
+                        className="flex items-center gap-2 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        {saveStatus === "saving" ? "Saving..." : "Save As A Draft"}
+                      </button>
+                    )}
                   </div>
                 </form>
               )}

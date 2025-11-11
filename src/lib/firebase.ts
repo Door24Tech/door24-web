@@ -22,29 +22,38 @@ let auth: Auth | undefined;
 let db: Firestore | undefined;
 let storage: FirebaseStorage | undefined;
 
-if (typeof window !== "undefined" && firebaseConfig.apiKey) {
-  // Only initialize on client side and if config is valid
+// Initialize Firebase on both client and server (for build-time static generation)
+if (firebaseConfig.apiKey) {
   try {
     if (getApps().length === 0) {
       app = initializeApp(firebaseConfig);
     } else {
       app = getApps()[0];
     }
-    auth = getAuth(app);
-    db = getFirestore(app);
     
-    // Initialize Storage
-    try {
-      storage = getStorage(app);
-      console.log("Firebase Storage initialized with bucket:", storageBucket);
-    } catch (storageError) {
-      console.error("Firebase Storage initialization error:", storageError);
+    // Only initialize auth and storage on client side
+    if (typeof window !== "undefined") {
+      auth = getAuth(app);
+      
+      // Initialize Storage
+      try {
+        // Explicitly pass the bucket URL to ensure it's configured
+        storage = getStorage(app, `gs://${storageBucket}`);
+        console.log("Firebase Storage initialized with bucket:", storageBucket);
+        console.log("Storage instance:", storage);
+      } catch (storageError) {
+        console.error("Firebase Storage initialization error:", storageError);
+        console.error("This usually means Storage is not enabled. Go to Firebase Console → Storage to enable it.");
+      }
     }
+    
+    // Initialize Firestore on both client and server (needed for build-time)
+    db = getFirestore(app);
   } catch (error) {
     console.error("Firebase initialization error:", error);
   }
 } else if (typeof window !== "undefined") {
-  console.warn("Firebase not initialized: Missing API key or running on server side");
+  console.warn("Firebase not initialized: Missing API key");
 }
 
 export { auth, db, storage };

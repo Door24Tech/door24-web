@@ -6,6 +6,7 @@ import {
   doc, 
   getDocs, 
   getDoc,
+  setDoc,
   query,
   orderBy,
   Timestamp,
@@ -34,6 +35,9 @@ export interface BlogPost {
   seoKeywords?: string;
   seoAuthor?: string;
   seoImage?: string;
+  // Draft tracking
+  draftId?: string;
+  lastSavedAt?: Timestamp | null;
 }
 
 export interface Category {
@@ -348,5 +352,182 @@ export function generateSlug(title: string): string {
     .replace(/[^\w\s-]/g, "") // Remove special characters
     .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with hyphens
     .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+}
+
+// Draft management functions
+export async function saveDraft(draftData: Partial<BlogPost> & { author: string }): Promise<string> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  // Generate a draft ID if not provided
+  const draftId = draftData.draftId || `draft-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  
+  // Build draft data, removing undefined values
+  const draft: any = {
+    draftId: draftId,
+    title: draftData.title || "",
+    slug: draftData.slug || generateSlug(draftData.title || "untitled"),
+    content: draftData.content || "",
+    description: draftData.description || "",
+    published: false,
+    author: draftData.author,
+    tags: draftData.tags || [],
+    lastSavedAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  };
+
+  // Only include optional fields if they have values
+  if (draftData.category) {
+    draft.category = draftData.category;
+  }
+  if (draftData.featuredImage) {
+    draft.featuredImage = draftData.featuredImage;
+  }
+  if (draftData.seoTitle) {
+    draft.seoTitle = draftData.seoTitle;
+  }
+  if (draftData.seoDescription) {
+    draft.seoDescription = draftData.seoDescription;
+  }
+  if (draftData.seoKeywords) {
+    draft.seoKeywords = draftData.seoKeywords;
+  }
+  if (draftData.seoAuthor) {
+    draft.seoAuthor = draftData.seoAuthor;
+  }
+  if (draftData.seoImage) {
+    draft.seoImage = draftData.seoImage;
+  }
+
+  try {
+    // Use draftId as document ID for easier management
+    const draftRef = doc(db, "blogDrafts", draftId);
+    const draftSnap = await getDoc(draftRef);
+
+    if (draftSnap.exists()) {
+      // Update existing draft - don't overwrite createdAt
+      await updateDoc(draftRef, draft);
+      return draftId;
+    } else {
+      // Create new draft with the draftId as document ID
+      draft.createdAt = serverTimestamp();
+      await setDoc(draftRef, draft);
+      return draftId;
+    }
+  } catch (error: any) {
+    if (error.code === 'permission-denied') {
+      throw new Error("Permission denied. Please ensure:\n1. You are logged in\n2. Firestore security rules have been deployed (run: firebase deploy --only firestore:rules)\n3. The blogDrafts collection rules allow authenticated writes");
+    }
+    throw error;
+  }
+}
+
+export async function getDraft(draftId: string): Promise<BlogPost | null> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  const draftSnap = await getDoc(doc(db, "blogDrafts", draftId));
+  if (!draftSnap.exists()) {
+    return null;
+  }
+
+  return {
+    id: draftSnap.id,
+    ...draftSnap.data(),
+  } as BlogPost;
+}
+
+export async function getAllDrafts(): Promise<BlogPost[]> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  try {
+    const querySnapshot = await getDocs(
+      query(collection(db, "blogDrafts"), orderBy("lastSavedAt", "desc"))
+    );
+    
+    const drafts: BlogPost[] = [];
+    querySnapshot.forEach((doc) => {
+      drafts.push({
+        id: doc.id,
+        ...doc.data(),
+      } as BlogPost);
+    });
+
+    return drafts;
+  } catch (error: any) {
+    // If orderBy fails due to missing index, try without ordering
+    if (error.code === 'failed-precondition') {
+      console.warn("Index missing for orderBy, fetching without order:", error);
+      const querySnapshot = await getDocs(collection(db, "blogDrafts"));
+      const drafts: BlogPost[] = [];
+      querySnapshot.forEach((doc) => {
+        drafts.push({
+          id: doc.id,
+          ...doc.data(),
+        } as BlogPost);
+      });
+      // Sort manually
+      drafts.sort((a, b) => {
+        const aTime = a.lastSavedAt instanceof Date
+          ? a.lastSavedAt.getTime()
+          : (a.lastSavedAt as any)?.toMillis?.() || (a.lastSavedAt as any)?.seconds * 1000 || 0;
+        const bTime = b.lastSavedAt instanceof Date
+          ? b.lastSavedAt.getTime()
+          : (b.lastSavedAt as any)?.toMillis?.() || (b.lastSavedAt as any)?.seconds * 1000 || 0;
+        return bTime - aTime;
+      });
+      return drafts;
+    }
+    throw error;
+  }
+}
+
+export async function deleteDraft(draftId: string): Promise<void> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  await deleteDoc(doc(db, "blogDrafts", draftId));
+}
+
+export async function publishDraft(draftId: string, publishData: Partial<BlogPost>): Promise<string> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  // Get draft
+  const draft = await getDraft(draftId);
+  if (!draft) {
+    throw new Error("Draft not found");
+  }
+
+  // Create post from draft
+  const postId = await createBlogPost({
+    title: publishData.title || draft.title,
+    slug: publishData.slug || draft.slug,
+    content: publishData.content || draft.content,
+    description: publishData.description || draft.description,
+    published: publishData.published ?? true,
+    publishedAt: publishData.publishedAt || null,
+    scheduledDate: publishData.scheduledDate || null,
+    author: publishData.author || draft.author,
+    tags: publishData.tags || draft.tags || [],
+    category: publishData.category || draft.category,
+    featuredImage: publishData.featuredImage || draft.featuredImage,
+    seoTitle: publishData.seoTitle || draft.seoTitle,
+    seoDescription: publishData.seoDescription || draft.seoDescription,
+    seoKeywords: publishData.seoKeywords || draft.seoKeywords,
+    seoAuthor: publishData.seoAuthor || draft.seoAuthor,
+    seoImage: publishData.seoImage || draft.seoImage,
+  });
+
+  // Delete draft after publishing
+  await deleteDraft(draftId);
+
+  return postId;
 }
 

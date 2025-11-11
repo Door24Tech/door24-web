@@ -169,53 +169,63 @@ export default function Blog() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-8">
-              {filteredPosts.map((post) => (
-                <Link
-                  key={post.id}
-                  href={`/blog/${post.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] backdrop-blur transition-all duration-300 ease-out hover:border-[var(--door24-border-hover)] hover:bg-[var(--door24-surface-hover)] hover:-translate-y-1 hover:shadow-xl hover:shadow-[rgba(139,92,246,0.15)]"
-                >
-                  {post.featuredImage && (
-                    <div className="relative h-48 w-full overflow-hidden sm:h-64">
-                      <AnimatedImage
-                        src={post.featuredImage}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPosts.map((post) => {
+                const publishedDate = post.publishedAt 
+                  ? (post.publishedAt instanceof Date
+                      ? post.publishedAt
+                      : new Date((post.publishedAt as any).toMillis?.() || post.publishedAt.seconds * 1000))
+                  : null;
+                
+                return (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug}`}
+                    className="group flex flex-col transition-all duration-300 hover:opacity-90"
+                  >
+                    {/* Image Container - Perfect Square */}
+                    <div className="relative w-full aspect-square overflow-hidden bg-black rounded-2xl mb-4">
+                      {post.featuredImage ? (
+                        <AnimatedImage
+                          src={post.featuredImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-black" />
+                      )}
                     </div>
-                  )}
-                  <div className="p-6">
-                    {post.category && (
-                      <span className="inline-block rounded-full bg-[var(--door24-surface)] px-3 py-1 text-xs font-medium text-[var(--door24-muted)] mb-3 transition-all duration-200 hover:scale-105 hover:bg-[var(--door24-surface-hover)] hover:text-[var(--door24-primary-end)] hover:shadow-md hover:shadow-[rgba(139,92,246,0.2)] cursor-default">
-                        {post.category}
-                      </span>
-                    )}
-                    <h2 className="text-2xl font-semibold mb-3 group-hover:text-[var(--door24-primary-end)] transition-colors sm:text-3xl">
+                    
+                    {/* Title and Description - No Box */}
+                    <h3 className="text-base font-semibold text-[var(--door24-foreground)] mb-2 line-clamp-2 leading-snug">
                       {post.title}
-                    </h2>
-                    <p className="text-sm text-[var(--door24-muted)] line-clamp-2 mb-4 sm:text-base">
-                      {post.description}
-                    </p>
-                    {post.publishedAt && (
-                      <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
-                        {post.publishedAt instanceof Date
-                          ? post.publishedAt.toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })
-                          : new Date((post.publishedAt as any).toMillis?.() || post.publishedAt.seconds * 1000).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
+                    </h3>
+                    {post.description && (
+                      <p className="text-sm text-[var(--door24-muted)] line-clamp-3 leading-relaxed mb-4">
+                        {post.description}
                       </p>
                     )}
-                  </div>
-                </Link>
-              ))}
+                    
+                    {/* Date and Read Button */}
+                    <div className="flex items-center justify-between mt-auto pt-2">
+                      {publishedDate && (
+                        <span className="text-xs text-[var(--door24-muted)]">
+                          {publishedDate.toLocaleDateString("en-US", {
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </span>
+                      )}
+                      <span className="door24-gradient relative inline-flex overflow-hidden rounded-full px-3 py-1 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out group-hover:scale-[1.05] group-hover:shadow-2xl group-hover:shadow-[rgba(139,92,246,0.5)]">
+                        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                        <span className="relative z-10">Read</span>
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>
