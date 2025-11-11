@@ -35,6 +35,7 @@ export default function BlogAdmin() {
   const [showCategoryManager, setShowCategoryManager] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showSEO, setShowSEO] = useState(false);
   const [formData, setFormData] = useState({
@@ -277,6 +278,7 @@ export default function BlogAdmin() {
         description: "",
       });
       setEditingCategory(null);
+      setIsCreatingCategory(false);
       await loadData();
     } catch (error: any) {
       console.error("Error saving category:", error);
@@ -288,6 +290,7 @@ export default function BlogAdmin() {
 
   const handleEditCategory = (category: Category) => {
     setEditingCategory(category);
+    setIsCreatingCategory(false);
     setCategoryFormData({
       name: category.name,
       slug: category.slug,
@@ -388,6 +391,7 @@ export default function BlogAdmin() {
                 <button
                   onClick={() => {
                     setEditingCategory(null);
+                    setIsCreatingCategory(true);
                     setCategoryFormData({ name: "", slug: "", description: "" });
                   }}
                   className="door24-gradient rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl"
@@ -397,7 +401,7 @@ export default function BlogAdmin() {
               </div>
 
               {/* Category Form */}
-              {(editingCategory || (!editingCategory && categoryFormData.name)) && (
+              {(editingCategory || isCreatingCategory) && (
                 <form onSubmit={handleCategorySubmit} className="mb-6 space-y-4 p-4 rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)]">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
@@ -445,6 +449,7 @@ export default function BlogAdmin() {
                       type="button"
                       onClick={() => {
                         setEditingCategory(null);
+                        setIsCreatingCategory(false);
                         setCategoryFormData({ name: "", slug: "", description: "" });
                       }}
                       className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
