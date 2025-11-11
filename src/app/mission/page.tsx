@@ -109,7 +109,7 @@ export default function Mission() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12">
+        <section className="relative mx-auto max-w-[900px] px-4 pt-20 pb-12 sm:px-8 sm:pt-24 sm:pb-16 lg:px-12">
           <div className="text-center">
             <div className="mb-4 inline-block">
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
@@ -130,7 +130,7 @@ export default function Mission() {
         <section
           id="human-system-breaking"
           data-animate
-          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-background)] via-[#141b2c] to-[var(--door24-background)] py-20 sm:py-24 lg:py-28"
+          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-background)] via-[#141b2c] to-[var(--door24-background)] pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pb-28"
         >
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[rgba(107,91,255,0.08)] blur-3xl" />
