@@ -607,13 +607,6 @@ export default function BlogAdmin() {
                           </svg>
                         </div>
                       </div>
-                        <option value="">No category</option>
-                        {categories.map((cat) => (
-                          <option key={cat.id} value={cat.name}>
-                            {cat.name}
-                          </option>
-                        ))}
-                      </select>
                     </div>
                   </div>
 
