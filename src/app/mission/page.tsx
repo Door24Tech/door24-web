@@ -126,7 +126,7 @@ export default function Mission() {
               Upgrade the Human Operating System
             </p>
             <p className="mx-auto mt-6 max-w-2xl text-sm text-[var(--door24-muted)] opacity-0 animate-fade-in-up sm:mt-8 sm:text-base lg:text-lg" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-              The future of recovery. The evolution of humanity.
+              Building the world's leading ecosystem for conscious evolution.
             </p>
           </div>
         </section>
