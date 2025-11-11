@@ -97,7 +97,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">
+    <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm w-full">
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Brand Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

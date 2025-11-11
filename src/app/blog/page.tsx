@@ -49,10 +49,10 @@ export default function Blog() {
   }, [posts, searchQuery, selectedCategory]);
 
   return (
-    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)] flex flex-col">
       <Header />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12 flex-1">
         <div className="flex flex-col gap-12">
           {/* Header Section with Search */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -203,7 +203,9 @@ export default function Blog() {
         </div>
       </main>
 
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }
