@@ -12,6 +12,15 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
+    
+    // Waitlist - public write (anyone can sign up), authenticated read (admin only)
+    match /waitlist/{entryId} {
+      allow read: if request.auth != null;
+      allow create: if request.resource.data.email is string 
+                    && request.resource.data.source is string
+                    && request.resource.data.status == "active";
+      allow update, delete: if false; // No updates or deletes via client (admin can do via console)
+    }
   }
 }
 

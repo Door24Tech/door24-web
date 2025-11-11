@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from "react";
+import { addToWaitlist } from "@/lib/waitlist";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -13,7 +14,11 @@ const successMessage = "You're on the list! We'll notify you when we launch.";
 
 const defaultMessage = "No spam. Anonymous by default. Opt out anytime.";
 
-export default function WaitlistForm() {
+interface WaitlistFormProps {
+  source?: "homepage" | "modal";
+}
+
+export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps) {
   const [formState, setFormState] = useState<FormState>({
     status: "idle",
     message: defaultMessage,
@@ -35,17 +40,17 @@ export default function WaitlistForm() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1400));
+      await addToWaitlist(email, source);
       event.currentTarget.reset();
       setFormState({
         status: "success",
         message: successMessage,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setFormState({
         status: "error",
-        message: "Something went wrong. Please try again in a moment.",
+        message: error.message || "Something went wrong. Please try again in a moment.",
       });
     }
   };
