@@ -109,7 +109,7 @@ export default function Mission() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[900px] px-4 pt-20 pb-12 sm:px-8 sm:pt-24 sm:pb-16 lg:px-12">
+        <section className="relative mx-auto max-w-[900px] px-4 pt-8 pb-12 sm:px-8 sm:pt-12 sm:pb-16 lg:px-12">
           <div className="text-center">
             <div className="mb-4 inline-block">
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">

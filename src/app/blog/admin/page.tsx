@@ -327,7 +327,7 @@ export default function BlogAdmin() {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center px-4 py-16">
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center px-4 py-8 sm:py-12">
           <div className="text-center">
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
@@ -345,7 +345,7 @@ export default function BlogAdmin() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-8">
           {/* Header */}
           <div className="flex items-center justify-between">

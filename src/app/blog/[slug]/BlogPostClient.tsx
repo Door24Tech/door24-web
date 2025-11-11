@@ -89,7 +89,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
           <div className="text-center">
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
@@ -103,7 +103,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto max-w-[1080px] px-4 py-16 sm:px-8 sm:py-24">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Post Not Found</h1>
             <p className="text-[var(--door24-muted)] mb-8">
@@ -126,7 +126,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto max-w-[880px] px-4 py-16 sm:px-8 sm:py-24">
+      <main className="mx-auto max-w-[880px] px-4 py-8 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-8">
           {/* Back link */}
           <Link

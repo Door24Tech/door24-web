@@ -18,7 +18,7 @@ export default function Home() {
 
       <main
         id="top"
-        className="relative mx-auto flex min-h-[calc(100vh-80px)] max-w-[1080px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20 lg:px-12"
+        className="relative mx-auto flex min-h-[calc(100vh-80px)] max-w-[1080px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 lg:px-12"
       >
         <section className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
           <div className="flex flex-col gap-6 sm:gap-8">

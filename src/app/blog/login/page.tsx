@@ -38,7 +38,7 @@ export default function BlogLogin() {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20">
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12">
           <div className="text-center">
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
@@ -72,7 +72,7 @@ export default function BlogLogin() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
 
-        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20">
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12">
           <div className="w-full space-y-8">
             <div className="text-center">
               <h1 className="text-3xl font-bold sm:text-4xl">Blog Admin Login</h1>
