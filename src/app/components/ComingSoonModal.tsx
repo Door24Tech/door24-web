@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface ComingSoonModalProps {
   isOpen: boolean;
@@ -19,6 +20,11 @@ export default function ComingSoonModal({
     minutes: 0,
     seconds: 0,
   });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -72,7 +78,7 @@ export default function ComingSoonModal({
     }
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center gap-1">
@@ -85,14 +91,13 @@ export default function ComingSoonModal({
     </div>
   );
 
-  return (
+  const modalContent = (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="coming-soon-modal-title"
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
@@ -167,5 +172,7 @@ export default function ComingSoonModal({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
