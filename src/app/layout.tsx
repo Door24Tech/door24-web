@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
   metadataBase: new URL("https://door24.app"),
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "/icon.svg",
+    apple: "/icon.svg",
   },
   openGraph: {
     title: "Door 24 — Community Recovery, Not Counting Recovery",
