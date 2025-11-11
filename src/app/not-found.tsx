@@ -12,33 +12,26 @@ export default function NotFound() {
 
       <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20 lg:px-12">
         <div className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
-          {/* 404 with Astra integrated */}
+          {/* Astra as focal point */}
           <div className="relative flex flex-col items-center gap-6">
-            <div className="relative flex items-center justify-center gap-4 sm:gap-6">
-              {/* Astra Image - positioned creatively */}
-              <div className="relative -ml-8 sm:-ml-12">
-                <Image
-                  src="/assets/Astra-Version-1.png"
-                  alt="Astra the owl"
-                  width={120}
-                  height={120}
-                  className="h-auto w-24 object-contain sm:w-32"
-                  unoptimized
-                  priority
-                />
-              </div>
-              {/* 404 Text */}
-              <div className="flex flex-col items-start">
-                <h1 className="text-6xl font-bold leading-none sm:text-7xl lg:text-8xl">
-                  404
-                </h1>
-              </div>
+            {/* Astra Image */}
+            <div className="relative">
+              <Image
+                src="/assets/Astra-Version-1.png"
+                alt="Astra the owl"
+                width={200}
+                height={200}
+                className="h-auto w-40 object-contain sm:w-48"
+                unoptimized
+                priority
+              />
             </div>
             
+            {/* Message */}
             <div className="flex flex-col gap-4">
-              <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
+              <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
                 Looks like Astra got a bit lost
-              </h2>
+              </h1>
               <p className="mx-auto max-w-2xl text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
                 Even the wisest owls can take a wrong turn. Don't worry—Astra knows the way home, and so do we.
               </p>
