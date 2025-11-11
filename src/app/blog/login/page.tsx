@@ -73,18 +73,10 @@ export default function BlogLogin() {
         <Header />
 
         <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12">
-          <div className="w-full space-y-8">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold sm:text-4xl">Blog Admin Login</h1>
-              <p className="mt-2 text-sm text-[var(--door24-muted)] sm:text-base">
-                Sign in to manage blog posts
-              </p>
-            </div>
-
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8"
-            >
+          <form
+            onSubmit={handleSubmit}
+            className="w-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8"
+          >
               <div className="space-y-4">
                 <div>
                   <label
@@ -117,7 +109,6 @@ export default function BlogLogin() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="••••••••"
                   />
                 </div>
 
@@ -139,7 +130,6 @@ export default function BlogLogin() {
                 </button>
               </div>
             </form>
-          </div>
         </main>
 
         <Footer />
