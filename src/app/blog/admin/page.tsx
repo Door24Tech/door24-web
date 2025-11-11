@@ -572,14 +572,17 @@ export default function BlogAdmin() {
                           />
                         )}
                         <div className="flex-1 min-w-0">
-                          <div className="text-xs text-gray-500 mb-1">
+                          {/* Title - bold, larger, at top */}
+                          <div className="text-lg font-bold text-blue-600 mb-1 line-clamp-2 leading-tight">
                             {formData.seoTitle || formData.title || "Your Title"}
                           </div>
-                          <div className="text-sm text-blue-600 mb-1 truncate">
-                            door24.app/blog/{formData.slug || "your-slug"}
-                          </div>
-                          <div className="text-xs text-gray-600 line-clamp-2">
+                          {/* Description - smaller, regular weight, below title */}
+                          <div className="text-sm text-gray-700 mb-1 line-clamp-2 leading-snug">
                             {formData.seoDescription || formData.description || "Your description will appear here"}
+                          </div>
+                          {/* URL - light grey, smaller, at bottom */}
+                          <div className="text-xs text-gray-500 truncate">
+                            door24.app/blog/{formData.slug || "your-slug"}
                           </div>
                         </div>
                       </div>
