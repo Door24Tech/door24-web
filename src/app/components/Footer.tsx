@@ -89,7 +89,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Brand Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
             <Link
               href="/"
               className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] sm:gap-3 sm:text-sm"
@@ -104,7 +104,7 @@ export default function Footer() {
               />
               <span>Door 24</span>
             </Link>
-            <p className="text-sm text-[var(--door24-muted)] sm:text-base">
+            <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
               Community Recovery, Not Counting Recovery
             </p>
           </div>
