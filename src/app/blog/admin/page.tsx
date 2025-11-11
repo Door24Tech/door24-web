@@ -47,7 +47,12 @@ export default function BlogAdmin() {
     tags: "",
     category: "",
     featuredImage: "",
-    coverImage: "",
+    // SEO Metadata
+    seoTitle: "",
+    seoDescription: "",
+    seoKeywords: "",
+    seoAuthor: "",
+    seoImage: "",
   });
   const [categoryFormData, setCategoryFormData] = useState({
     name: "",
@@ -120,11 +125,16 @@ export default function BlogAdmin() {
         published: formData.published && !scheduledDate, // Can't be both published and scheduled
         publishedAt: formData.published && !scheduledDate ? Timestamp.now() : null,
         scheduledDate: scheduledDate,
-        author: user?.email || "Door 24",
+        author: formData.seoAuthor || user?.email || "Door 24",
         tags: tagsArray,
         category: formData.category || undefined,
         featuredImage: formData.featuredImage || undefined,
-        coverImage: formData.coverImage || undefined,
+        // SEO Metadata
+        seoTitle: formData.seoTitle || undefined,
+        seoDescription: formData.seoDescription || undefined,
+        seoKeywords: formData.seoKeywords || undefined,
+        seoAuthor: formData.seoAuthor || undefined,
+        seoImage: formData.seoImage || undefined,
       };
 
       if (editingPost?.id) {
@@ -145,7 +155,11 @@ export default function BlogAdmin() {
         tags: "",
         category: "",
         featuredImage: "",
-        coverImage: "",
+        seoTitle: "",
+        seoDescription: "",
+        seoKeywords: "",
+        seoAuthor: "",
+        seoImage: "",
       });
       setEditingPost(null);
       setShowEditor(false);
@@ -184,7 +198,11 @@ export default function BlogAdmin() {
       tags: post.tags?.join(", ") || "",
       category: post.category || "",
       featuredImage: post.featuredImage || "",
-      coverImage: post.coverImage || "",
+      seoTitle: post.seoTitle || "",
+      seoDescription: post.seoDescription || "",
+      seoKeywords: post.seoKeywords || "",
+      seoAuthor: post.seoAuthor || "",
+      seoImage: post.seoImage || "",
     });
     setShowEditor(true);
     setShowPreview(false);
@@ -217,7 +235,11 @@ export default function BlogAdmin() {
       tags: "",
       category: "",
       featuredImage: "",
-      coverImage: "",
+      seoTitle: "",
+      seoDescription: "",
+      seoKeywords: "",
+      seoAuthor: "",
+      seoImage: "",
     });
     setShowEditor(true);
     setShowPreview(false);
@@ -537,6 +559,98 @@ export default function BlogAdmin() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* SEO Preview Box */}
+                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
+                    <h3 className="text-sm font-semibold mb-3 text-[var(--door24-foreground)]">SEO Preview</h3>
+                    <div className="bg-white rounded-lg p-4 text-gray-900">
+                      <div className="flex items-start gap-3">
+                        {(formData.seoImage || formData.featuredImage) && (
+                          <img
+                            src={formData.seoImage || formData.featuredImage || ""}
+                            alt="Preview"
+                            className="w-32 h-20 object-cover rounded flex-shrink-0"
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs text-gray-500 mb-1">
+                            {formData.seoTitle || formData.title || "Your Title"}
+                          </div>
+                          <div className="text-sm text-blue-600 mb-1 truncate">
+                            door24.app/blog/{formData.slug || "your-slug"}
+                          </div>
+                          <div className="text-xs text-gray-600 line-clamp-2">
+                            {formData.seoDescription || formData.description || "Your description will appear here"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* SEO Metadata Section */}
+                  <div className="rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] p-4">
+                    <h3 className="text-sm font-semibold mb-4 text-[var(--door24-foreground)]">SEO Metadata</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">SEO Title</label>
+                        <input
+                          type="text"
+                          value={formData.seoTitle}
+                          onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
+                          className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                          placeholder="Leave empty to use post title"
+                        />
+                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                          {formData.seoTitle.length}/60 characters
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">SEO Description</label>
+                        <textarea
+                          value={formData.seoDescription}
+                          onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
+                          rows={2}
+                          className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                          placeholder="Leave empty to use post description"
+                        />
+                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                          {formData.seoDescription.length}/160 characters
+                        </p>
+                      </div>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">SEO Keywords</label>
+                          <input
+                            type="text"
+                            value={formData.seoKeywords}
+                            onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
+                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                            placeholder="keyword1, keyword2, keyword3"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">SEO Author</label>
+                          <input
+                            type="text"
+                            value={formData.seoAuthor}
+                            onChange={(e) => setFormData({ ...formData, seoAuthor: e.target.value })}
+                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                            placeholder="Leave empty to use your email"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">SEO Social Image</label>
+                        <p className="text-xs text-[var(--door24-muted)] mb-2">
+                          Image for social media sharing (Open Graph). Recommended: 1200x630px
+                        </p>
+                        <ImageUpload
+                          onUploadComplete={(url) => setFormData({ ...formData, seoImage: url })}
+                          currentImage={formData.seoImage}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
                       <label className="block text-sm font-medium mb-2">Title</label>
@@ -595,21 +709,13 @@ export default function BlogAdmin() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Featured Image (for blog post page)</label>
+                    <label className="block text-sm font-medium mb-2">Featured Image</label>
+                    <p className="text-xs text-[var(--door24-muted)] mb-2">
+                      Used for blog post page and listing previews. Recommended: Wide image (16:9 aspect ratio)
+                    </p>
                     <ImageUpload
                       onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
                       currentImage={formData.featuredImage}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Cover Image (wide banner for blog listing page)</label>
-                    <p className="text-xs text-[var(--door24-muted)] mb-2">
-                      Recommended: Wide image (16:9 or similar aspect ratio) for the blog listing preview
-                    </p>
-                    <ImageUpload
-                      onUploadComplete={(url) => setFormData({ ...formData, coverImage: url })}
-                      currentImage={formData.coverImage}
                     />
                   </div>
 
@@ -653,24 +759,34 @@ export default function BlogAdmin() {
                     
                     {!formData.published && (
                       <div className="grid gap-4 sm:grid-cols-2 mt-4">
-                        <div>
+                        <div className="relative">
                           <label className="block text-sm font-medium mb-2">Schedule Date</label>
-                          <input
-                            type="date"
-                            value={formData.scheduledDate}
-                            onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
-                            min={new Date().toISOString().split('T')[0]}
-                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                          />
+                          <div className="relative">
+                            <input
+                              type="date"
+                              value={formData.scheduledDate}
+                              onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
+                              min={new Date().toISOString().split('T')[0]}
+                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 pl-10 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                            />
+                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
                         </div>
-                        <div>
+                        <div className="relative">
                           <label className="block text-sm font-medium mb-2">Schedule Time</label>
-                          <input
-                            type="time"
-                            value={formData.scheduledTime}
-                            onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
-                            className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                          />
+                          <div className="relative">
+                            <input
+                              type="time"
+                              value={formData.scheduledTime}
+                              onChange={(e) => setFormData({ ...formData, scheduledTime: e.target.value })}
+                              className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 pl-10 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base [color-scheme:dark]"
+                            />
+                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--door24-foreground)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     )}

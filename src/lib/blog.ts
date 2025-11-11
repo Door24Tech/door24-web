@@ -28,7 +28,12 @@ export interface BlogPost {
   tags?: string[];
   category?: string;
   featuredImage?: string;
-  coverImage?: string;
+  // SEO Metadata
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string;
+  seoAuthor?: string;
+  seoImage?: string;
 }
 
 export interface Category {
