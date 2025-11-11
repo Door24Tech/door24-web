@@ -1,13 +1,30 @@
+'use client';
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Link from "next/link";
-
-export const metadata = {
-  title: "Blog — Door 24",
-  description: "Read the latest articles and insights from Door 24.",
-};
+import { getAllBlogPosts, type BlogPost } from "@/lib/blog";
 
 export default function Blog() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const loadPosts = async () => {
+    try {
+      const publishedPosts = await getAllBlogPosts(true);
+      setPosts(publishedPosts);
+    } catch (error) {
+      console.error("Error loading posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
@@ -21,11 +38,49 @@ export default function Blog() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur text-center">
-            <p className="text-[var(--door24-muted)]">
-              Blog posts coming soon. Check back later for articles and updates.
-            </p>
-          </div>
+          {loading ? (
+            <div className="text-center">
+              <p className="text-[var(--door24-muted)]">Loading posts...</p>
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur text-center">
+              <p className="text-[var(--door24-muted)]">
+                No posts yet. Check back soon for articles and updates.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => (
+                <Link
+                  key={post.id}
+                  href={`/blog/${post.slug}`}
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
+                >
+                  <h2 className="text-xl font-semibold mb-2 group-hover:text-[var(--door24-primary-end)] transition">
+                    {post.title}
+                  </h2>
+                  <p className="text-sm text-[var(--door24-muted)] line-clamp-3 mb-4">
+                    {post.description}
+                  </p>
+                  {post.publishedAt && (
+                    <p className="text-xs text-[var(--door24-muted)]">
+                      {post.publishedAt instanceof Date
+                        ? post.publishedAt.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })
+                        : new Date((post.publishedAt as any).toMillis?.() || post.publishedAt.seconds * 1000).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
@@ -33,4 +88,3 @@ export default function Blog() {
     </div>
   );
 }
-
