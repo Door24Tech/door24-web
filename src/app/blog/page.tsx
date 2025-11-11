@@ -52,7 +52,7 @@ export default function Blog() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)] flex flex-col">
       <Header />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12 flex-1">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-12">
           {/* Header Section with Search */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
