@@ -676,7 +676,7 @@ export default function BlogAdmin() {
                       <div className="p-4 pt-0 space-y-4 border-t border-white/10">
                         {/* SEO Preview Box */}
                         <div>
-                          <h4 className="text-xs font-semibold mb-3 text-[var(--door24-foreground)] uppercase tracking-wider">Preview</h4>
+                          <h4 className="text-xs font-semibold mb-4 pt-2 text-[var(--door24-foreground)] uppercase tracking-wider">Preview</h4>
                           <div className="bg-white rounded-lg p-4 text-gray-900">
                             <div className="flex items-start gap-3">
                               {(formData.seoImage || formData.featuredImage) && (
