@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
 import { useAuth } from "@/contexts/AuthContext";
@@ -31,7 +31,6 @@ import {
 export default function BlogAdmin() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [scheduledPosts, setScheduledPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -86,18 +85,27 @@ export default function BlogAdmin() {
     }
   }, [user]);
 
-  // Load draft from URL parameter
+  // Load draft from URL parameter (client-side only to avoid static export issues)
   useEffect(() => {
+    // Only run this effect on the client side after mount
+    if (typeof window === 'undefined') return;
+    
     if (user) {
-      const draftId = searchParams.get('draft');
-      if (draftId) {
-        handleLoadDraft(draftId);
-        // Clean up URL
-        router.replace('/blog/admin');
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const draftId = urlParams.get('draft');
+        if (draftId) {
+          handleLoadDraft(draftId);
+          // Clean up URL - use window.history to avoid router during SSR
+          window.history.replaceState({}, '', '/blog/admin');
+        }
+      } catch (error) {
+        // Silently fail if URL parsing fails
+        console.error('Error reading URL params:', error);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, searchParams]);
+  }, [user]);
 
   const loadData = async () => {
     try {
