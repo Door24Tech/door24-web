@@ -25,6 +25,8 @@ export interface BlogPost {
   updatedAt: Timestamp | null;
   author: string;
   tags?: string[];
+  category?: string;
+  featuredImage?: string;
 }
 
 export async function createBlogPost(post: Omit<BlogPost, "id" | "createdAt" | "updatedAt">): Promise<string> {
@@ -81,19 +83,12 @@ export async function getBlogPost(id: string): Promise<BlogPost | null> {
   } as BlogPost;
 }
 
-export async function getAllBlogPosts(publishedOnly: boolean = false): Promise<BlogPost[]> {
+export async function getAllBlogPosts(publishedOnly: boolean = false, category?: string): Promise<BlogPost[]> {
   if (!db) {
     throw new Error("Firestore is not initialized");
   }
 
   let q = query(collection(db, "blogPosts"), orderBy("publishedAt", "desc"));
-  
-  if (publishedOnly) {
-    q = query(
-      collection(db, "blogPosts"),
-      orderBy("publishedAt", "desc")
-    );
-  }
 
   const querySnapshot = await getDocs(q);
   const posts: BlogPost[] = [];
@@ -106,12 +101,36 @@ export async function getAllBlogPosts(publishedOnly: boolean = false): Promise<B
     } as BlogPost;
 
     // Filter out unpublished posts if requested
-    if (!publishedOnly || post.published) {
-      posts.push(post);
+    if (publishedOnly && !post.published) {
+      return;
     }
+
+    // Filter by category if specified
+    if (category && post.category !== category) {
+      return;
+    }
+
+    posts.push(post);
   });
 
   return posts;
+}
+
+export async function getCategories(): Promise<string[]> {
+  if (!db) {
+    throw new Error("Firestore is not initialized");
+  }
+
+  const posts = await getAllBlogPosts(true);
+  const categories = new Set<string>();
+  
+  posts.forEach((post) => {
+    if (post.category) {
+      categories.add(post.category);
+    }
+  });
+
+  return Array.from(categories).sort();
 }
 
 // Helper function to generate slug from title

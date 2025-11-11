@@ -1,6 +1,7 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, Firestore } from "firebase/firestore";
+import { getStorage, Storage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 let db: Firestore | undefined;
+let storage: Storage | undefined;
 
 if (typeof window !== "undefined" && firebaseConfig.apiKey) {
   // Only initialize on client side and if config is valid
@@ -26,11 +28,12 @@ if (typeof window !== "undefined" && firebaseConfig.apiKey) {
     }
     auth = getAuth(app);
     db = getFirestore(app);
+    storage = getStorage(app);
   } catch (error) {
     console.error("Firebase initialization error:", error);
   }
 }
 
-export { auth, db };
+export { auth, db, storage };
 export default app;
 

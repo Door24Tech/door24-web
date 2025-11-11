@@ -5,14 +5,29 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import ImageUpload from "@/app/components/ImageUpload";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { 
   getAllBlogPosts, 
   createBlogPost, 
   updateBlogPost, 
   deleteBlogPost,
+  getCategories,
   generateSlug,
   type BlogPost 
 } from "@/lib/blog";
+
+const commonCategories = [
+  "Recovery",
+  "Community",
+  "Wellness",
+  "Technology",
+  "Updates",
+  "Resources",
+  "Stories",
+  "Tips",
+];
 
 export default function BlogAdmin() {
   const { user, loading, logout } = useAuth();
@@ -21,6 +36,7 @@ export default function BlogAdmin() {
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [showEditor, setShowEditor] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -28,6 +44,8 @@ export default function BlogAdmin() {
     description: "",
     published: false,
     tags: "",
+    category: "",
+    featuredImage: "",
   });
   const [saving, setSaving] = useState(false);
 
@@ -81,6 +99,8 @@ export default function BlogAdmin() {
         published: formData.published,
         author: user?.email || "Door 24",
         tags: tagsArray,
+        category: formData.category || undefined,
+        featuredImage: formData.featuredImage || undefined,
       };
 
       if (editingPost?.id) {
@@ -97,9 +117,12 @@ export default function BlogAdmin() {
         description: "",
         published: false,
         tags: "",
+        category: "",
+        featuredImage: "",
       });
       setEditingPost(null);
       setShowEditor(false);
+      setShowPreview(false);
       await loadPosts();
     } catch (error: any) {
       console.error("Error saving post:", error);
@@ -118,8 +141,11 @@ export default function BlogAdmin() {
       description: post.description,
       published: post.published || false,
       tags: post.tags?.join(", ") || "",
+      category: post.category || "",
+      featuredImage: post.featuredImage || "",
     });
     setShowEditor(true);
+    setShowPreview(false);
   };
 
   const handleDelete = async (id: string) => {
@@ -145,8 +171,11 @@ export default function BlogAdmin() {
       description: "",
       published: false,
       tags: "",
+      category: "",
+      featuredImage: "",
     });
     setShowEditor(true);
+    setShowPreview(false);
   };
 
   if (loading) {
@@ -203,104 +232,157 @@ export default function BlogAdmin() {
           {/* Editor */}
           {showEditor && (
             <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8">
-              <h2 className="text-2xl font-semibold mb-6">
-                {editingPost ? "Edit Post" : "Create New Post"}
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Title</label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => handleTitleChange(e.target.value)}
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="Blog post title"
-                  />
-                </div>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold">
+                  {editingPost ? "Edit Post" : "Create New Post"}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(!showPreview)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
+                >
+                  {showPreview ? "Edit" : "Preview"}
+                </button>
+              </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">Slug</label>
-                  <input
-                    type="text"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="blog-post-slug"
-                  />
-                  <p className="mt-1 text-xs text-[var(--door24-muted)]">
-                    URL: /blog/{formData.slug || "slug"}
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Description (SEO)</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    required
-                    rows={2}
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="Brief description for SEO and previews"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Content</label>
-                  <textarea
-                    value={formData.content}
-                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                    required
-                    rows={12}
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="Write your blog post content here (markdown supported)"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Tags (comma-separated)</label>
-                  <input
-                    type="text"
-                    value={formData.tags}
-                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="recovery, community, wellness"
-                  />
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={formData.published}
-                      onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-                      className="rounded border-white/10"
+              {showPreview ? (
+                <div className="prose prose-invert max-w-none">
+                  <h1>{formData.title}</h1>
+                  {formData.featuredImage && (
+                    <img
+                      src={formData.featuredImage}
+                      alt={formData.title}
+                      className="w-full rounded-xl mb-6"
                     />
-                    <span className="text-sm">Publish immediately</span>
-                  </label>
+                  )}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {formData.content}
+                  </ReactMarkdown>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Title</label>
+                      <input
+                        type="text"
+                        value={formData.title}
+                        onChange={(e) => handleTitleChange(e.target.value)}
+                        required
+                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        placeholder="Blog post title"
+                      />
+                    </div>
 
-                <div className="flex gap-4">
-                  <button
-                    type="submit"
-                    disabled={saving}
-                    className="door24-gradient rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
-                  >
-                    {saving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowEditor(false);
-                      setEditingPost(null);
-                    }}
-                    className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Category</label>
+                      <select
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      >
+                        <option value="">Select a category</option>
+                        {commonCategories.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Slug</label>
+                    <input
+                      type="text"
+                      value={formData.slug}
+                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      required
+                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="blog-post-slug"
+                    />
+                    <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                      URL: /blog/{formData.slug || "slug"}
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Description (SEO)</label>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      required
+                      rows={2}
+                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="Brief description for SEO and previews"
+                    />
+                  </div>
+
+                  <ImageUpload
+                    onUploadComplete={(url) => setFormData({ ...formData, featuredImage: url })}
+                    currentImage={formData.featuredImage}
+                  />
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
+                    <textarea
+                      value={formData.content}
+                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                      required
+                      rows={16}
+                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm font-mono outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="Write your blog post content here (markdown supported)"
+                    />
+                    <p className="mt-2 text-xs text-[var(--door24-muted)]">
+                      Supports Markdown syntax. Use **bold**, *italic*, # headings, - lists, etc.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Tags (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={formData.tags}
+                      onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                      className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      placeholder="recovery, community, wellness"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.published}
+                        onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                        className="rounded border-white/10"
+                      />
+                      <span className="text-sm">Publish immediately</span>
+                    </label>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="door24-gradient rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg transition hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {saving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowEditor(false);
+                        setEditingPost(null);
+                        setShowPreview(false);
+                      }}
+                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold transition hover:bg-white/10"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           )}
 
@@ -328,6 +410,11 @@ export default function BlogAdmin() {
                         ) : (
                           <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-1 text-xs text-[var(--door24-muted)]">
                             Draft
+                          </span>
+                        )}
+                        {post.category && (
+                          <span className="rounded-full bg-white/5 px-2 py-1 text-xs text-[var(--door24-muted)]">
+                            {post.category}
                           </span>
                         )}
                       </div>

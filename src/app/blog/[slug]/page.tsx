@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getAllBlogPosts, type BlogPost } from "@/lib/blog";
 
 export default function BlogPost() {
@@ -82,8 +85,27 @@ export default function BlogPost() {
             ← Back to Blog
           </Link>
 
+          {/* Featured Image */}
+          {post.featuredImage && (
+            <div className="relative h-64 w-full overflow-hidden rounded-2xl sm:h-96">
+              <Image
+                src={post.featuredImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                unoptimized
+                priority
+              />
+            </div>
+          )}
+
           {/* Post header */}
           <div className="flex flex-col gap-4">
+            {post.category && (
+              <span className="inline-block w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-[var(--door24-muted)]">
+                {post.category}
+              </span>
+            )}
             <h1 className="text-4xl font-bold sm:text-5xl">{post.title}</h1>
             {post.description && (
               <p className="text-lg leading-7 text-[var(--door24-muted)] sm:text-xl sm:leading-8">
@@ -91,21 +113,21 @@ export default function BlogPost() {
               </p>
             )}
             <div className="flex items-center gap-4 text-sm text-[var(--door24-muted)]">
-            {post.publishedAt && (
-              <span>
-                {post.publishedAt instanceof Date
-                  ? post.publishedAt.toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
-                  : new Date((post.publishedAt as any).toMillis?.() || post.publishedAt.seconds * 1000).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-              </span>
-            )}
+              {post.publishedAt && (
+                <span>
+                  {post.publishedAt instanceof Date
+                    ? post.publishedAt.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
+                    : new Date((post.publishedAt as any).toMillis?.() || post.publishedAt.seconds * 1000).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                </span>
+              )}
               {post.author && (
                 <>
                   <span>•</span>
@@ -116,10 +138,36 @@ export default function BlogPost() {
           </div>
 
           {/* Post content */}
-          <div className="prose prose-invert max-w-none">
-            <div className="text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8 whitespace-pre-wrap">
+          <div className="prose prose-invert prose-lg max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              className="text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8"
+              components={{
+                h1: ({ children }) => <h1 className="text-4xl font-bold mt-8 mb-4">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-3xl font-bold mt-6 mb-3">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-2xl font-semibold mt-4 mb-2">{children}</h3>,
+                p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
+                ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
+                ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
+                li: ({ children }) => <li className="ml-4">{children}</li>,
+                a: ({ href, children }) => (
+                  <a href={href} className="text-[var(--door24-primary-end)] underline hover:text-[var(--door24-primary-start)]">
+                    {children}
+                  </a>
+                ),
+                img: ({ src, alt }) => (
+                  <img src={src || ""} alt={alt} className="rounded-xl my-6 w-full" />
+                ),
+                code: ({ children }) => (
+                  <code className="bg-white/5 px-2 py-1 rounded text-sm font-mono">{children}</code>
+                ),
+                pre: ({ children }) => (
+                  <pre className="bg-white/5 p-4 rounded-xl overflow-x-auto my-4">{children}</pre>
+                ),
+              }}
+            >
               {post.content}
-            </div>
+            </ReactMarkdown>
           </div>
 
           {/* Tags */}
@@ -130,7 +178,7 @@ export default function BlogPost() {
                   key={tag}
                   className="rounded-full bg-white/5 px-3 py-1 text-xs text-[var(--door24-muted)]"
                 >
-                  {tag}
+                  #{tag}
                 </span>
               ))}
             </div>
@@ -142,4 +190,3 @@ export default function BlogPost() {
     </div>
   );
 }
-
