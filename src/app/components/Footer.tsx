@@ -84,6 +84,16 @@ export default function Footer() {
   // PST is UTC-8, so 8 AM PST = 4 PM UTC (16:00)
   const launchDate = new Date('2026-01-01T16:00:00Z');
 
+  // Get current year in Los Angeles timezone
+  const getCurrentYear = () => {
+    const now = new Date();
+    // Los Angeles is America/Los_Angeles timezone
+    const laTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    return laTime.getFullYear();
+  };
+
+  const currentYear = getCurrentYear();
+
   return (
     <footer className="border-t border-white/5 bg-[rgba(8,12,24,0.95)] backdrop-blur-sm">
       <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
@@ -193,7 +203,7 @@ export default function Footer() {
               </a>
             </p>
             <p className="text-xs text-[var(--door24-muted)]">
-              © 2025 Door 24 Technologies. All Rights Reserved.
+              © {currentYear} Door 24 Technologies. All Rights Reserved.
             </p>
           </div>
         </div>
