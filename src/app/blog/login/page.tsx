@@ -100,7 +100,6 @@ export default function BlogLogin() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full rounded-xl border border-white/10 bg-[rgba(11,16,32,0.6)] px-4 py-3 text-sm text-[var(--door24-foreground)] outline-none transition focus-visible:border-white/40 focus-visible:bg-[rgba(11,16,32,0.85)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
-                    placeholder="admin@door24.app"
                   />
                 </div>
 
