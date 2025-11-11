@@ -89,18 +89,18 @@ export default function Blog() {
                 href="/blog/rss.xml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="group flex items-center gap-1.5 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label="Subscribe to RSS Feed"
               >
+                <span className="hidden sm:inline">RSS</span>
                 <Image
                   src="/assets/Rss-Icon.svg"
                   alt="RSS Feed"
-                  width={16}
-                  height={16}
-                  className="w-4 h-4 transition-transform group-hover:scale-110"
+                  width={12}
+                  height={12}
+                  className="w-3 h-3 transition-transform group-hover:scale-110"
                   unoptimized
                 />
-                <span className="hidden sm:inline">RSS</span>
               </Link>
             </div>
           </div>
