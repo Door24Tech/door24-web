@@ -119,7 +119,8 @@ export default function BlogAdmin() {
         scheduledDate = Timestamp.fromDate(dateTime);
       }
 
-      const postData = {
+      // Build post data object, only including fields that have values
+      const postData: any = {
         title: formData.title,
         slug: formData.slug,
         content: formData.content,
@@ -129,15 +130,30 @@ export default function BlogAdmin() {
         scheduledDate: scheduledDate,
         author: formData.seoAuthor || user?.email || "Door 24",
         tags: tagsArray,
-        category: formData.category || undefined,
-        featuredImage: formData.featuredImage || undefined,
-        // SEO Metadata
-        seoTitle: formData.seoTitle || undefined,
-        seoDescription: formData.seoDescription || undefined,
-        seoKeywords: formData.seoKeywords || undefined,
-        seoAuthor: formData.seoAuthor || undefined,
-        seoImage: formData.seoImage || undefined,
       };
+
+      // Only include optional fields if they have values
+      if (formData.category && formData.category.trim()) {
+        postData.category = formData.category.trim();
+      }
+      if (formData.featuredImage && formData.featuredImage.trim()) {
+        postData.featuredImage = formData.featuredImage.trim();
+      }
+      if (formData.seoTitle && formData.seoTitle.trim()) {
+        postData.seoTitle = formData.seoTitle.trim();
+      }
+      if (formData.seoDescription && formData.seoDescription.trim()) {
+        postData.seoDescription = formData.seoDescription.trim();
+      }
+      if (formData.seoKeywords && formData.seoKeywords.trim()) {
+        postData.seoKeywords = formData.seoKeywords.trim();
+      }
+      if (formData.seoAuthor && formData.seoAuthor.trim()) {
+        postData.seoAuthor = formData.seoAuthor.trim();
+      }
+      if (formData.seoImage && formData.seoImage.trim()) {
+        postData.seoImage = formData.seoImage.trim();
+      }
 
       if (editingPost?.id) {
         await updateBlogPost(editingPost.id, postData);

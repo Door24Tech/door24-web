@@ -49,13 +49,43 @@ export async function createBlogPost(post: Omit<BlogPost, "id" | "createdAt" | "
     throw new Error("Firestore is not initialized");
   }
 
-  const postData = {
-    ...post,
+  // Remove undefined values to avoid Firestore errors
+  const postData: any = {
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    description: post.description,
+    published: post.published,
+    author: post.author,
+    tags: post.tags || [],
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     publishedAt: post.published && !post.scheduledDate ? serverTimestamp() : null,
     scheduledDate: post.scheduledDate || null,
   };
+
+  // Only include optional fields if they have values
+  if (post.category) {
+    postData.category = post.category;
+  }
+  if (post.featuredImage) {
+    postData.featuredImage = post.featuredImage;
+  }
+  if (post.seoTitle) {
+    postData.seoTitle = post.seoTitle;
+  }
+  if (post.seoDescription) {
+    postData.seoDescription = post.seoDescription;
+  }
+  if (post.seoKeywords) {
+    postData.seoKeywords = post.seoKeywords;
+  }
+  if (post.seoAuthor) {
+    postData.seoAuthor = post.seoAuthor;
+  }
+  if (post.seoImage) {
+    postData.seoImage = post.seoImage;
+  }
 
   const docRef = await addDoc(collection(db, "blogPosts"), postData);
   return docRef.id;
@@ -66,20 +96,69 @@ export async function updateBlogPost(id: string, post: Partial<BlogPost>): Promi
     throw new Error("Firestore is not initialized");
   }
 
+  // Remove undefined values to avoid Firestore errors
   const postData: any = {
-    ...post,
     updatedAt: serverTimestamp(),
   };
+
+  // Only include fields that are explicitly provided (not undefined)
+  if (post.title !== undefined) {
+    postData.title = post.title;
+  }
+  if (post.slug !== undefined) {
+    postData.slug = post.slug;
+  }
+  if (post.content !== undefined) {
+    postData.content = post.content;
+  }
+  if (post.description !== undefined) {
+    postData.description = post.description;
+  }
+  if (post.published !== undefined) {
+    postData.published = post.published;
+  }
+  if (post.author !== undefined) {
+    postData.author = post.author;
+  }
+  if (post.tags !== undefined) {
+    postData.tags = post.tags;
+  }
+  if (post.category !== undefined) {
+    postData.category = post.category || null;
+  }
+  if (post.featuredImage !== undefined) {
+    postData.featuredImage = post.featuredImage || null;
+  }
+  if (post.seoTitle !== undefined) {
+    postData.seoTitle = post.seoTitle || null;
+  }
+  if (post.seoDescription !== undefined) {
+    postData.seoDescription = post.seoDescription || null;
+  }
+  if (post.seoKeywords !== undefined) {
+    postData.seoKeywords = post.seoKeywords || null;
+  }
+  if (post.seoAuthor !== undefined) {
+    postData.seoAuthor = post.seoAuthor || null;
+  }
+  if (post.seoImage !== undefined) {
+    postData.seoImage = post.seoImage || null;
+  }
 
   // Handle publishing logic
   if (post.published && !post.scheduledDate) {
     // Publish immediately
     postData.publishedAt = post.publishedAt || serverTimestamp();
     postData.scheduledDate = null;
-  } else if (post.scheduledDate) {
-    // Scheduled - don't publish yet
-    postData.published = false;
-    postData.publishedAt = null;
+  } else if (post.scheduledDate !== undefined) {
+    if (post.scheduledDate) {
+      // Scheduled - don't publish yet
+      postData.published = false;
+      postData.publishedAt = null;
+      postData.scheduledDate = post.scheduledDate;
+    } else {
+      postData.scheduledDate = null;
+    }
   }
 
   await updateDoc(doc(db, "blogPosts", id), postData);
