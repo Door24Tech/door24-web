@@ -41,11 +41,7 @@ export default function BlogLogin() {
   };
 
   return (
-    <>
-      <Head>
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-      <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
 
         <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-16 sm:px-8 sm:py-20">
@@ -121,7 +117,6 @@ export default function BlogLogin() {
 
         <Footer />
       </div>
-    </>
   );
 }
 
