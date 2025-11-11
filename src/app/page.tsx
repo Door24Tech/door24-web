@@ -87,6 +87,7 @@ export default function Home() {
             className="flex w-full max-w-2xl flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-[rgba(107,91,255,0.12)] backdrop-blur sm:p-6"
             onSubmit={(event) => handleSubmit(event, setHeroForm)}
             aria-label="Join the Door 24 waitlist"
+            suppressHydrationWarning
           >
             <div className="flex flex-col gap-3 sm:flex-row">
               <label className="w-full text-left text-sm font-medium text-[var(--door24-muted)] sm:flex-1">
@@ -97,6 +98,7 @@ export default function Home() {
                   name="email"
                   placeholder="you@email.com"
                   required
+                  suppressHydrationWarning
                 />
               </label>
               <button
