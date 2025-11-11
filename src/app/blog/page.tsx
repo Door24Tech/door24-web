@@ -92,13 +92,14 @@ export default function Blog() {
                 className="group flex items-center gap-2 text-sm text-[var(--door24-muted)] transition hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label="Subscribe to RSS Feed"
               >
-                <svg 
-                  className="w-4 h-4 transition-transform group-hover:scale-110" 
-                  fill="currentColor" 
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M3.429 2.571c0 1.893 1.536 3.429 3.429 3.429 1.893 0 3.429-1.536 3.429-3.429S8.751.142 6.858.142 3.429 1.678 3.429 2.571zm12 0c0 1.893 1.536 3.429 3.429 3.429s3.429-1.536 3.429-3.429S19.322.142 17.429.142 15.429 1.678 15.429 2.571zM2.571 7.143c8.107 0 14.857 1.536 17.429 3.429v2.286c-2.571 1.893-9.322 3.429-17.429 3.429S2.571 13.75 0 12.857v-2.286c2.571-1.893 9.322-3.429 17.429-3.429zm0 5.714c6.107 0 11.143.893 12.857 1.536v1.536c-1.714.643-6.75 1.536-12.857 1.536S2.571 16.429.857 15.786v-1.536c1.714-.643 6.75-1.536 12.857-1.536z" />
-                </svg>
+                <Image
+                  src="/assets/Rss-Icon.svg"
+                  alt="RSS Feed"
+                  width={16}
+                  height={16}
+                  className="w-4 h-4 transition-transform group-hover:scale-110"
+                  unoptimized
+                />
                 <span className="hidden sm:inline">RSS</span>
               </Link>
             </div>
