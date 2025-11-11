@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Door 24 — Community Recovery, Not Counting Recovery",
     description:
-      "Join the Door 24 waitlist to get early access to the community-powered recovery app and receive the free Reset Pack.",
+      "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
     url: "https://door24.app",
     siteName: "Door 24",
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Door 24 — Community Recovery, Not Counting Recovery",
     description:
-      "Join the Door 24 waitlist to get early access to the community-powered recovery app and receive the free Reset Pack.",
+      "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
     images: ["/assets/door-24-logo.png"],
   },
 };
