@@ -71,7 +71,10 @@ export default function BlogAdmin() {
   const [currentDraftId, setCurrentDraftId] = useState<string | null>(null);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const POSTS_PER_PAGE = 10;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -118,6 +121,8 @@ export default function BlogAdmin() {
       setPosts(allPosts);
       setScheduledPosts(scheduled);
       setCategories(allCategories);
+      // Reset to page 1 when data loads
+      setCurrentPage(1);
     } catch (error) {
       console.error("Error loading data:", error);
     } finally {
@@ -297,6 +302,7 @@ export default function BlogAdmin() {
       setLastSavedAt(null);
       setShowEditor(false);
       setShowPreview(false);
+      setCurrentPage(1);
       await loadData();
     } catch (error: any) {
       console.error("Error saving post:", error);
@@ -621,10 +627,21 @@ export default function BlogAdmin() {
               </button>
               <button
                 onClick={() => router.push("/blog/admin/drafts")}
-                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] sm:text-sm sm:px-3.5 sm:py-2"
+                className="group relative overflow-hidden rounded-lg px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl sm:text-sm sm:px-3.5 sm:py-2"
+                style={{
+                  background: 'linear-gradient(135deg, #02b7d5 0%, #26d5ef 100%)',
+                  boxShadow: '0 10px 15px -3px rgba(2, 183, 213, 0.25), 0 4px 6px -2px rgba(2, 183, 213, 0.25)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(2, 183, 213, 0.5), 0 10px 10px -5px rgba(2, 183, 213, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(2, 183, 213, 0.25), 0 4px 6px -2px rgba(2, 183, 213, 0.25)';
+                }}
                 title="View Drafts"
               >
-                Drafts
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                <span className="relative z-10">Drafts</span>
               </button>
               <button
                 onClick={logout}
@@ -638,16 +655,21 @@ export default function BlogAdmin() {
 
           {/* Category Manager */}
           {showCategoryManager && (
-            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold">Manage Categories</h2>
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 pt-4 pb-3 backdrop-blur sm:px-6 sm:pt-6 sm:pb-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 
+                  className="font-semibold"
+                  style={{ fontSize: '1.25rem', lineHeight: '1.75rem' }}
+                >
+                  Manage Categories
+                </h2>
                 <button
                   onClick={() => {
                     setEditingCategory(null);
                     setIsCreatingCategory(true);
                     setCategoryFormData({ name: "", slug: "", description: "" });
                   }}
-                  className="door24-gradient group relative overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)]"
+                  className="door24-gradient group relative overflow-hidden rounded-lg px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)]"
                 >
                   <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                   <span className="relative z-10">New Category</span>
@@ -656,46 +678,64 @@ export default function BlogAdmin() {
 
               {/* Category Form */}
               {(editingCategory || isCreatingCategory) && (
-                <form onSubmit={handleCategorySubmit} className="mb-6 space-y-4 p-4 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)]">
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <form onSubmit={handleCategorySubmit} className="mb-4 space-y-3 p-3 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)]">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Category Name</label>
+                      <label 
+                        className="block font-medium mb-1"
+                        style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
+                      >
+                        Category Name
+                      </label>
                       <input
                         type="text"
                         value={categoryFormData.name}
                         onChange={(e) => handleCategoryNameChange(e.target.value)}
                         required
-                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2 outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                        style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
                         placeholder="Category name"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Slug</label>
+                      <label 
+                        className="block font-medium mb-1"
+                        style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
+                      >
+                        Slug
+                      </label>
                       <input
                         type="text"
                         value={categoryFormData.slug}
                         onChange={(e) => setCategoryFormData({ ...categoryFormData, slug: e.target.value })}
                         required
-                        className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm font-mono outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2 font-mono outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                        style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
                         placeholder="category-slug"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Description (optional)</label>
+                    <label 
+                      className="block font-medium mb-1"
+                      style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
+                    >
+                      Description (optional)
+                    </label>
                     <input
                       type="text"
                       value={categoryFormData.description}
                       onChange={(e) => setCategoryFormData({ ...categoryFormData, description: e.target.value })}
-                      className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-base"
+                      className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2 outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                      style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
                       placeholder="Brief description"
                     />
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex gap-2">
                     <button
                       type="submit"
                       disabled={savingCategory}
-                      className="door24-gradient group relative overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
+                      className="door24-gradient group relative overflow-hidden rounded-lg px-4 py-2 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
                     >
                       <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                       <span className="relative z-10">
@@ -709,7 +749,7 @@ export default function BlogAdmin() {
                         setIsCreatingCategory(false);
                         setCategoryFormData({ name: "", slug: "", description: "" });
                       }}
-                      className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)]"
+                      className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-xs font-semibold transition hover:bg-[var(--door24-surface-hover)]"
                     >
                       Cancel
                     </button>
@@ -720,30 +760,52 @@ export default function BlogAdmin() {
               {/* Categories List */}
               <div className="space-y-2">
                 {categories.length === 0 ? (
-                  <p className="text-[var(--door24-muted)]">No categories yet. Create your first category!</p>
+                  <p 
+                    className="text-[var(--door24-muted)]"
+                    style={{ fontSize: '0.8125rem', lineHeight: '1.125rem' }}
+                  >
+                    No categories yet. Create your first category!
+                  </p>
                 ) : (
                   categories.map((category) => (
                     <div
                       key={category.id}
-                      className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
+                      className="flex items-center justify-between rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-3"
                     >
-                      <div>
-                        <h3 className="font-semibold">{category.name}</h3>
+                      <div className="flex-1 min-w-0">
+                        <h3 
+                          className="font-medium truncate"
+                          style={{ fontSize: '0.9375rem', lineHeight: '1.375rem', fontWeight: 500 }}
+                        >
+                          {category.name}
+                        </h3>
                         {category.description && (
-                          <p className="text-sm text-[var(--door24-muted)]">{category.description}</p>
+                          <p 
+                            className="truncate"
+                            style={{ fontSize: '0.8125rem', lineHeight: '1.125rem', color: 'var(--door24-muted)', marginTop: '0.25rem' }}
+                          >
+                            {category.description}
+                          </p>
                         )}
-                        <p className="text-xs text-[var(--door24-muted)] mt-1">Slug: {category.slug}</p>
+                        <p 
+                          className="truncate"
+                          style={{ fontSize: '0.75rem', lineHeight: '1rem', color: 'var(--door24-muted)', marginTop: '0.25rem' }}
+                        >
+                          Slug: {category.slug}
+                        </p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-1.5 ml-3 flex-shrink-0">
                         <button
                           onClick={() => handleEditCategory(category)}
-                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                          className="rounded-md border border-[var(--door24-border)] bg-[var(--door24-surface)] font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                          style={{ padding: '0.375rem 0.625rem', fontSize: '0.75rem', lineHeight: '1rem' }}
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => category.id && handleDeleteCategory(category.id)}
-                          className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                          className="rounded-md border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                          style={{ padding: '0.375rem 0.625rem', fontSize: '0.75rem', lineHeight: '1rem' }}
                         >
                           Delete
                         </button>
@@ -757,7 +819,7 @@ export default function BlogAdmin() {
 
           {/* Scheduled Posts Preview */}
           {scheduledPosts.length > 0 && (
-            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 pt-6 pb-4 backdrop-blur sm:px-8 sm:pt-8 sm:pb-5">
               <h2 className="text-2xl font-semibold mb-6">Scheduled Posts</h2>
               <div className="space-y-4">
                 {scheduledPosts.map((post) => (
@@ -792,7 +854,7 @@ export default function BlogAdmin() {
 
           {/* Editor */}
           {showEditor && (
-            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 pt-6 pb-4 backdrop-blur sm:px-8 sm:pt-8 sm:pb-5">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   <h2 className="text-2xl font-semibold">
@@ -1286,8 +1348,8 @@ export default function BlogAdmin() {
 
           {/* Posts List - Only show when not editing/creating */}
           {!showEditor && (
-            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-              <div className="flex items-center gap-4 mb-6">
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 pt-6 pb-4 backdrop-blur sm:px-8 sm:pt-8 sm:pb-5">
+              <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold">All Posts</h2>
                 {!loadingPosts && (
                   <div className="flex items-center justify-center min-w-[2rem] h-7 px-3 rounded-full bg-gradient-to-r from-[var(--door24-primary-start)]/15 to-[var(--door24-primary-end)]/15 border border-[var(--door24-primary-start)]/30 backdrop-blur-sm">
@@ -1302,60 +1364,117 @@ export default function BlogAdmin() {
               ) : posts.length === 0 ? (
                 <p className="text-[var(--door24-muted)]">No posts yet. Create your first post!</p>
               ) : (
-                <div className="space-y-4">
-                  {posts.map((post) => (
-                    <div
-                      key={post.id}
-                      className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
-                    >
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 flex-wrap">
-                          <h3 className="font-semibold">{post.title}</h3>
-                          {post.published ? (
-                            <span className="rounded-full bg-[var(--door24-accent)]/20 px-2 py-1 text-xs text-[var(--door24-accent)]">
-                              Published
-                            </span>
-                          ) : post.scheduledDate ? (
-                            <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-1 text-xs text-[var(--door24-primary-start)]">
-                              Scheduled
-                            </span>
-                          ) : (
-                            <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-1 text-xs text-[var(--door24-muted)]">
-                              Draft
-                            </span>
-                          )}
-                          {post.category && (
-                            <span className="rounded-full bg-[var(--door24-surface)] px-2 py-1 text-xs text-[var(--door24-muted)]">
-                              {post.category}
-                            </span>
-                          )}
+                <>
+                  <div className="space-y-2.5">
+                    {posts
+                      .slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE)
+                      .map((post) => (
+                        <div
+                          key={post.id}
+                          className="flex items-center justify-between rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-3"
+                        >
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 
+                                className="font-medium truncate max-w-md"
+                                style={{ fontSize: '0.9375rem', lineHeight: '1.375rem', fontWeight: 500 }}
+                              >
+                                {post.title}
+                              </h3>
+                              {post.published ? (
+                                <span className="rounded-full bg-[var(--door24-accent)]/20 px-2 py-0.5 text-[11px] text-[var(--door24-accent)] flex-shrink-0">
+                                  Published
+                                </span>
+                              ) : post.scheduledDate ? (
+                                <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-0.5 text-[11px] text-[var(--door24-primary-start)] flex-shrink-0">
+                                  Scheduled
+                                </span>
+                              ) : (
+                                <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-0.5 text-[11px] text-[var(--door24-muted)] flex-shrink-0">
+                                  Draft
+                                </span>
+                              )}
+                              {post.category && (
+                                <span className="rounded-full bg-[var(--door24-surface)] px-2 py-0.5 text-[11px] text-[var(--door24-muted)] flex-shrink-0">
+                                  {post.category}
+                                </span>
+                              )}
+                            </div>
+                            <p 
+                              className="mt-1 truncate"
+                              style={{ fontSize: '0.8125rem', lineHeight: '1.125rem', color: 'var(--door24-muted)' }}
+                            >
+                              /blog/{post.slug}
+                            </p>
+                            {post.scheduledDate && (
+                              <p 
+                                className="mt-1"
+                                style={{ fontSize: '0.75rem', lineHeight: '1rem', color: 'var(--door24-muted)' }}
+                              >
+                                {formatScheduledDate(post.scheduledDate)}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex gap-1.5 ml-3 flex-shrink-0">
+                            <button
+                              onClick={() => handleEdit(post)}
+                              className="rounded-md border border-[var(--door24-border)] bg-[var(--door24-surface)] font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                              style={{ padding: '0.375rem 0.625rem', fontSize: '0.75rem', lineHeight: '1rem' }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => post.id && handleDelete(post.id)}
+                              className="rounded-md border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                              style={{ padding: '0.375rem 0.625rem', fontSize: '0.75rem', lineHeight: '1rem' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                        <p className="mt-1 text-sm text-[var(--door24-muted)]">
-                          /blog/{post.slug}
-                        </p>
-                        {post.scheduledDate && (
-                          <p className="mt-1 text-xs text-[var(--door24-muted)]">
-                            Scheduled: {formatScheduledDate(post.scheduledDate)}
-                          </p>
-                        )}
+                      ))}
+                  </div>
+                  
+                  {/* Pagination */}
+                  {Math.ceil(posts.length / POSTS_PER_PAGE) > 1 && (
+                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-[var(--door24-border)]">
+                      <div className="text-sm text-[var(--door24-muted)]">
+                        Showing {(currentPage - 1) * POSTS_PER_PAGE + 1} to {Math.min(currentPage * POSTS_PER_PAGE, posts.length)} of {posts.length} posts
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex items-center gap-2">
                         <button
-                          onClick={() => handleEdit(post)}
-                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                          disabled={currentPage === 1}
+                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Edit
+                          Previous
                         </button>
+                        <div className="flex items-center gap-1">
+                          {Array.from({ length: Math.ceil(posts.length / POSTS_PER_PAGE) }, (_, i) => i + 1).map((page) => (
+                            <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
+                                currentPage === page
+                                  ? 'border-[var(--door24-primary-end)] bg-[var(--door24-primary-start)]/20 text-[var(--door24-foreground)]'
+                                  : 'border-[var(--door24-border)] bg-[var(--door24-surface)] text-[var(--door24-muted)] hover:bg-[var(--door24-surface-hover)]'
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          ))}
+                        </div>
                         <button
-                          onClick={() => post.id && handleDelete(post.id)}
-                          className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                          onClick={() => setCurrentPage(prev => Math.min(Math.ceil(posts.length / POSTS_PER_PAGE), prev + 1))}
+                          disabled={currentPage >= Math.ceil(posts.length / POSTS_PER_PAGE)}
+                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Delete
+                          Next
                         </button>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               )}
             </div>
           )}
