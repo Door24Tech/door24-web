@@ -9,23 +9,26 @@ export default function PressKit() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
-        <div className="flex flex-col gap-8">
+      <main className="mx-auto max-w-4xl px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
+        <div className="flex flex-col gap-6">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Press Kit</h1>
-            <p className="text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
+            <h1 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Press Kit</h1>
+            <p className="text-xs text-[var(--door24-muted)]">
               Everything you need to write about Door 24.
             </p>
           </div>
 
+          {/* Divider */}
+          <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
           {/* Download Section */}
-          <section className="flex flex-col gap-6 rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-8 backdrop-blur sm:p-10">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl font-semibold leading-snug sm:text-3xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+          <section className="flex flex-col gap-4 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 backdrop-blur sm:p-5">
+            <div className="flex flex-col gap-3">
+              <h2 className="mb-4 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 Download Press Kit
               </h2>
-              <p className="max-w-2xl text-base leading-relaxed text-[var(--door24-body)] sm:text-lg">
+              <p className="text-sm leading-relaxed text-[var(--door24-body)] sm:text-base">
                 Get access to logos, brand assets, product screenshots, and press
                 materials in one convenient package.
               </p>
@@ -34,7 +37,7 @@ export default function PressKit() {
             {/* Download Button - Placeholder for now */}
             <a
               href="#"
-              className="door24-gradient group relative inline-flex w-fit overflow-hidden rounded-xl px-8 py-3.5 text-base font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-10 sm:py-4 sm:text-lg"
+              className="door24-gradient group relative inline-flex w-fit overflow-hidden rounded-lg px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3 sm:text-base"
               onClick={(e) => {
                 e.preventDefault();
                 // Download link will be wired in later
@@ -43,7 +46,7 @@ export default function PressKit() {
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
               <span className="relative z-10 flex items-center gap-2">
                 <svg
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -60,41 +63,47 @@ export default function PressKit() {
             </a>
           </section>
 
+          {/* Divider */}
+          <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
           {/* What's Included Section */}
-          <section className="flex flex-col gap-6">
-            <h2 className="text-2xl font-semibold sm:text-3xl">What's Included</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 backdrop-blur">
-                <h3 className="mb-2 text-lg font-semibold">Brand Assets</h3>
-                <p className="text-sm leading-relaxed text-[var(--door24-muted)]">
+          <section className="flex flex-col gap-4 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 backdrop-blur sm:p-5">
+            <h2 className="mb-4 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>What's Included</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-card)] p-3 backdrop-blur sm:p-4">
+                <h3 className="mb-2 text-sm font-semibold sm:text-base">Brand Assets</h3>
+                <p className="text-xs leading-relaxed text-[var(--door24-muted)] sm:text-sm">
                   High-resolution logos, brand guidelines, and color palettes.
                 </p>
               </div>
-              <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 backdrop-blur">
-                <h3 className="mb-2 text-lg font-semibold">Product Screenshots</h3>
-                <p className="text-sm leading-relaxed text-[var(--door24-muted)]">
+              <div className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-card)] p-3 backdrop-blur sm:p-4">
+                <h3 className="mb-2 text-sm font-semibold sm:text-base">Product Screenshots</h3>
+                <p className="text-xs leading-relaxed text-[var(--door24-muted)] sm:text-sm">
                   App screenshots and interface images for editorial use.
                 </p>
               </div>
-              <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 backdrop-blur">
-                <h3 className="mb-2 text-lg font-semibold">Press Release</h3>
-                <p className="text-sm leading-relaxed text-[var(--door24-muted)]">
+              <div className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-card)] p-3 backdrop-blur sm:p-4">
+                <h3 className="mb-2 text-sm font-semibold sm:text-base">Press Release</h3>
+                <p className="text-xs leading-relaxed text-[var(--door24-muted)] sm:text-sm">
                   Latest announcements and company news.
                 </p>
               </div>
-              <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 backdrop-blur">
-                <h3 className="mb-2 text-lg font-semibold">Company Information</h3>
-                <p className="text-sm leading-relaxed text-[var(--door24-muted)]">
+              <div className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-card)] p-3 backdrop-blur sm:p-4">
+                <h3 className="mb-2 text-sm font-semibold sm:text-base">Company Information</h3>
+                <p className="text-xs leading-relaxed text-[var(--door24-muted)] sm:text-sm">
                   About Door 24, mission statement, and key facts.
                 </p>
               </div>
             </div>
           </section>
 
+          {/* Divider */}
+          <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
           {/* Contact Section */}
-          <section className="flex flex-col gap-4 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Press Inquiries</h2>
-            <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg">
+          <section className="flex flex-col gap-4 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 backdrop-blur sm:p-5">
+            <h2 className="mb-4 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Press Inquiries</h2>
+            <p className="text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base">
               For media inquiries, interview requests, or additional information,
               please contact us at{" "}
               <a

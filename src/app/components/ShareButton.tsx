@@ -78,7 +78,8 @@ export default function ShareButton({ url, title, description }: ShareButtonProp
     <div className="relative">
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="inline-flex items-center gap-2 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-sm text-[var(--door24-foreground)] transition-all duration-200 hover:bg-[var(--door24-surface-hover)] hover:border-[var(--door24-border-hover)]"
+        className="relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-[var(--door24-border)] bg-gradient-to-br from-[var(--door24-surface)] to-[var(--door24-surface)] px-3 py-1.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] transition-all duration-300 ease-out hover:border-transparent hover:bg-gradient-to-r hover:from-[#6b46c2] hover:to-[#8b5cf6] hover:shadow-lg hover:shadow-[rgba(107,70,198,0.25)]"
+        style={{ fontFamily: 'var(--font-inter)' }}
         aria-label="Share post"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,10 +102,10 @@ export default function ShareButton({ url, title, description }: ShareButtonProp
               <button
                 key={option.name}
                 onClick={option.action}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--door24-foreground)] transition-colors duration-200 hover:bg-[var(--door24-surface)] first:rounded-t-lg last:rounded-b-lg"
+                className="group relative w-full flex items-center gap-3 overflow-hidden px-4 py-2.5 text-sm text-[var(--door24-foreground)] transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-[#6b46c2] hover:to-[#8b5cf6] hover:shadow-md hover:shadow-[rgba(107,70,198,0.25)] first:rounded-t-lg last:rounded-b-lg"
               >
-                <span className="text-[var(--door24-muted)]">{option.icon}</span>
-                <span>{option.name === 'Copy Link' && copied ? 'Copied!' : option.name}</span>
+                <span className="text-[var(--door24-muted)] transition-colors duration-300 group-hover:text-[var(--door24-foreground)]">{option.icon}</span>
+                <span className="font-medium">{option.name === 'Copy Link' && copied ? 'Copied!' : option.name}</span>
               </button>
             ))}
           </div>

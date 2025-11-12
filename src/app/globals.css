@@ -32,6 +32,63 @@
   font-family: var(--font-inter), "Inter", sans-serif;
 }
 
+/* Blog Post Content - Full Width */
+.prose.max-w-none {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Override prose styles for blog post content to use component-level styling */
+.prose.max-w-none h1,
+.prose.max-w-none h3,
+.prose.max-w-none h4,
+.prose.max-w-none h5,
+.prose.max-w-none h6 {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  margin-top: inherit !important;
+  margin-bottom: inherit !important;
+  color: inherit !important;
+}
+
+/* Allow h2 to use component-level styling - don't override font-size so component sizes work */
+.prose.max-w-none h2 {
+  font-family: inherit !important;
+  /* font-size removed - let component className (text-2xl sm:text-3xl) take precedence */
+  font-weight: 700 !important; /* Match component's fontWeight: '700' */
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  margin-top: inherit !important;
+  margin-bottom: inherit !important;
+  color: inherit !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.prose.max-w-none p {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  margin-bottom: inherit !important;
+  color: inherit !important;
+}
+
+.prose.max-w-none li {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+.prose.max-w-none strong {
+  font-family: inherit !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+}
+
 .prose h1,
 .prose h2,
 .prose h3,
@@ -562,5 +619,67 @@ a .blog-post-description,
   .blog-post-description {
     font-size: 0.875rem !important; /* 14px - fits 150 chars on 3 lines */
     color: #9ca3af !important; /* Grey color - must override parent white */
+  }
+}
+
+/* Home Page - Override global h1 with larger sizes */
+body > div > main section h1 {
+  font-size: 2.5rem !important; /* 40px - between text-4xl and text-5xl */
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 640px) {
+  body > div > main section h1 {
+    font-size: 3rem !important; /* 48px - text-5xl */
+  }
+}
+
+@media (min-width: 768px) {
+  body > div > main section h1 {
+    font-size: 3.75rem !important; /* 60px - text-6xl */
+  }
+}
+
+@media (min-width: 1024px) {
+  body > div > main section h1 {
+    font-size: 4.5rem !important; /* 72px - text-7xl */
+  }
+}
+
+/* Legal Pages (Terms, Privacy, GDPR) - Override global h1/h2 sizes */
+main h1 {
+  font-size: 1.875rem !important; /* 30px - text-3xl */
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 640px) {
+  main h1 {
+    font-size: 2.25rem !important; /* 36px - text-4xl */
+  }
+}
+
+main h2 {
+  font-size: 1.25rem !important; /* 20px - text-xl */
+  letter-spacing: -0.005em;
+}
+
+@media (min-width: 640px) {
+  main h2 {
+    font-size: 1.5rem !important; /* 24px - text-2xl */
+  }
+}
+
+/* Support Page FAQ - Override global h3 styles */
+main section button h3,
+main section h3 {
+  font-size: 0.875rem !important; /* 14px - standard readable size */
+  font-weight: 500 !important; /* Medium */
+  line-height: 1.5 !important;
+}
+
+@media (min-width: 640px) {
+  main section button h3,
+  main section h3 {
+    font-size: 0.9375rem !important; /* 15px - slightly larger for desktop */
   }
 }

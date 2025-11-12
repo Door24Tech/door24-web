@@ -94,35 +94,38 @@ export default function Support() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
-        <div className="flex flex-col gap-16">
+      <main className="mx-auto max-w-4xl px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
+        <div className="flex flex-col gap-6">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Support</h1>
-            <p className="text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
+            <h1 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Support</h1>
+            <p className="text-xs text-[var(--door24-muted)]">
               Need help? Check our FAQ below or send us a message. We typically respond within 24-48 hours.
             </p>
           </div>
 
+          {/* Divider */}
+          <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
           {/* FAQ Section */}
-          <section className="flex flex-col gap-6">
-            <h2 className="text-2xl font-semibold leading-snug sm:text-3xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Frequently Asked Questions</h2>
-            <div className="flex flex-col gap-3">
+          <section className="flex flex-col gap-4 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 sm:p-5">
+            <h2 className="mb-4 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Frequently Asked Questions</h2>
+            <div className="flex flex-col gap-1.5">
               {faqs.map((faq, index) => (
                 <div
                   key={index}
-                  className="group rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-5 transition-all duration-200 hover:border-[var(--door24-border-hover)] hover:bg-[var(--door24-surface-hover)] hover:shadow-lg hover:shadow-[rgba(107,70,198,0.1)] sm:p-6"
+                  className="group rounded border border-[var(--door24-border)] bg-[var(--door24-card)] p-2 transition-all duration-200 hover:border-[var(--door24-border-hover)] hover:bg-[var(--door24-card-hover)]"
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="flex w-full items-start justify-between gap-4 text-left"
+                    className="flex w-full items-start justify-between gap-2 text-left"
                     aria-expanded={openFaq === index}
                   >
-                    <h3 className="text-base font-semibold text-[var(--door24-foreground)] transition-colors duration-200 group-hover:text-[var(--door24-primary-end)] sm:text-lg">
+                    <h3 className="text-xs font-medium text-[var(--door24-foreground)] leading-snug transition-colors duration-200 group-hover:text-[var(--door24-primary-end)]">
                       {faq.question}
                     </h3>
                     <svg
-                      className={`h-5 w-5 flex-shrink-0 text-[var(--door24-muted)] transition-all duration-200 ${
+                      className={`h-3 w-3 flex-shrink-0 text-[var(--door24-muted)] transition-all duration-200 mt-0.5 ${
                         openFaq === index ? "rotate-180 text-[var(--door24-primary-end)]" : "group-hover:text-[var(--door24-foreground)]"
                       }`}
                       fill="none"
@@ -134,7 +137,7 @@ export default function Support() {
                     </svg>
                   </button>
                   {openFaq === index && (
-                    <p className="mt-4 text-sm leading-relaxed text-[var(--door24-muted)] sm:text-base animate-fade-in">
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--door24-body)] animate-fade-in">
                       {faq.answer}
                     </p>
                   )}
@@ -143,20 +146,23 @@ export default function Support() {
             </div>
           </section>
 
+          {/* Divider */}
+          <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
           {/* Contact Form Section */}
-          <section className="flex flex-col gap-6">
+          <section className="flex flex-col gap-4 rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 sm:p-5">
             <div>
-              <h2 className="mb-3 text-2xl font-semibold sm:text-3xl">Contact Us</h2>
-              <p className="text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Contact Us</h2>
+              <p className="text-sm leading-6 text-[var(--door24-muted)] sm:text-base sm:leading-7">
                 Can't find what you're looking for? Send us a message and we'll help you out.
               </p>
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-6 rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 shadow-lg shadow-[rgba(107,70,198,0.12)] backdrop-blur transition-all duration-200 hover:shadow-xl hover:shadow-[rgba(107,70,198,0.18)] sm:p-8"
+              className="flex flex-col gap-4"
               suppressHydrationWarning
             >
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3">
                 {/* Name Field */}
                 <label className="flex flex-col gap-2">
                   <span className="text-sm font-medium text-[var(--door24-foreground)] sm:text-base">

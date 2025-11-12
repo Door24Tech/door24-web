@@ -7,211 +7,262 @@ export default function GDPR() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
-        <div className="flex flex-col gap-8">
+      <main className="mx-auto max-w-4xl px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
+        <div className="flex flex-col gap-6">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>GDPR Compliance</h1>
-            <p className="text-sm text-[var(--door24-muted)]">
-              Last updated: November 10, 2025
+            <h1 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>GDPR Compliance</h1>
+            <p className="text-xs text-[var(--door24-muted)]">
+              Last Updated: November 10, 2025
             </p>
           </div>
 
           {/* Content */}
-          <div className="flex flex-col gap-8 text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
+          <div className="flex flex-col gap-4 text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
             <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>What is GDPR?</h2>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                1. What is GDPR?
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                The General Data Protection Regulation (GDPR) is a European Union regulation that governs how personal data is collected, used, and protected for individuals within the European Economic Area (EEA).
+              </p>
               <p className="text-[var(--door24-body)]">
-                The General Data Protection Regulation (GDPR) is a European Union
-                regulation that governs data protection and privacy for individuals
-                within the EU and EEA. Door 24 is committed to full compliance with
-                GDPR and protecting your personal data.
+                Door 24 Technologies, Inc. ("Door 24," "we," "us," or "our") is committed to full compliance with the GDPR and to protecting the privacy and rights of all users, regardless of location.
               </p>
             </section>
 
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
             <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Your Rights Under GDPR</h2>
-              <p className="mb-4 text-[var(--door24-body)]">
-                As a data subject under GDPR, you have the following rights:
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                2. Your Rights Under GDPR
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                If you are located in the EU or EEA, you have the following rights regarding your personal data:
               </p>
-              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-body)]">
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right of Access:</strong> You can request a copy of the personal data we hold about you.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Rectification:</strong> You can request correction of inaccurate or incomplete data.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Erasure:</strong> You can request deletion of your personal data in certain circumstances.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Restrict Processing:</strong> You can request that we limit how we use your data.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Data Portability:</strong> You can request your data in a structured, machine-readable format.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Object:</strong> You can object to processing of your data for certain purposes.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Right to Withdraw Consent:</strong> You can withdraw consent at any time where processing is based on consent.
-                </li>
+              <ul className="mb-4 ml-6 list-disc space-y-2 text-[var(--door24-body)]">
+                <li><strong className="text-[var(--door24-foreground)]">Right of Access</strong> – Request a copy of the personal data we hold about you.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Rectification</strong> – Request correction of inaccurate or incomplete data.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Erasure ("Right to be Forgotten")</strong> – Request deletion of your data under certain conditions.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Restrict Processing</strong> – Request that we limit how your data is used.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Data Portability</strong> – Receive your data in a structured, machine-readable format and transfer it elsewhere.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Object</strong> – Object to our processing of your data for specific purposes, including direct marketing.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Right to Withdraw Consent</strong> – Withdraw consent at any time when processing is based on consent.</li>
               </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Legal Basis for Processing</h2>
-              <p className="mb-4 text-[var(--door24-muted)]">
-                We process your personal data based on the following legal grounds:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-muted)]">
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Consent:</strong> When you provide explicit consent (e.g., joining our waitlist).
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Contractual Necessity:</strong> To provide and maintain our services.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Legal Obligation:</strong> To comply with applicable laws and regulations.
-                </li>
-                <li>
-                  <strong className="text-[var(--door24-foreground)]">Legitimate Interests:</strong> For security, fraud prevention, and service improvement.
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data We Collect</h2>
-              <p className="mb-4 text-[var(--door24-muted)]">
-                We collect and process the following categories of personal data:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-muted)]">
-                <li>Email address (for waitlist and account creation)</li>
-                <li>Account information and profile data</li>
-                <li>Usage data and analytics</li>
-                <li>Device information and IP address</li>
-                <li>Communications with our support team</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>How We Use Your Data</h2>
-              <p className="mb-4 text-[var(--door24-muted)]">
-                We use your personal data to:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-muted)]">
-                <li>Provide and improve our services</li>
-                <li>Send you updates and notifications (with your consent)</li>
-                <li>Respond to your inquiries and support requests</li>
-                <li>Ensure security and prevent fraud</li>
-                <li>Comply with legal obligations</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Retention</h2>
               <p className="text-[var(--door24-body)]">
-                We retain your personal data only for as long as necessary to fulfill
-                the purposes outlined in this notice, comply with legal obligations, or
-                resolve disputes. When you request deletion, we will remove your data
-                within 30 days, unless we are required to retain it for legal purposes.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Security</h2>
-              <p className="text-[var(--door24-body)]">
-                We implement appropriate technical and organizational measures to protect
-                your personal data against unauthorized access, alteration, disclosure,
-                or destruction. This includes encryption, access controls, and regular
-                security assessments.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>International Data Transfers</h2>
-              <p className="text-[var(--door24-body)]">
-                Your data may be transferred to and processed in countries outside the
-                EU/EEA. When we transfer data internationally, we ensure appropriate
-                safeguards are in place, such as Standard Contractual Clauses approved
-                by the European Commission, to protect your data in accordance with GDPR.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Exercising Your Rights</h2>
-              <p className="mb-4 text-[var(--door24-muted)]">
-                To exercise any of your GDPR rights, please contact us at{" "}
+                To exercise these rights, contact{" "}
                 <a
                   href="mailto:privacy@door24.app"
                   className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   privacy@door24.app
                 </a>
-                . We will respond to your request within 30 days. You may be asked to
-                verify your identity before we can process your request.
-              </p>
-              <p className="text-[var(--door24-body)]">
-                You can also manage your data preferences directly in your account
-                settings when the app launches.
+                . We will respond within 30 days of receiving your request.
               </p>
             </section>
 
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
             <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Right to Lodge a Complaint</h2>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                3. Legal Basis for Processing
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                Door 24 processes personal data under the following lawful bases:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-body)]">
+                <li><strong className="text-[var(--door24-foreground)]">Consent</strong> – When you voluntarily provide data (e.g., joining the waitlist, subscribing to updates).</li>
+                <li><strong className="text-[var(--door24-foreground)]">Contractual Necessity</strong> – When processing is necessary to provide or maintain our services.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Legal Obligation</strong> – When required by law or regulatory authorities.</li>
+                <li><strong className="text-[var(--door24-foreground)]">Legitimate Interests</strong> – For purposes such as improving security, preventing fraud, and enhancing the user experience.</li>
+              </ul>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                4. Data We Collect
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We may collect and process the following categories of personal data:
+              </p>
+              <ul className="mb-4 ml-6 list-disc space-y-2 text-[var(--door24-body)]">
+                <li>Email address (for waitlist registration, account creation, and communication)</li>
+                <li>Account information and profile data (such as display name or preferences)</li>
+                <li>Usage and analytics data (to improve performance and experience)</li>
+                <li>Device information and IP address</li>
+                <li>Messages or communications sent to our support team</li>
+              </ul>
               <p className="text-[var(--door24-body)]">
-                If you believe we have not addressed your concerns adequately, you have
-                the right to lodge a complaint with your local data protection authority.
-                For EU residents, you can find your supervisory authority at{" "}
+                We do not collect sensitive health or medical data.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                5. How We Use Your Data
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We use your personal data to:
+              </p>
+              <ul className="mb-4 ml-6 list-disc space-y-2 text-[var(--door24-body)]">
+                <li>Operate, maintain, and improve the Door 24 platform</li>
+                <li>Send updates, notifications, or product announcements (only with your consent)</li>
+                <li>Respond to your inquiries and support requests</li>
+                <li>Ensure security, detect abuse, and prevent fraud</li>
+                <li>Comply with legal obligations</li>
+              </ul>
+              <p className="text-[var(--door24-body)]">
+                We do not sell or rent your personal data to third parties.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                6. Data Retention
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We retain your personal data only as long as necessary to fulfill the purposes described in this notice, comply with applicable laws, or resolve disputes.
+              </p>
+              <p className="text-[var(--door24-body)]">
+                If you request deletion, we will remove or anonymize your data within 30 days, unless retention is legally required.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                7. Data Security
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We maintain technical and organizational safeguards to protect your data against unauthorized access, disclosure, alteration, or destruction.
+              </p>
+              <p className="mb-3 text-[var(--door24-body)]">
+                These include encryption, access controls, secure data storage, and regular security reviews.
+              </p>
+              <p className="text-[var(--door24-body)]">
+                Despite our efforts, no system is completely secure. You acknowledge and accept this risk when using the Service.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                8. International Data Transfers
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                Your information may be transferred to and processed in countries outside the EU/EEA, including the United States.
+              </p>
+              <p className="text-[var(--door24-body)]">
+                When we transfer data internationally, we ensure appropriate safeguards are in place—such as Standard Contractual Clauses approved by the European Commission—to maintain an equivalent level of protection required under GDPR.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                9. Exercising Your Rights
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                To exercise your GDPR rights, email{" "}
                 <a
-                  href="https://edpb.europa.eu/about-edpb/about-edpb/members_en"
+                  href="mailto:privacy@door24.app"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
+                >
+                  privacy@door24.app
+                </a>{" "}
+                with your request.
+              </p>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We may require verification of your identity before processing it.
+              </p>
+              <p className="text-[var(--door24-body)]">
+                You can also manage certain preferences directly within your Door 24 account settings (once the app launches).
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                10. Right to Lodge a Complaint
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                If you believe we have not adequately addressed your data protection concerns, you have the right to lodge a complaint with your local data protection authority.
+              </p>
+              <p className="text-[var(--door24-body)]">
+                For EU residents, a list of supervisory authorities is available at{" "}
+                <a
+                  href="https://edpb.europa.eu"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   edpb.europa.eu
-                </a>
-                .
+                </a>.
               </p>
             </section>
 
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
             <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Protection Officer</h2>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                11. Data Protection Officer
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                Door 24 has appointed a Data Protection Officer (DPO) to oversee GDPR compliance.
+              </p>
               <p className="text-[var(--door24-body)]">
-                For questions or concerns about our data processing practices, please
-                contact our Data Protection Officer at{" "}
+                You can contact the DPO regarding questions, requests, or privacy concerns at{" "}
+                <a
+                  href="mailto:privacy@door24.app"
+                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
+                >
+                  privacy@door24.app
+                </a>.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                12. Updates to This Notice
+              </h2>
+              <p className="mb-3 text-[var(--door24-body)]">
+                We may update this GDPR Compliance Notice periodically to reflect changes in our practices or legal requirements.
+              </p>
+              <p className="mb-3 text-[var(--door24-body)]">
+                When updates occur, the "Last Updated" date will be revised, and material changes will be communicated through our website or app.
+              </p>
+            </section>
+
+            <div className="h-px w-full bg-[var(--door24-border)] my-4" />
+
+            <section>
+              <h2 className="mb-6 text-xl font-semibold leading-snug sm:text-2xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                13. Contact Us
+              </h2>
+              <p className="text-[var(--door24-body)]">
+                If you have any questions about our GDPR compliance or your data protection rights, please contact:
+              </p>
+              <p className="mt-2 text-[var(--door24-body)]">
                 <a
                   href="mailto:privacy@door24.app"
                   className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
                 >
                   privacy@door24.app
                 </a>
-                .
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Updates to This Notice</h2>
-              <p className="text-[var(--door24-body)]">
-                We may update this GDPR Compliance notice from time to time to reflect
-                changes in our practices or legal requirements. We will notify you of
-                any material changes by posting the updated notice on this page and
-                updating the "Last updated" date.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Contact Us</h2>
-              <p className="text-[var(--door24-body)]">
-                If you have any questions about our GDPR compliance or your data
-                protection rights, please contact us at{" "}
-                <a
-                  href="mailto:privacy@door24.app"
-                  className="text-[var(--door24-foreground)] underline transition-colors duration-200 hover:text-[var(--door24-primary-end)]"
-                >
-                  privacy@door24.app
-                </a>
-                .
               </p>
             </section>
           </div>

@@ -23,7 +23,7 @@ export default function Home() {
               Join the Movement
             </span>
             <div className="flex flex-col gap-4 sm:gap-5">
-              <h1 className="text-5xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-6xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+              <h1 className="text-5xl font-bold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 Community-Powered Sobriety
               </h1>
               <div className="flex flex-col gap-2">
