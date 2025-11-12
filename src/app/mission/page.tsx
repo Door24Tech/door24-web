@@ -95,7 +95,7 @@ export default function Mission() {
           <div className="scroll-fade-in visible">
             <div className="mb-4 inline-block scroll-fade-in visible" style={{ transitionDelay: '0.1s' }}>
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
-                Our Mission
+                [OUR PURPOSE]
               </span>
             </div>
             <h1 className="mb-4 text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl scroll-fade-in visible" style={{ transitionDelay: '0.2s', fontFamily: 'var(--font-bebas-neue)' }}>
