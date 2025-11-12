@@ -111,24 +111,22 @@ export default function Footer() {
       <div className="relative z-10 mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Brand Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <Link
               href="/"
-              className="flex items-center gap-2 text-lg font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] leading-none sm:gap-2.5 sm:text-xl"
-              style={{ fontFamily: 'var(--font-bebas-neue)' }}
+              className="flex items-center"
             >
-              <Image
-                src="/assets/door-24-logo.png"
-                alt="Door 24 logo"
-                width={32}
-                height={32}
-                className="h-6 w-6 object-contain sm:h-8 sm:w-8"
-                unoptimized
+              <img
+                src="/assets/Door-24-Header-Logo.svg"
+                alt="Door 24"
+                className="h-6 w-auto object-contain sm:h-8"
               />
-              <span>Door 24</span>
             </Link>
-            <p className="text-xs text-[var(--door24-body)] sm:text-sm">
-              Community Recovery, Not Counting Recovery
+            <p 
+              className="text-xs text-[var(--door24-foreground)]/90 sm:text-sm font-normal tracking-[0.03em] leading-tight"
+              style={{ fontFamily: 'var(--font-inter)' }}
+            >
+              Systems for Human Evolution
             </p>
           </div>
 
@@ -205,8 +203,8 @@ export default function Footer() {
           </div>
 
           {/* Support Email & Copyright */}
-          <div className="flex flex-col gap-0.5 text-center sm:text-right">
-            <p className="text-xs text-[var(--door24-body)] sm:text-sm" style={{ marginBottom: 0 }}>
+          <div className="flex flex-col gap-0 text-center sm:text-right">
+            <p className="text-xs text-[var(--door24-body)] font-normal" style={{ marginBottom: 0, fontSize: '0.875rem' }}>
               Need help?{' '}
               <a
                 href="mailto:support@door24.app"
@@ -215,7 +213,7 @@ export default function Footer() {
                 support@door24.app
               </a>
             </p>
-            <p className="text-xs text-[var(--door24-muted)]" style={{ marginBottom: 0 }}>
+            <p className="text-xs text-[var(--door24-muted)] -mt-0.5 font-normal" style={{ marginBottom: 0, fontSize: '0.875rem' }}>
               © {currentYear} Door 24 Technologies. All Rights Reserved.
             </p>
           </div>

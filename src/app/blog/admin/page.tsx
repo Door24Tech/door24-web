@@ -1284,70 +1284,81 @@ export default function BlogAdmin() {
             </div>
           )}
 
-          {/* Posts List */}
-          <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-            <h2 className="text-2xl font-semibold mb-6">All Posts</h2>
-            {loadingPosts ? (
-              <p className="text-[var(--door24-muted)]">Loading posts...</p>
-            ) : posts.length === 0 ? (
-              <p className="text-[var(--door24-muted)]">No posts yet. Create your first post!</p>
-            ) : (
-              <div className="space-y-4">
-                {posts.map((post) => (
-                  <div
-                    key={post.id}
-                    className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="font-semibold">{post.title}</h3>
-                        {post.published ? (
-                          <span className="rounded-full bg-[var(--door24-accent)]/20 px-2 py-1 text-xs text-[var(--door24-accent)]">
-                            Published
-                          </span>
-                        ) : post.scheduledDate ? (
-                          <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-1 text-xs text-[var(--door24-primary-start)]">
-                            Scheduled
-                          </span>
-                        ) : (
-                          <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-1 text-xs text-[var(--door24-muted)]">
-                            Draft
-                          </span>
-                        )}
-                        {post.category && (
-                          <span className="rounded-full bg-[var(--door24-surface)] px-2 py-1 text-xs text-[var(--door24-muted)]">
-                            {post.category}
-                          </span>
+          {/* Posts List - Only show when not editing/creating */}
+          {!showEditor && (
+            <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <h2 className="text-2xl font-semibold">All Posts</h2>
+                {!loadingPosts && (
+                  <div className="flex items-center justify-center min-w-[2rem] h-7 px-3 rounded-full bg-gradient-to-r from-[var(--door24-primary-start)]/15 to-[var(--door24-primary-end)]/15 border border-[var(--door24-primary-start)]/30 backdrop-blur-sm">
+                    <span className="text-sm font-semibold text-[var(--door24-foreground)] tabular-nums">
+                      {posts.length}
+                    </span>
+                  </div>
+                )}
+              </div>
+              {loadingPosts ? (
+                <p className="text-[var(--door24-muted)]">Loading posts...</p>
+              ) : posts.length === 0 ? (
+                <p className="text-[var(--door24-muted)]">No posts yet. Create your first post!</p>
+              ) : (
+                <div className="space-y-4">
+                  {posts.map((post) => (
+                    <div
+                      key={post.id}
+                      className="flex items-center justify-between rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h3 className="font-semibold">{post.title}</h3>
+                          {post.published ? (
+                            <span className="rounded-full bg-[var(--door24-accent)]/20 px-2 py-1 text-xs text-[var(--door24-accent)]">
+                              Published
+                            </span>
+                          ) : post.scheduledDate ? (
+                            <span className="rounded-full bg-[var(--door24-primary-start)]/20 px-2 py-1 text-xs text-[var(--door24-primary-start)]">
+                              Scheduled
+                            </span>
+                          ) : (
+                            <span className="rounded-full bg-[var(--door24-muted)]/20 px-2 py-1 text-xs text-[var(--door24-muted)]">
+                              Draft
+                            </span>
+                          )}
+                          {post.category && (
+                            <span className="rounded-full bg-[var(--door24-surface)] px-2 py-1 text-xs text-[var(--door24-muted)]">
+                              {post.category}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-1 text-sm text-[var(--door24-muted)]">
+                          /blog/{post.slug}
+                        </p>
+                        {post.scheduledDate && (
+                          <p className="mt-1 text-xs text-[var(--door24-muted)]">
+                            Scheduled: {formatScheduledDate(post.scheduledDate)}
+                          </p>
                         )}
                       </div>
-                      <p className="mt-1 text-sm text-[var(--door24-muted)]">
-                        /blog/{post.slug}
-                      </p>
-                      {post.scheduledDate && (
-                        <p className="mt-1 text-xs text-[var(--door24-muted)]">
-                          Scheduled: {formatScheduledDate(post.scheduledDate)}
-                        </p>
-                      )}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEdit(post)}
+                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => post.id && handleDelete(post.id)}
+                          className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleEdit(post)}
-                        className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => post.id && handleDelete(post.id)}
-                        className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </main>
 

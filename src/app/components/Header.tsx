@@ -1,6 +1,5 @@
 'use client';
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -26,19 +25,13 @@ export default function Header() {
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-3 sm:px-6 sm:py-3.5 lg:px-12">
           <Link
             href="/"
-            className="flex items-center gap-2 text-base font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] leading-none sm:gap-2.5 sm:text-lg"
-            style={{ fontFamily: 'var(--font-bebas-neue)' }}
+            className="flex items-center"
           >
-            <Image
-              src="/assets/door-24-logo.png"
-              alt="Door 24 logo"
-              width={24}
-              height={24}
-              className="h-5 w-5 object-contain sm:h-6 sm:w-6"
-              unoptimized
-              priority
+            <img
+              src="/assets/Door-24-Header-Logo.svg"
+              alt="Door 24"
+              className="h-6 w-auto object-contain sm:h-8"
             />
-            <span>Door 24</span>
           </Link>
 
           <nav className="flex items-center gap-3 sm:gap-4">
@@ -46,7 +39,7 @@ export default function Header() {
             <div className="hidden md:flex items-center gap-8">
               <Link
                 href="/blog"
-                className={`text-base font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] ${
+                className={`text-sm font-medium uppercase transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] ${
                   pathname === '/blog' || pathname?.startsWith('/blog/')
                     ? 'text-[var(--door24-foreground)]'
                     : 'text-[var(--door24-body)] hover:text-[var(--door24-foreground)]'
@@ -56,7 +49,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/mission"
-                className={`text-base font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] ${
+                className={`text-sm font-medium uppercase transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] ${
                   pathname === '/mission'
                     ? 'text-[var(--door24-foreground)]'
                     : 'text-[var(--door24-body)] hover:text-[var(--door24-foreground)]'
