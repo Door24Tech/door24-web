@@ -137,7 +137,7 @@ export default function ComingSoonModal({
             Coming Soon
           </h2>
           <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg">
-            Door 24 will be available on the App Store soon. Join our waitlist to be notified when we launch.
+            Door 24 will be available soon. Join our waitlist to be notified when we launch.
           </p>
 
           {/* Countdown Timer */}

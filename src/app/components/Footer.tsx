@@ -130,28 +130,55 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* App Store Badge */}
-          <div className="flex flex-col gap-3">
+          {/* App Store & Google Play Badges */}
+          <div className="flex flex-row gap-3">
+            {/* App Store Button */}
             <button
               onClick={() => setIsComingSoonOpen(true)}
               className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
-              <div className="flex h-10 items-center gap-2 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-2.5 sm:px-5">
+              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-4 sm:px-5">
                 <Image
                   src="/assets/App-Store-Apple-Logo.svg"
                   alt="Apple logo"
                   width={20}
                   height={20}
-                  className="h-5 w-5 object-contain sm:h-6 sm:w-6"
+                  className="h-5 w-5 flex-shrink-0 object-contain sm:h-6 sm:w-6"
                   unoptimized
                 />
-                <div className="flex flex-col">
-                  <span className="text-[10px] leading-tight text-white opacity-90 sm:text-xs">
+                <div className="flex flex-col items-start">
+                  <span className="text-[9px] leading-tight text-white opacity-70 sm:text-[10px]">
                     Download on the
                   </span>
-                  <span className="text-xs font-semibold leading-tight text-white sm:text-sm">
+                  <span className="text-sm font-bold leading-tight text-white sm:text-base">
                     App Store
+                  </span>
+                </div>
+              </div>
+            </button>
+
+            {/* Google Play Button */}
+            <button
+              onClick={() => setIsComingSoonOpen(true)}
+              className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              aria-label="Get Door 24 on Google Play"
+            >
+              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-4 sm:px-5">
+                <Image
+                  src="/assets/Play-Store-Icon.svg"
+                  alt="Google Play logo"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 flex-shrink-0 object-contain sm:h-6 sm:w-6"
+                  unoptimized
+                />
+                <div className="flex flex-col items-start">
+                  <span className="text-[9px] leading-tight text-white opacity-70 sm:text-[10px]">
+                    Get It On
+                  </span>
+                  <span className="text-sm font-bold leading-tight text-white sm:text-base">
+                    Google Play
                   </span>
                 </div>
               </div>

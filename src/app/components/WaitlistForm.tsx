@@ -12,7 +12,7 @@ type FormState = {
 
 const successMessage = "You're on the list! We'll notify you when we launch.";
 
-const defaultMessage = "Anonymous by default • No spam • Opt out anytime • iOS at launch";
+const defaultMessage = "Anonymous by default • No spam • Opt out anytime";
 
 interface WaitlistFormProps {
   source?: "homepage" | "modal";
