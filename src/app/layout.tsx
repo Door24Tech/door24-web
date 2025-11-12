@@ -1,13 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Bebas_Neue, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
+  variable: "--font-bebas-neue",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
@@ -50,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${bebasNeue.variable} ${playfairDisplay.variable} antialiased`} suppressHydrationWarning>
         <AuthProvider>
           {children}
         </AuthProvider>

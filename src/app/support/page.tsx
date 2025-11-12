@@ -98,15 +98,15 @@ export default function Support() {
         <div className="flex flex-col gap-16">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold sm:text-5xl">Support</h1>
-            <p className="text-base leading-7 text-[var(--door24-muted)] sm:text-lg sm:leading-8">
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Support</h1>
+            <p className="text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
               Need help? Check our FAQ below or send us a message. We typically respond within 24-48 hours.
             </p>
           </div>
 
           {/* FAQ Section */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-semibold leading-snug sm:text-3xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Frequently Asked Questions</h2>
             <div className="flex flex-col gap-3">
               {faqs.map((faq, index) => (
                 <div

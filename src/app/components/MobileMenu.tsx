@@ -82,10 +82,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <div className="flex h-full flex-col">
           {/* Header with Close Button */}
           <div className="flex items-center justify-between border-b border-[var(--door24-border)] px-4 py-4 sm:px-6">
-            <h2 className="text-lg font-semibold text-[var(--door24-foreground)] sm:text-xl">Menu</h2>
+            <h2 className="text-lg font-semibold text-[var(--door24-foreground)] sm:text-xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Menu</h2>
             <button
               onClick={onClose}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[var(--door24-muted)] transition-colors active:bg-[var(--door24-surface)] hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[var(--door24-body)] transition-colors active:bg-[var(--door24-surface)] hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Close menu"
             >
               <svg
@@ -117,7 +117,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       className={`block min-h-[44px] rounded-lg px-4 py-3.5 text-base font-medium transition-all duration-200 active:bg-[var(--door24-surface-hover)] sm:text-lg ${
                         isActive
                           ? 'bg-[var(--door24-surface)] text-[var(--door24-foreground)]'
-                          : 'text-[var(--door24-muted)] hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)]'
+                          : 'text-[var(--door24-body)] hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)]'
                       } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]`}
                     >
                       {link.label}

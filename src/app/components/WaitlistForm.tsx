@@ -72,7 +72,7 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
         <div className="w-full sm:flex-1" suppressHydrationWarning>
           <label 
             htmlFor="waitlist-email" 
-            className="block text-left text-sm font-medium text-[var(--door24-muted)] mb-2"
+            className="block text-left text-sm font-medium text-[var(--door24-body)] mb-2"
             suppressHydrationWarning
           >
             Email
@@ -95,11 +95,11 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
         <button
           type="submit"
           disabled={formState.status === "loading"}
-          className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:mt-auto sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+          className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:mt-auto sm:w-auto sm:px-6 sm:py-3 sm:text-base"
         >
           <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           <span className="relative z-10">
-            {formState.status === "loading" ? "Joining…" : "Join the Waitlist"}
+            {formState.status === "loading" ? "Joining…" : "Join the Movement"}
           </span>
         </button>
       </div>
@@ -110,7 +110,7 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
             ? "text-[var(--door24-accent)]"
             : formState.status === "error"
               ? "text-[var(--door24-error)]"
-              : "text-[var(--door24-muted)]"
+              : "text-[var(--door24-body)]"
         }`}
       >
         {formState.message}

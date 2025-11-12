@@ -115,6 +115,7 @@ export default function Footer() {
             <Link
               href="/"
               className="flex items-center gap-2 text-lg font-semibold tracking-[0.18em] uppercase text-[var(--door24-foreground)] leading-none sm:gap-2.5 sm:text-xl"
+              style={{ fontFamily: 'var(--font-bebas-neue)' }}
             >
               <Image
                 src="/assets/door-24-logo.png"
@@ -126,7 +127,7 @@ export default function Footer() {
               />
               <span>Door 24</span>
             </Link>
-            <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
+            <p className="text-xs text-[var(--door24-body)] sm:text-sm">
               Community Recovery, Not Counting Recovery
             </p>
           </div>
@@ -172,7 +173,7 @@ export default function Footer() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="relative inline-block text-xs text-[var(--door24-muted)] transition-colors duration-200 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-sm after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[var(--door24-primary-end)] after:transition-all after:duration-300 hover:after:w-full"
+                    className="relative inline-block text-xs font-medium text-[var(--door24-body)] transition-colors duration-200 hover:text-[var(--door24-foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:text-sm after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[var(--door24-primary-end)] after:transition-all after:duration-300 hover:after:w-full"
                   >
                     {link.label}
                   </Link>
@@ -195,7 +196,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative rounded-lg p-2 text-[var(--door24-muted)] transition-all hover:bg-[var(--door24-surface)] hover:text-[var(--door24-foreground)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+                className="group relative rounded-lg p-2 text-[var(--door24-foreground)] transition-all hover:bg-[var(--door24-surface)] hover:text-[var(--door24-primary-end)] hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
                 aria-label={`Follow us on ${social.name}`}
               >
                 {social.icon}
@@ -204,8 +205,8 @@ export default function Footer() {
           </div>
 
           {/* Support Email & Copyright */}
-          <div className="flex flex-col gap-2 text-center sm:text-right">
-            <p className="text-xs text-[var(--door24-muted)] sm:text-sm">
+          <div className="flex flex-col gap-0.5 text-center sm:text-right">
+            <p className="text-xs text-[var(--door24-body)] sm:text-sm" style={{ marginBottom: 0 }}>
               Need help?{' '}
               <a
                 href="mailto:support@door24.app"
@@ -214,7 +215,7 @@ export default function Footer() {
                 support@door24.app
               </a>
             </p>
-            <p className="text-xs text-[var(--door24-muted)]">
+            <p className="text-xs text-[var(--door24-muted)]" style={{ marginBottom: 0 }}>
               © {currentYear} Door 24 Technologies. All Rights Reserved.
             </p>
           </div>

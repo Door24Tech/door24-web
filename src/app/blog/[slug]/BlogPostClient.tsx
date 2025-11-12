@@ -145,7 +145,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
           <div className="flex items-center justify-center py-12">
             <LoadingSpinner size="lg" />
           </div>
@@ -159,7 +159,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto max-w-[720px] px-4 py-8 sm:px-8 sm:py-16">
+        <main className="mx-auto max-w-[720px] px-4 py-8 pt-20 sm:px-8 sm:py-16 sm:pt-24">
           <div className="flex flex-col gap-6">
             <Link
               href="/blog"
@@ -193,7 +193,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto max-w-[720px] px-4 py-8 sm:px-8 sm:py-16">
+      <main className="mx-auto max-w-[720px] px-4 py-8 pt-20 sm:px-8 sm:py-16 sm:pt-24">
         <div className="flex flex-col gap-8">
           {/* Back link - Minimal arrow icon */}
           <Link
@@ -220,9 +220,9 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
               </span>
             )}
             <header className="flex flex-col gap-4">
-              <h1 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{post.title}</h1>
+              <h1 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>{post.title}</h1>
               {post.description && (
-                <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg">
+                <p className="text-base leading-relaxed text-[var(--door24-body)] sm:text-lg">
                   {post.description}
                 </p>
               )}
@@ -270,10 +270,10 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                h1: ({ children }) => <h1 className="text-3xl font-bold mt-12 mb-6 first:mt-0">{children}</h1>,
-                h2: ({ children }) => <h2 className="text-2xl font-bold mt-10 mb-4">{children}</h2>,
+                h1: ({ children }) => <h1 className="text-3xl font-bold mt-12 mb-6 first:mt-0" style={{ fontFamily: 'var(--font-bebas-neue)' }}>{children}</h1>,
+                h2: ({ children }) => <h2 className="text-2xl font-semibold mt-10 mb-4" style={{ fontFamily: 'var(--font-bebas-neue)' }}>{children}</h2>,
                 h3: ({ children }) => <h3 className="text-xl font-semibold mt-8 mb-3">{children}</h3>,
-                p: ({ children }) => <p className="mb-6 text-base leading-relaxed text-[var(--door24-foreground)] sm:text-lg">{children}</p>,
+                p: ({ children }) => <p className="mb-6 text-base leading-relaxed text-[var(--door24-body)] sm:text-lg">{children}</p>,
                 ul: ({ children }) => <ul className="list-disc list-outside mb-6 ml-6 space-y-2">{children}</ul>,
                 ol: ({ children }) => <ol className="list-decimal list-outside mb-6 ml-6 space-y-2">{children}</ol>,
                 li: ({ children }) => <li className="text-base leading-relaxed sm:text-lg">{children}</li>,
@@ -334,7 +334,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
           {/* Related Posts */}
           {relatedPostsList.length > 0 && (
             <div className="pt-12 mt-12 border-t border-[var(--door24-border)]">
-              <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
+              <h2 className="text-2xl font-semibold leading-snug mb-6" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Related Posts</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {relatedPostsList.map((relatedPost) => {
                   const relatedPublishedDate = relatedPost.publishedAt 
@@ -368,7 +368,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                         {relatedPost.title}
                       </h3>
                       {relatedPost.description && (
-                        <p className="text-sm text-[var(--door24-muted)] line-clamp-3 leading-relaxed mb-4">
+                        <p className="text-sm text-[var(--door24-body)] line-clamp-3 leading-relaxed mb-4">
                           {relatedPost.description}
                         </p>
                       )}
@@ -384,7 +384,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                             })}
                           </span>
                         )}
-                        <span className="door24-gradient relative inline-flex overflow-hidden rounded-full px-3 py-1 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out group-hover:scale-[1.05] group-hover:shadow-2xl group-hover:shadow-[rgba(139,92,246,0.5)]">
+                        <span className="door24-gradient relative inline-flex overflow-hidden rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out group-hover:scale-[1.05] group-hover:shadow-2xl group-hover:shadow-[rgba(139,92,246,0.5)]">
                           <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                           <span className="relative z-10">Read</span>
                         </span>

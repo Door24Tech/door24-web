@@ -11,17 +11,17 @@ export default function Privacy() {
         <div className="flex flex-col gap-8">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold sm:text-5xl">Privacy Policy</h1>
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Privacy Policy</h1>
             <p className="text-sm text-[var(--door24-muted)]">
               Last updated: November 10, 2025
             </p>
           </div>
 
           {/* Content */}
-          <div className="flex flex-col gap-8 text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8">
+          <div className="flex flex-col gap-8 text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Introduction</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Introduction</h2>
+              <p className="text-[var(--door24-body)]">
                 At Door 24, we take your privacy seriously. This Privacy Policy
                 explains how we collect, use, and protect your personal
                 information when you use our services.
@@ -29,7 +29,7 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 Information We Collect
               </h2>
               <p className="mb-4 text-[var(--door24-muted)]">
@@ -45,7 +45,7 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 How We Use Your Information
               </h2>
               <p className="mb-4 text-[var(--door24-muted)]">
@@ -60,10 +60,10 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 Anonymous by Default
               </h2>
-              <p className="text-[var(--door24-muted)]">
+              <p className="text-[var(--door24-body)]">
                 Door 24 is designed with privacy at its core. You can use our
                 platform anonymously, and we will never sell your personal data
                 to third parties.
@@ -71,8 +71,8 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Data Security</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Security</h2>
+              <p className="text-[var(--door24-body)]">
                 We implement industry-standard security measures to protect your
                 personal information from unauthorized access, disclosure, or
                 destruction.
@@ -80,7 +80,7 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Your Rights</h2>
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Your Rights</h2>
               <p className="mb-4 text-[var(--door24-muted)]">
                 You have the right to:
               </p>
@@ -93,8 +93,8 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Contact Us</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Contact Us</h2>
+              <p className="text-[var(--door24-body)]">
                 If you have any questions about this Privacy Policy, please
                 contact us at{" "}
                 <a

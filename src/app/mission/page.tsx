@@ -140,11 +140,11 @@ export default function Mission() {
                 Our Mission
               </span>
             </div>
-            <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl scroll-fade-in visible" style={{ transitionDelay: '0.2s' }}>
+            <h1 className="mb-4 text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl scroll-fade-in visible" style={{ transitionDelay: '0.2s', fontFamily: 'var(--font-bebas-neue)' }}>
               Upgrade the Human<br />
               Operating System
             </h1>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg scroll-fade-in visible" style={{ transitionDelay: '0.3s' }}>
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--door24-body)] sm:text-lg scroll-fade-in visible" style={{ transitionDelay: '0.3s' }}>
               Building the world's leading ecosystem for conscious evolution.
             </p>
           </div>
@@ -167,10 +167,10 @@ export default function Mission() {
                 The Crisis
               </span>
             </div>
-            <h2 className="mb-6 text-2xl font-bold leading-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl scroll-fade-in">
+            <h2 className="mb-6 text-2xl font-bold leading-[1.1] tracking-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl scroll-fade-in" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
               The Human System Is Breaking
             </h2>
-            <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-muted)] sm:text-xl scroll-fade-in" style={{ transitionDelay: '100ms' }}>
+            <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-body)] sm:text-xl scroll-fade-in" style={{ transitionDelay: '100ms' }}>
               Technology has advanced faster than we have, and humanity is paying the price.
             </p>
             <div className="space-y-5 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
@@ -267,7 +267,7 @@ export default function Mission() {
                     {item.title}
                   </h3>
                 </div>
-                <p className="ml-8 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
+                <p className="ml-8 text-base leading-relaxed text-[var(--door24-body)] sm:text-lg sm:leading-relaxed">
                   {item.description}
                 </p>
               </div>

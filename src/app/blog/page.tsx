@@ -61,7 +61,7 @@ export default function Blog() {
         <div className="flex flex-col gap-8 w-full">
           {/* Header Section with Search */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full">
-            <h1 className="text-4xl font-bold sm:text-5xl">Blog</h1>
+            <h1 className="text-4xl font-bold sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Blog</h1>
             <div className="flex items-center gap-2">
               {/* Search Bar */}
               <div className="relative w-full sm:w-64">
@@ -181,8 +181,13 @@ export default function Blog() {
                   <Link
                     key={post.id}
                     href={`/blog/${post.slug}`}
-                    className="group flex flex-col transition-all duration-300 hover:opacity-90"
+                    className="group relative flex flex-col transition-all duration-300"
+                    style={{ color: 'inherit' }}
                   >
+                    {/* Background highlight with border - appears on hover */}
+                    <div className="absolute -inset-2 rounded-lg bg-gradient-to-br from-[rgba(139,92,246,0.12)] to-[rgba(107,70,198,0.15)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+                    <div className="absolute -inset-2 rounded-lg border border-[var(--door24-primary-end)]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 pointer-events-none" />
+                    
                     {/* Image Container - Perfect Square */}
                     <div className="relative w-full aspect-square overflow-hidden bg-black rounded-none mb-4">
                       {post.featuredImage ? (
@@ -198,11 +203,11 @@ export default function Blog() {
                     </div>
                     
                     {/* Title and Description - No Box */}
-                    <h3 className="text-base font-semibold text-[var(--door24-foreground)] mb-2 line-clamp-2 leading-snug">
+                    <h3 className="blog-post-title">
                       {post.title}
                     </h3>
                     {post.description && (
-                      <p className="text-sm text-[var(--door24-muted)] line-clamp-3 leading-relaxed mb-4">
+                      <p className="blog-post-description" style={{ color: '#9ca3af' }}>
                         {post.description}
                       </p>
                     )}
@@ -218,7 +223,7 @@ export default function Blog() {
                           })}
                         </span>
                       )}
-                      <span className="door24-gradient relative inline-flex overflow-hidden rounded-full px-3 py-1 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out group-hover:scale-[1.05] group-hover:shadow-2xl group-hover:shadow-[rgba(139,92,246,0.5)]">
+                      <span className="relative inline-flex overflow-hidden rounded-full border border-[var(--door24-border)] bg-gradient-to-br from-[var(--door24-surface)] to-[var(--door24-surface)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--door24-foreground)] transition-all duration-300 ease-out group-hover:border-transparent group-hover:bg-gradient-to-r group-hover:from-[#6b46c2] group-hover:to-[#8b5cf6] group-hover:shadow-lg group-hover:shadow-[rgba(107,70,198,0.25)]">
                         <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                         <span className="relative z-10">Read</span>
                       </span>

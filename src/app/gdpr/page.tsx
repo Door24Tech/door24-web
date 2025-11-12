@@ -11,17 +11,17 @@ export default function GDPR() {
         <div className="flex flex-col gap-8">
           {/* Title */}
           <div className="flex flex-col gap-4">
-            <h1 className="text-4xl font-bold sm:text-5xl">GDPR Compliance</h1>
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>GDPR Compliance</h1>
             <p className="text-sm text-[var(--door24-muted)]">
               Last updated: November 10, 2025
             </p>
           </div>
 
           {/* Content */}
-          <div className="flex flex-col gap-8 text-base leading-7 text-[var(--door24-foreground)] sm:text-lg sm:leading-8">
+          <div className="flex flex-col gap-8 text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">What is GDPR?</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>What is GDPR?</h2>
+              <p className="text-[var(--door24-body)]">
                 The General Data Protection Regulation (GDPR) is a European Union
                 regulation that governs data protection and privacy for individuals
                 within the EU and EEA. Door 24 is committed to full compliance with
@@ -30,11 +30,11 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Your Rights Under GDPR</h2>
-              <p className="mb-4 text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Your Rights Under GDPR</h2>
+              <p className="mb-4 text-[var(--door24-body)]">
                 As a data subject under GDPR, you have the following rights:
               </p>
-              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-muted)]">
+              <ul className="ml-6 list-disc space-y-2 text-[var(--door24-body)]">
                 <li>
                   <strong className="text-[var(--door24-foreground)]">Right of Access:</strong> You can request a copy of the personal data we hold about you.
                 </li>
@@ -60,7 +60,7 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Legal Basis for Processing</h2>
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Legal Basis for Processing</h2>
               <p className="mb-4 text-[var(--door24-muted)]">
                 We process your personal data based on the following legal grounds:
               </p>
@@ -81,7 +81,7 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Data We Collect</h2>
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data We Collect</h2>
               <p className="mb-4 text-[var(--door24-muted)]">
                 We collect and process the following categories of personal data:
               </p>
@@ -95,7 +95,7 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">How We Use Your Data</h2>
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>How We Use Your Data</h2>
               <p className="mb-4 text-[var(--door24-muted)]">
                 We use your personal data to:
               </p>
@@ -109,8 +109,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Data Retention</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Retention</h2>
+              <p className="text-[var(--door24-body)]">
                 We retain your personal data only for as long as necessary to fulfill
                 the purposes outlined in this notice, comply with legal obligations, or
                 resolve disputes. When you request deletion, we will remove your data
@@ -119,8 +119,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Data Security</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Security</h2>
+              <p className="text-[var(--door24-body)]">
                 We implement appropriate technical and organizational measures to protect
                 your personal data against unauthorized access, alteration, disclosure,
                 or destruction. This includes encryption, access controls, and regular
@@ -129,8 +129,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">International Data Transfers</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>International Data Transfers</h2>
+              <p className="text-[var(--door24-body)]">
                 Your data may be transferred to and processed in countries outside the
                 EU/EEA. When we transfer data internationally, we ensure appropriate
                 safeguards are in place, such as Standard Contractual Clauses approved
@@ -139,7 +139,7 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Exercising Your Rights</h2>
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Exercising Your Rights</h2>
               <p className="mb-4 text-[var(--door24-muted)]">
                 To exercise any of your GDPR rights, please contact us at{" "}
                 <a
@@ -151,15 +151,15 @@ export default function GDPR() {
                 . We will respond to your request within 30 days. You may be asked to
                 verify your identity before we can process your request.
               </p>
-              <p className="text-[var(--door24-muted)]">
+              <p className="text-[var(--door24-body)]">
                 You can also manage your data preferences directly in your account
                 settings when the app launches.
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Right to Lodge a Complaint</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Right to Lodge a Complaint</h2>
+              <p className="text-[var(--door24-body)]">
                 If you believe we have not addressed your concerns adequately, you have
                 the right to lodge a complaint with your local data protection authority.
                 For EU residents, you can find your supervisory authority at{" "}
@@ -176,8 +176,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Data Protection Officer</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Data Protection Officer</h2>
+              <p className="text-[var(--door24-body)]">
                 For questions or concerns about our data processing practices, please
                 contact our Data Protection Officer at{" "}
                 <a
@@ -191,8 +191,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Updates to This Notice</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Updates to This Notice</h2>
+              <p className="text-[var(--door24-body)]">
                 We may update this GDPR Compliance notice from time to time to reflect
                 changes in our practices or legal requirements. We will notify you of
                 any material changes by posting the updated notice on this page and
@@ -201,8 +201,8 @@ export default function GDPR() {
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-semibold">Contact Us</h2>
-              <p className="text-[var(--door24-muted)]">
+              <h2 className="mb-4 text-2xl font-semibold leading-snug" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Contact Us</h2>
+              <p className="text-[var(--door24-body)]">
                 If you have any questions about our GDPR compliance or your data
                 protection rights, please contact us at{" "}
                 <a
