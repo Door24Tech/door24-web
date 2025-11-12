@@ -1,9 +1,15 @@
-'use client';
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+export const metadata: Metadata = {
+  title: "Page Not Found | Door 24 Sobriety App",
+  description: "The page you're looking for doesn't exist. Return to Door 24 to keep building your freedom and progress.",
+  keywords: "404 page, missing page, Door 24 error",
+  authors: [{ name: "Brett Booker" }],
+};
 
 export default function NotFound() {
   return (
@@ -71,4 +77,3 @@ export default function NotFound() {
     </div>
   );
 }
-

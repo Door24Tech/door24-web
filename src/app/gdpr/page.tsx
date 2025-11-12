@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "GDPR Compliance | Your Rights & Data Protection at Door 24",
+  description: "Door 24 follows full GDPR compliance. Understand your rights under EU law and how we safeguard your personal information.",
+  keywords: "GDPR compliance, EU privacy rights, Door 24 data security, user protection",
+  authors: [{ name: "Brett Booker" }],
+};
 
 export default function GDPR() {
   return (

@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | Door 24 Sobriety Platform",
+  description: "Review Door 24's Terms of Service for details on user rights, data protection, and responsible community standards.",
+  keywords: "Door 24 terms, user agreement, sobriety platform policy",
+  authors: [{ name: "Brett Booker" }],
+};
 
 export default function Terms() {
   return (

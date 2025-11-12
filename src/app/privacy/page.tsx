@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | How Door 24 Protects Your Data",
+  description: "Learn how Door 24 collects, protects, and uses your data while supporting your recovery journey with trust and transparency.",
+  keywords: "Door 24 privacy, data protection, sobriety app privacy, user data security",
+  authors: [{ name: "Brett Booker" }],
+};
 
 export default function Privacy() {
   return (

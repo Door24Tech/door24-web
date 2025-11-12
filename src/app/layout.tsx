@@ -26,18 +26,20 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Door 24 — Community Recovery, Not Counting Recovery",
+  title: "Reclaim Control. Stay Sober. Track Your Journey with Door 24",
   description:
-    "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
+    "Door 24 helps you quit drinking and stay sober through powerful tracking tools, community support, and daily reflection that builds real change.",
+  keywords: "sobriety app, quit drinking, sober tracker, recovery support, Door 24",
+  authors: [{ name: "Brett Booker" }],
   metadataBase: new URL("https://door24.app"),
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "Door 24 — Community Recovery, Not Counting Recovery",
+    title: "Reclaim Control. Stay Sober. Track Your Journey with Door 24",
     description:
-      "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
+      "Door 24 helps you quit drinking and stay sober through powerful tracking tools, community support, and daily reflection that builds real change.",
     url: "https://door24.app",
     siteName: "Door 24",
     images: [
@@ -51,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Door 24 — Community Recovery, Not Counting Recovery",
+    title: "Reclaim Control. Stay Sober. Track Your Journey with Door 24",
     description:
-      "Join the Door 24 waitlist to get early access to the community-powered recovery app.",
+      "Door 24 helps you quit drinking and stay sober through powerful tracking tools, community support, and daily reflection that builds real change.",
     images: ["/assets/door-24-logo.png"],
   },
 };
