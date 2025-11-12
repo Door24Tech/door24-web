@@ -91,7 +91,7 @@ export default function Mission() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[1080px] px-4 pt-20 pb-12 sm:px-8 sm:pt-28 sm:pb-16 lg:px-12">
+        <section className="relative mx-auto max-w-[1080px] px-4 pt-20 pb-4 sm:px-8 sm:pt-24 sm:pb-6 lg:px-12">
           <div className="scroll-fade-in visible">
             <div className="mb-4 inline-block scroll-fade-in visible" style={{ transitionDelay: '0.1s' }}>
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
@@ -103,7 +103,7 @@ export default function Mission() {
               Operating System
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-[var(--door24-body)] sm:text-lg scroll-fade-in visible" style={{ transitionDelay: '0.3s' }}>
-              Building the world's leading ecosystem for conscious evolution.
+              Building the world's leading platform for human evolution.
             </p>
           </div>
         </section>
@@ -112,7 +112,7 @@ export default function Mission() {
         <section
           id="human-system-breaking"
           data-animate
-          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-hero-bg)] via-[var(--door24-card)] to-[var(--door24-section-bg)] pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pb-28"
+          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-hero-bg)] via-[var(--door24-card)] to-[var(--door24-section-bg)] pt-8 pb-12 sm:pt-12 sm:pb-16"
         >
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[rgba(107,70,198,0.08)] blur-3xl" />
@@ -128,10 +128,10 @@ export default function Mission() {
             <h2 className="mb-6 text-2xl font-bold leading-[1.1] tracking-tight text-[var(--door24-foreground)] sm:text-3xl lg:text-4xl scroll-fade-in" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
               The Human System Is Breaking
             </h2>
-            <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-body)] sm:text-xl scroll-fade-in" style={{ transitionDelay: '100ms' }}>
+            <p className="mb-8 text-lg font-medium leading-relaxed text-[var(--door24-body)] sm:text-xl scroll-fade-in" style={{ transitionDelay: '100ms' }}>
               We are living through an extinction-level event for human wellbeing.
             </p>
-            <div className="space-y-5 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
+            <div className="space-y-4 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
               <p className="scroll-fade-in" style={{ transitionDelay: "100ms" }}>
                 Overdoses at all-time highs. Anxiety and depression doubling every decade. Obesity spanning generations. Life expectancy declining for the first time in modern history.
               </p>
@@ -144,7 +144,7 @@ export default function Mission() {
               <p className="scroll-fade-in" style={{ transitionDelay: "400ms" }}>
                 The result: more connected than ever, and lonelier than ever. More medicated than ever, and sicker than ever.
               </p>
-              <p className="mt-10 border-l-2 border-[var(--door24-primary-start)] pl-6 text-lg font-medium leading-relaxed text-[var(--door24-foreground)] sm:text-xl scroll-slide-right" style={{ transitionDelay: "500ms" }}>
+              <p className="mt-8 border-l-2 border-[var(--door24-primary-start)] pl-6 text-lg font-medium leading-relaxed text-[var(--door24-foreground)] sm:text-xl scroll-slide-right" style={{ transitionDelay: "500ms" }}>
                 Door 24 was born from this collapse.
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function Mission() {
         <section
           id="the-mission"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
@@ -163,7 +163,7 @@ export default function Mission() {
               The Mission
             </span>
           </div>
-          <div className="space-y-6 sm:space-y-7">
+          <div className="space-y-5 sm:space-y-6">
             <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '0ms' }}>
               We build the products, experiences, and communities that architect human transformation at scale.
             </p>
@@ -176,7 +176,7 @@ export default function Mission() {
             <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '225ms' }}>
               We believe the next great frontier isn't external. It's internal. The breakthroughs that matter most will come from within.
             </p>
-            <div className="space-y-4 pt-2 scroll-fade-in" style={{ transitionDelay: '300ms' }}>
+            <div className="space-y-3 pt-2 scroll-fade-in" style={{ transitionDelay: '300ms' }}>
               <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed">
                 Technology should restore the mind, not fracture it.
               </p>
@@ -194,7 +194,7 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12 py-4">
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
@@ -202,7 +202,7 @@ export default function Mission() {
         <section
           id="how-we-do-it"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
@@ -210,7 +210,7 @@ export default function Mission() {
               How We Do It
             </span>
           </div>
-          <div className="space-y-10 sm:space-y-12">
+          <div className="space-y-8 sm:space-y-10">
             {howWeDoIt.map((item, index) => (
               <div
                 key={item.title}
@@ -234,7 +234,7 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12 py-4">
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
@@ -242,7 +242,7 @@ export default function Mission() {
         <section
           id="join-us"
           data-animate
-          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-12 sm:px-8 sm:py-16 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
@@ -250,7 +250,7 @@ export default function Mission() {
               Join Us
             </span>
           </div>
-          <div className="space-y-6 sm:space-y-7">
+          <div className="space-y-5 sm:space-y-6">
             <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '100ms' }}>
               We are rewiring the human operating system.
             </p>
@@ -260,7 +260,7 @@ export default function Mission() {
             <div className="pt-4 scroll-scale-in" style={{ transitionDelay: '300ms' }}>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-5 sm:py-2.5 sm:text-base"
+                className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-6 sm:py-3 sm:text-base"
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
                 <span className="relative z-10">Join the Movement</span>
