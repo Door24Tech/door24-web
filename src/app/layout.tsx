@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     siteName: "Door 24",
     images: [
       {
-        url: "/assets/door-24-logo.png",
-        width: 1024,
-        height: 1024,
-        alt: "Door 24 logo",
+        url: "/assets/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Door 24",
       },
     ],
   },
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Reclaim Control. Stay Sober. Track Your Journey with Door 24",
     description:
       "Door 24 helps you quit drinking and stay sober through powerful tracking tools, community support, and daily reflection that builds real change.",
-    images: ["/assets/door-24-logo.png"],
+    images: ["/assets/og-image.png"],
   },
 };
 

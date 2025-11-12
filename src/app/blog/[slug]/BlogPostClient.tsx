@@ -42,7 +42,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
       const description = post.seoDescription || post.description;
       const keywords = post.seoKeywords || post.tags?.join(", ") || "";
       const author = post.seoAuthor || post.author || "Door 24";
-      const image = post.seoImage || post.featuredImage || "/assets/door-24-logo.png";
+      const image = post.seoImage || post.featuredImage || "/assets/og-image.png";
       const url = `https://door24.app/blog/${post.slug}`;
 
       // Update document title
