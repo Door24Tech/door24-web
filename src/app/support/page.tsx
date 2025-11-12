@@ -90,11 +90,11 @@ export default function Support() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+    <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[880px] px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
+      <main className="mx-auto max-w-[880px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
         <div className="flex flex-col gap-16">
           {/* Title */}
           <div className="flex flex-col gap-4">

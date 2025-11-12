@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b border-[var(--door24-border)] bg-[var(--door24-overlay)] backdrop-blur-sm">
+      <header className="fixed top-0 left-0 right-0 z-20 bg-[rgba(0,0,0,0.85)] backdrop-blur-sm border-b border-[var(--door24-border)] shadow-[0_1px_20px_rgba(0,0,0,0.3)]">
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-12">
           <Link
             href="/"

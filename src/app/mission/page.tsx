@@ -128,12 +128,12 @@ export default function Mission() {
 
 
   return (
-    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+    <div className="relative min-h-screen bg-[var(--door24-hero-bg)] text-[var(--door24-foreground)]">
       <Header />
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[900px] px-4 pt-8 pb-12 sm:px-8 sm:pt-12 sm:pb-16 lg:px-12">
+        <section className="relative mx-auto max-w-[900px] px-4 pt-20 pb-12 sm:px-8 sm:pt-28 sm:pb-16 lg:px-12">
           <div className="text-center scroll-fade-in visible">
             <div className="mb-4 inline-block scroll-fade-in visible" style={{ transitionDelay: '0.1s' }}>
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
@@ -154,7 +154,7 @@ export default function Mission() {
         <section
           id="human-system-breaking"
           data-animate
-          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-background)] via-[var(--door24-card)] to-[var(--door24-background)] pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pb-28"
+          className="relative overflow-hidden bg-gradient-to-b from-[var(--door24-hero-bg)] via-[var(--door24-card)] to-[var(--door24-section-bg)] pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pb-28"
         >
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[rgba(107,70,198,0.08)] blur-3xl" />

@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { addToWaitlist } from "@/lib/waitlist";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
@@ -23,6 +23,11 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
     status: "idle",
     message: defaultMessage,
   });
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,10 +52,11 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
         message: successMessage,
       });
     } catch (error: any) {
-      console.error(error);
+      const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : "Something went wrong. Please try again in a moment.");
+      console.error("Waitlist submission error:", errorMessage);
       setFormState({
         status: "error",
-        message: error.message || "Something went wrong. Please try again in a moment.",
+        message: errorMessage,
       });
     }
   };
@@ -67,19 +73,23 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
           <label 
             htmlFor="waitlist-email" 
             className="block text-left text-sm font-medium text-[var(--door24-muted)] mb-2"
+            suppressHydrationWarning
           >
             Email
           </label>
           <div suppressHydrationWarning>
-            <input
-              id="waitlist-email"
-              className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] sm:px-4 sm:py-3 sm:text-base"
-              type="email"
-              name="email"
-              placeholder="you@email.com"
-              required
-              suppressHydrationWarning
-            />
+            {isMounted ? (
+              <input
+                id="waitlist-email"
+                className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm text-[var(--door24-foreground)] outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] focus-visible:shadow-lg focus-visible:shadow-[rgba(139,92,246,0.2)] sm:px-4 sm:py-3 sm:text-base"
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                required
+              />
+            ) : (
+              <div className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm sm:px-4 sm:py-3 sm:text-base" style={{ height: '42px' }} />
+            )}
           </div>
         </div>
         <button

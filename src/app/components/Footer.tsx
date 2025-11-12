@@ -96,9 +96,19 @@ export default function Footer() {
     setCurrentYear(getCurrentYear());
   }, []);
 
+
   return (
-    <footer className="border-t border-[var(--door24-border)] bg-[var(--door24-overlay)] backdrop-blur-sm w-full">
-      <div className="mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
+    <footer className="relative w-full" style={{ 
+      background: 'linear-gradient(to right, rgba(251, 191, 36, 0.15), rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0.15))'
+    }}>
+      {/* Dark Overlay for Readability */}
+      <div className="absolute inset-0 bg-black/25 backdrop-blur-sm" />
+      
+      {/* Top Glow Effect - Subtle warm glow at the top edge */}
+      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-amber-400/30 via-purple-500/20 to-transparent blur-2xl pointer-events-none" />
+      
+      {/* Content Container */}
+      <div className="relative z-10 mx-auto max-w-[1080px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
         {/* Brand Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-1.5">

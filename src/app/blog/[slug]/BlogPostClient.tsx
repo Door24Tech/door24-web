@@ -143,7 +143,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+      <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
         <Header />
         <main className="mx-auto max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12">
           <div className="flex items-center justify-center py-12">
@@ -157,7 +157,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
   if (!post) {
     return (
-      <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+      <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
         <Header />
         <main className="mx-auto max-w-[720px] px-4 py-8 sm:px-8 sm:py-16">
           <div className="flex flex-col gap-6">

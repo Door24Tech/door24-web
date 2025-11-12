@@ -32,7 +32,7 @@ export default function Blog() {
       setPosts(allPosts);
       setCategories(allCategories);
     } catch (error) {
-      console.error("Error loading posts:", error);
+      console.error("Error loading posts:", error instanceof Error ? error.message : String(error));
     } finally {
       setLoading(false);
     }
@@ -54,10 +54,10 @@ export default function Blog() {
   }, [posts, searchQuery, selectedCategory]);
 
   return (
-    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
+    <div className="relative min-h-screen bg-[var(--door24-section-bg)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1080px] px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
+      <main className="mx-auto w-full max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
         <div className="flex flex-col gap-8 w-full">
           {/* Header Section with Search */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full">
@@ -184,7 +184,7 @@ export default function Blog() {
                     className="group flex flex-col transition-all duration-300 hover:opacity-90"
                   >
                     {/* Image Container - Perfect Square */}
-                    <div className="relative w-full aspect-square overflow-hidden bg-black rounded-2xl mb-4">
+                    <div className="relative w-full aspect-square overflow-hidden bg-black rounded-none mb-4">
                       {post.featuredImage ? (
                         <AnimatedImage
                           src={post.featuredImage}
