@@ -17,36 +17,28 @@ export default function Home() {
       <Header />
 
       <main className="relative mx-auto flex max-w-[1080px] flex-col items-center px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
-        <section className="flex w-full flex-col items-center gap-8 text-center sm:gap-10">
+        <section className="flex w-full flex-col items-center gap-6 text-center sm:gap-8">
           <div className="flex flex-col gap-6 sm:gap-8">
             <span className="mx-auto w-fit rounded-full border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.15em] text-[var(--door24-muted)] sm:px-4 sm:text-xs sm:tracking-[0.15em]">
               Join the Movement
             </span>
             <div className="flex flex-col gap-4 sm:gap-5">
-              <h1 className="px-2 text-5xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-6xl">
-                Community Recovery,<br />
-                Not Counting Recovery.
+              <h1 className="text-5xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-6xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
+                Community-Powered Sobriety
               </h1>
-              <p className="mx-auto max-w-2xl px-2 text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
-                Door 24 rewires the recovery experience through connection, tools that adapt, and progress that compounds.
-              </p>
+              <div className="flex flex-col gap-2">
+                <p className="mx-auto max-w-2xl text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
+                  The intelligent app that evolves with you. Real connection. Real accountability. Transformation that compounds.
+                </p>
+                <p className="mx-auto max-w-2xl text-sm font-medium leading-6 text-[var(--door24-body)] sm:text-base sm:leading-7">
+                  Door 24 turns sobriety into identity change, so it actually lasts.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="w-full max-w-2xl">
+          <div className="w-full max-w-2xl mt-2">
             <WaitlistForm />
-          </div>
-
-          <div className="flex flex-col gap-3 text-sm font-medium uppercase tracking-[0.15em] text-[var(--door24-muted)] sm:flex-row sm:items-center sm:gap-6">
-            <span>Anonymous</span>
-            <span aria-hidden className="hidden sm:inline">
-              •
-            </span>
-            <span>No ads</span>
-            <span aria-hidden className="hidden sm:inline">
-              •
-            </span>
-            <span>iOS at launch</span>
           </div>
         </section>
       </main>

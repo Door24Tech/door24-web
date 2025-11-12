@@ -7,7 +7,7 @@ export default function Terms() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[880px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
         <div className="flex flex-col gap-8">
           {/* Title */}
           <div className="flex flex-col gap-4">

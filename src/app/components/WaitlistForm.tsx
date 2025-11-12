@@ -12,7 +12,7 @@ type FormState = {
 
 const successMessage = "You're on the list! We'll notify you when we launch.";
 
-const defaultMessage = "No spam. Anonymous by default. Opt out anytime.";
+const defaultMessage = "Anonymous by default • No spam • Opt out anytime • iOS at launch";
 
 interface WaitlistFormProps {
   source?: "homepage" | "modal";
@@ -70,13 +70,6 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
     >
       <div className="flex flex-col gap-3 sm:flex-row" suppressHydrationWarning>
         <div className="w-full sm:flex-1" suppressHydrationWarning>
-          <label 
-            htmlFor="waitlist-email" 
-            className="block text-left text-sm font-medium text-[var(--door24-body)] mb-2"
-            suppressHydrationWarning
-          >
-            Email
-          </label>
           <div suppressHydrationWarning>
             {isMounted ? (
               <input
@@ -86,6 +79,7 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
                 name="email"
                 placeholder="you@email.com"
                 required
+                aria-label="Email address"
               />
             ) : (
               <div className="w-full rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-2.5 text-sm sm:px-4 sm:py-3 sm:text-base" style={{ height: '42px' }} />
@@ -95,7 +89,7 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
         <button
           type="submit"
           disabled={formState.status === "loading"}
-          className="door24-gradient group relative mt-2 w-full overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:mt-auto sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+          className="door24-gradient group relative w-full overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
         >
           <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           <span className="relative z-10">
@@ -105,12 +99,12 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
       </div>
       <div
         aria-live="polite"
-        className={`text-center text-xs sm:text-sm ${
+        className={`text-center text-xs ${
           formState.status === "success"
             ? "text-[var(--door24-accent)]"
             : formState.status === "error"
               ? "text-[var(--door24-error)]"
-              : "text-[var(--door24-body)]"
+              : "text-[var(--door24-muted)]"
         }`}
       >
         {formState.message}

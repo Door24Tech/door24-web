@@ -5,69 +5,27 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WaitlistModal from "../components/WaitlistModal";
 
-const missionStatements = [
-  "We build products, experiences, and communities that transform how humans think, heal, and thrive.",
-  "Our work cuts through the noise, helping people reclaim clarity, live with intention, and reconnect to what's essential.",
-  "Technology should restore the mind, not fracture it.",
-  "Community should unite, not isolate.",
-  "Recovery isn't the destination. It's where real life begins.",
-];
-
 const howWeDoIt = [
   {
-    title: "Transformative Tools",
+    title: "Intelligence That Evolves With You",
     description:
-      "We create software that rebuilds focus, discipline, and identity from the ground up. Every feature is anchored in neuroscience and designed with deep empathy. Our adaptive intelligence learns your patterns and evolves with you, supporting genuine, lasting change.",
+      "Adaptive systems that learn who you are and what you need in real time. Not static trackers or one-size-fits-all solutions. Technology that responds, anticipates, and grows alongside human transformation.",
   },
   {
-    title: "A New Model of Recovery",
+    title: "Real Community, Not Networks",
     description:
-      "We've moved beyond counting days. We're building momentum. Small, intentional actions that compound into transformation. Progress becomes tangible: something you see, feel, and sustain.",
+      "We're building living ecosystems where people don't just connect—they evolve together. Shared identity. Collective momentum. Accountability that feels like belonging. This is community as infrastructure for change.",
   },
   {
-    title: "Human Tech, Not Hype",
+    title: "Physical Spaces for Mental Transformation",
     description:
-      "Our systems are context-aware. They observe behavior, surface insights, and respond in real time. This is technology that strengthens self-awareness rather than supplanting it. We amplify human capacity, not replace it.",
+      "Immersive retreats at the frontier of restoration science. We don't treat symptoms. We address root causes. Our protocols integrate emerging research and therapeutic modalities that most institutions won't touch—creating environments where healing happens at the identity level, not the prescription level.",
   },
   {
-    title: "Beyond the Screen",
+    title: "A Platform for Permanent Transformation",
     description:
-      "Immersive retreats. Sound-based restoration. Live gatherings where people reconnect face-to-face. The physical world becomes your training ground for mental resilience and growth.",
+      "Beyond tracking. Beyond habits. We're building the operating system for identity change itself. Small actions compound into new ways of being. Progress becomes visible, tangible, unstoppable.",
   },
-];
-
-const philosophy = [
-  {
-    headline: "Healing is intelligence.",
-    description:
-      "The mind possesses an innate capacity to repair and evolve itself. Recovery is not a deficit to manage. It is the activation of latent human potential.",
-  },
-  {
-    headline: "Community is medicine.",
-    description:
-      "Isolation is the architecture of suffering. Connection is the architecture of healing. We design spaces where people are seen, heard, and held.",
-  },
-  {
-    headline: "Behavior is data. Data is insight. Insight is power.",
-    description:
-      "We track not to judge, but to illuminate. Patterns reveal what words cannot. Self-awareness becomes the foundation of self-mastery.",
-  },
-  {
-    headline: "Technology should amplify humanity, not replace it.",
-    description:
-      "We build tools that restore agency, deepen presence, and reconnect people to themselves and each other. Our mission is to make technology disappear into the background of a life well-lived.",
-  },
-];
-
-const whyWeExist = [
-  "Humanity is waking up to the cost of distraction, disconnection, and dependency.",
-  "We are more connected than ever, and lonelier than ever.",
-  "We have more information than ever, and less clarity than ever.",
-  "We have more tools for productivity, and less peace than ever.",
-  "Door 24 exists to correct this imbalance.",
-  "We are building the infrastructure for human flourishing in the age of infinite noise.",
-  "This is not self-help. This is self-evolution.",
-  "This is not an app. This is a movement.",
 ];
 
 export default function Mission() {
@@ -133,8 +91,8 @@ export default function Mission() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-[900px] px-4 pt-20 pb-12 sm:px-8 sm:pt-28 sm:pb-16 lg:px-12">
-          <div className="text-center scroll-fade-in visible">
+        <section className="relative mx-auto max-w-[1080px] px-4 pt-20 pb-12 sm:px-8 sm:pt-28 sm:pb-16 lg:px-12">
+          <div className="scroll-fade-in visible">
             <div className="mb-4 inline-block scroll-fade-in visible" style={{ transitionDelay: '0.1s' }}>
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--door24-muted)] sm:text-sm">
                 Our Mission
@@ -144,7 +102,7 @@ export default function Mission() {
               Upgrade the Human<br />
               Operating System
             </h1>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--door24-body)] sm:text-lg scroll-fade-in visible" style={{ transitionDelay: '0.3s' }}>
+            <p className="max-w-2xl text-base leading-relaxed text-[var(--door24-body)] sm:text-lg scroll-fade-in visible" style={{ transitionDelay: '0.3s' }}>
               Building the world's leading ecosystem for conscious evolution.
             </p>
           </div>
@@ -160,7 +118,7 @@ export default function Mission() {
             <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-[rgba(107,70,198,0.08)] blur-3xl" />
             <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-[rgba(139,92,246,0.06)] blur-3xl" />
           </div>
-          <div className="relative mx-auto max-w-[800px] px-4 sm:px-8 lg:px-12">
+          <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12">
             <div className="mb-6 flex items-center gap-3 scroll-slide-left">
               <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
@@ -171,40 +129,23 @@ export default function Mission() {
               The Human System Is Breaking
             </h2>
             <p className="mb-12 text-lg font-medium leading-relaxed text-[var(--door24-body)] sm:text-xl scroll-fade-in" style={{ transitionDelay: '100ms' }}>
-              Technology has advanced faster than we have, and humanity is paying the price.
+              We are living through an extinction-level event for human wellbeing.
             </p>
             <div className="space-y-5 text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
               <p className="scroll-fade-in" style={{ transitionDelay: "100ms" }}>
-                Overdoses. Anxiety. Isolation. Endless scrolling.
+                Overdoses at all-time highs. Anxiety and depression doubling every decade. Obesity spanning generations. Life expectancy declining for the first time in modern history.
               </p>
               <p className="scroll-fade-in" style={{ transitionDelay: "200ms" }}>
-                We built machines that outpace our minds, but never taught the mind to keep up.
+                We built machines that outpace our minds but never taught the mind to keep up. The average person now spends more time with algorithms than with other humans.
               </p>
               <p className="scroll-fade-in" style={{ transitionDelay: "300ms" }}>
-                <span className="relative font-semibold text-[var(--door24-foreground)]">
-                  Attention has become the new currency, and most of us are broke.
-                </span>
+                Our health systems treat symptoms with pills. Our tech companies monetize distraction. Our food systems engineer addiction.
               </p>
               <p className="scroll-fade-in" style={{ transitionDelay: "400ms" }}>
-                We chase connection through screens and find only noise.
+                The result: more connected than ever, and lonelier than ever. More medicated than ever, and sicker than ever.
               </p>
-              <p className="scroll-fade-in" style={{ transitionDelay: "500ms" }}>
-                We've confused stimulation for satisfaction, and progress for peace.
-              </p>
-              <p className="scroll-fade-in" style={{ transitionDelay: "600ms" }}>
-                Our health systems treat symptoms.
-              </p>
-              <p className="scroll-fade-in" style={{ transitionDelay: "700ms" }}>
-                Our tech companies monetize distraction.
-              </p>
-              <p className="scroll-fade-in" style={{ transitionDelay: "800ms" }}>
-                And the result is clear:{' '}
-                <span className="font-semibold text-[var(--door24-foreground)]">
-                  a species more connected than ever, and somehow lonelier than ever.
-                </span>
-              </p>
-              <p className="mt-10 border-l-2 border-[var(--door24-primary-start)] pl-6 text-lg font-medium leading-relaxed text-[var(--door24-foreground)] sm:text-xl scroll-slide-right" style={{ transitionDelay: "900ms" }}>
-                Door 24 was born from this collapse. A new kind of technology built not to consume us, but to restore us.
+              <p className="mt-10 border-l-2 border-[var(--door24-primary-start)] pl-6 text-lg font-medium leading-relaxed text-[var(--door24-foreground)] sm:text-xl scroll-slide-right" style={{ transitionDelay: "500ms" }}>
+                Door 24 was born from this collapse.
               </p>
             </div>
           </div>
@@ -214,7 +155,7 @@ export default function Mission() {
         <section
           id="the-mission"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
@@ -223,20 +164,37 @@ export default function Mission() {
             </span>
           </div>
           <div className="space-y-6 sm:space-y-7">
-            {missionStatements.map((statement, index) => (
-              <p
-                key={index}
-                className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in"
-                style={{ transitionDelay: `${index * 75}ms` }}
-              >
-                {statement}
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '0ms' }}>
+              We build the products, experiences, and communities that architect human transformation at scale.
+            </p>
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '75ms' }}>
+              Technology that heals instead of harms. Community that elevates instead of isolates. Recovery that transforms instead of maintains.
+            </p>
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '150ms' }}>
+              We're not fixing broken people. We're unlocking dormant potential. Helping humans operate at levels most don't know exist.
+            </p>
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in" style={{ transitionDelay: '225ms' }}>
+              We believe the next great frontier isn't external. It's internal. The breakthroughs that matter most will come from within.
+            </p>
+            <div className="space-y-4 pt-2 scroll-fade-in" style={{ transitionDelay: '300ms' }}>
+              <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed">
+                Technology should restore the mind, not fracture it.
               </p>
-            ))}
+              <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed">
+                Community should unite, not isolate.
+              </p>
+              <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed">
+                And human potential should be limitless, not medicated into submission.
+              </p>
+            </div>
+            <p className="text-lg leading-relaxed text-[var(--door24-foreground)] sm:text-xl sm:leading-relaxed scroll-fade-in pt-2" style={{ transitionDelay: '375ms' }}>
+              This is the infrastructure for a species-level upgrade.
+            </p>
           </div>
         </section>
 
         {/* Divider */}
-        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12">
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
@@ -244,7 +202,7 @@ export default function Mission() {
         <section
           id="how-we-do-it"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
@@ -276,76 +234,7 @@ export default function Mission() {
         </section>
 
         {/* Divider */}
-        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        </div>
-
-        {/* Philosophy */}
-        <section
-          id="philosophy"
-          data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
-        >
-          <div className="mb-6 flex items-center gap-3 scroll-slide-left">
-            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
-              Our Philosophy
-            </span>
-          </div>
-          <div className="space-y-10 sm:space-y-12">
-            {philosophy.map((item, index) => (
-              <div
-                key={item.headline}
-                className="scroll-fade-in"
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <h3 className="mb-4 text-2xl font-semibold italic leading-tight text-[var(--door24-foreground)] transition-colors duration-200 hover:text-[var(--door24-primary-end)] sm:text-3xl">
-                  {item.headline}
-                </h3>
-                <p className="text-base leading-relaxed text-[var(--door24-muted)] sm:text-lg sm:leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        </div>
-
-        {/* Why We Exist */}
-        <section
-          id="why-we-exist"
-          data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
-        >
-          <div className="mb-6 flex items-center gap-3 scroll-slide-left">
-            <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--door24-muted)]">
-              Why We Exist
-            </span>
-          </div>
-          <div className="space-y-5 sm:space-y-6">
-            {whyWeExist.map((line, index) => (
-              <p
-                key={index}
-                className={`text-lg leading-relaxed sm:text-xl sm:leading-relaxed scroll-fade-in ${
-                  line.includes("Door 24 exists") || line.includes("This is not")
-                    ? "font-semibold text-[var(--door24-foreground)]"
-                    : "text-[var(--door24-muted)]"
-                }`}
-                style={{ transitionDelay: `${index * 75}ms` }}
-              >
-                {line}
-              </p>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <div className="relative mx-auto max-w-[900px] px-4 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1080px] px-4 sm:px-8 lg:px-12">
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
@@ -353,7 +242,7 @@ export default function Mission() {
         <section
           id="join-us"
           data-animate
-          className="relative mx-auto max-w-[900px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
+          className="relative mx-auto max-w-[1080px] px-4 py-20 sm:px-8 sm:py-24 lg:px-12"
         >
           <div className="mb-6 flex items-center gap-3 scroll-slide-left">
             <div className="h-px w-12 bg-gradient-to-r from-[var(--door24-primary-start)] to-transparent" />

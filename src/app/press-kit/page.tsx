@@ -9,10 +9,10 @@ export default function PressKit() {
       <Header />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[880px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
         <div className="flex flex-col gap-8">
           {/* Title */}
-          <div className="flex flex-col gap-4 text-center">
+          <div className="flex flex-col gap-4">
             <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>Press Kit</h1>
             <p className="text-base leading-7 text-[var(--door24-body)] sm:text-lg sm:leading-8">
               Everything you need to write about Door 24.
@@ -20,8 +20,8 @@ export default function PressKit() {
           </div>
 
           {/* Download Section */}
-          <section className="flex flex-col items-center gap-6 rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-8 backdrop-blur sm:p-10">
-            <div className="flex flex-col gap-4 text-center">
+          <section className="flex flex-col gap-6 rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-8 backdrop-blur sm:p-10">
+            <div className="flex flex-col gap-4">
               <h2 className="text-2xl font-semibold leading-snug sm:text-3xl" style={{ fontFamily: 'var(--font-bebas-neue)' }}>
                 Download Press Kit
               </h2>
@@ -34,8 +34,7 @@ export default function PressKit() {
             {/* Download Button - Placeholder for now */}
             <a
               href="#"
-              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-8 py-3.5 text-base font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-10 sm:py-4 sm:text-lg"
-              style={{ fontFamily: 'var(--font-bebas-neue)' }}
+              className="door24-gradient group relative inline-flex w-fit overflow-hidden rounded-xl px-8 py-3.5 text-base font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-10 sm:py-4 sm:text-lg"
               onClick={(e) => {
                 e.preventDefault();
                 // Download link will be wired in later
