@@ -89,11 +89,11 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
         <button
           type="submit"
           disabled={formState.status === "loading"}
-          className="door24-gradient group relative w-full overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:w-auto sm:px-6 sm:py-3 sm:text-base"
+          className="door24-gradient group relative w-full overflow-hidden rounded-xl px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 sm:w-auto sm:min-w-[100px] sm:px-4 sm:py-2.5 sm:text-base"
         >
           <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           <span className="relative z-10">
-            {formState.status === "loading" ? "Joining…" : "Join the Movement"}
+            {formState.status === "loading" ? "Joining…" : "Join"}
           </span>
         </button>
       </div>

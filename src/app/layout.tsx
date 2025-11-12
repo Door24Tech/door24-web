@@ -33,9 +33,14 @@ export const metadata: Metadata = {
   authors: [{ name: "Brett Booker" }],
   metadataBase: new URL("https://door24.app"),
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Reclaim Control. Stay Sober. Track Your Journey with Door 24",
     description:
