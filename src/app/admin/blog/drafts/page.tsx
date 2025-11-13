@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
 import { getAllDrafts, deleteDraft, getDraft, type BlogPost } from "@/lib/blog";
 
 export default function DraftsPage() {
@@ -76,7 +75,6 @@ export default function DraftsPage() {
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -174,8 +172,6 @@ export default function DraftsPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

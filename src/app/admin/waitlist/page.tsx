@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
 import { 
   getAllWaitlistEntries, 
   updateWaitlistEntry, 
@@ -153,7 +152,6 @@ export default function WaitlistAdmin() {
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -485,8 +483,6 @@ export default function WaitlistAdmin() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

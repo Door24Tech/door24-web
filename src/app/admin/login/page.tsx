@@ -4,7 +4,6 @@ import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
 
 export default function AdminLogin() {
   const { user, loading: authLoading, login } = useAuth();
@@ -43,7 +42,6 @@ export default function AdminLogin() {
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -134,8 +132,6 @@ export default function AdminLogin() {
               </div>
             </form>
         </main>
-
-        <Footer />
       </div>
   );
 }

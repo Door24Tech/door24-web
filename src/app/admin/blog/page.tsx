@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
 import ImageUpload from "@/app/components/ImageUpload";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -568,7 +567,6 @@ export default function BlogAdmin() {
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -1488,8 +1486,6 @@ export default function BlogAdmin() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
