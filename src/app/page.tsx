@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WaitlistForm from "./components/WaitlistForm";
@@ -57,7 +58,7 @@ export default function Home() {
 
       <main className="relative">
         {/* Hero Section - Two Column Layout */}
-        <section className="py-24">
+        <section className="py-24 relative">
           <div className="max-w-[1080px] mx-auto px-6 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-12 items-center">
             {/* Left Column - Existing Content */}
             <div className="flex flex-col gap-4 md:gap-6 items-center text-center md:items-start md:text-left">
@@ -80,18 +81,24 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column - Phone Mockup */}
+            {/* Right Column - App Screenshot */}
             <div className="flex justify-center md:justify-end">
-              <div className="w-64 md:w-72 lg:w-80">
+              <div className="w-48 md:w-56 lg:w-64">
                 <div className="relative">
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-purple-500/10 blur-3xl rounded-[3rem]" />
-                  {/* Phone frame */}
-                  <div className="relative mx-auto w-full h-[480px] bg-neutral-800 rounded-[2.5rem] border border-neutral-700 shadow-2xl flex items-center justify-center">
-                    <span className="text-neutral-500 text-sm">
-                      App Screenshot Placeholder
-                    </span>
-                  </div>
+                  {/* Glow effects */}
+                  <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-[3rem]" />
+                  <div className="absolute inset-0 bg-purple-400/12 blur-2xl rounded-[3rem]" />
+                  <div className="absolute inset-0 bg-cyan-500/8 blur-xl rounded-[3rem]" />
+                  {/* App Screenshot */}
+                  <Image
+                    src="/assets/Timer-Door-24-App.png"
+                    alt="Door 24 Timer App Screenshot"
+                    width={320}
+                    height={480}
+                    className="relative w-full h-auto max-h-[600px] object-contain rounded-2xl shadow-2xl"
+                    priority
+                    unoptimized
+                  />
                 </div>
               </div>
             </div>
