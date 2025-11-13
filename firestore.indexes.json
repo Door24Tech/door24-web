@@ -1,11 +1,15 @@
 {
   "indexes": [
     {
-      "collectionGroup": "blogPosts",
+      "collectionGroup": "socialAccounts",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "publishedAt",
+          "fieldPath": "category",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
           "order": "DESCENDING"
         }
       ]

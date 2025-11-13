@@ -37,6 +37,11 @@ service cloud.firestore {
     match /blogDrafts/{draftId} {
       allow read, write: if request.auth != null;
     }
+    
+    // Social accounts - authenticated read/write only (admin only)
+    match /socialAccounts/{accountId} {
+      allow read, write: if request.auth != null;
+    }
   }
 }
 
