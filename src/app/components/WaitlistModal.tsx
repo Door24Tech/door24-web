@@ -94,7 +94,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         </div>
 
         {/* Form */}
-        <WaitlistForm source="modal" />
+        <WaitlistForm source="modal" onSuccess={onClose} />
       </div>
     </div>
   );

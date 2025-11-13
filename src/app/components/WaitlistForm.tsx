@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState, useEffect, useRef } from "react";
 import { addToWaitlist } from "@/lib/waitlist";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
@@ -16,14 +16,16 @@ const defaultMessage = "Anonymous by default • No spam • Opt out anytime";
 
 interface WaitlistFormProps {
   source?: "homepage" | "modal";
+  onSuccess?: () => void;
 }
 
-export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps) {
+export default function WaitlistForm({ source = "homepage", onSuccess }: WaitlistFormProps) {
   const [formState, setFormState] = useState<FormState>({
     status: "idle",
     message: defaultMessage,
   });
   const [isMounted, setIsMounted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -46,11 +48,23 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
 
     try {
       await addToWaitlist(email, source);
-      event.currentTarget.reset();
+      
+      // Safely reset the form using the ref
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      
       setFormState({
         status: "success",
         message: successMessage,
       });
+
+      // Call onSuccess callback if provided (for modal to close after delay)
+      if (onSuccess) {
+        setTimeout(() => {
+          onSuccess();
+        }, 2000); // Close modal after 2 seconds so user can see success message
+      }
     } catch (error: any) {
       const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : "Something went wrong. Please try again in a moment.");
       console.error("Waitlist submission error:", errorMessage);
@@ -63,6 +77,7 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
 
   return (
     <form
+      ref={formRef}
       className="flex w-full flex-col gap-3"
       onSubmit={handleSubmit}
       aria-label="Join the Door 24 waitlist"
@@ -99,12 +114,12 @@ export default function WaitlistForm({ source = "homepage" }: WaitlistFormProps)
       </div>
       <div
         aria-live="polite"
-        className={`text-center text-xs ${
+        className={`text-center ${
           formState.status === "success"
-            ? "text-[var(--door24-accent)]"
+            ? "text-sm font-medium text-[var(--door24-success)]"
             : formState.status === "error"
-              ? "text-[var(--door24-error)]"
-              : "text-[var(--door24-muted)]"
+              ? "text-sm font-medium text-[var(--door24-error)]"
+              : "text-xs text-[var(--door24-muted)]"
         }`}
       >
         {formState.message}
