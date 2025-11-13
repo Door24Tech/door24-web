@@ -140,14 +140,14 @@ export default function Footer() {
           </div>
 
           {/* App Store & Google Play Badges */}
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row gap-4 sm:gap-8">
             {/* App Store Button */}
             <button
               onClick={() => setIsComingSoonOpen(true)}
-              className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              className="group inline-block transition-all duration-300 ease-out hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Download Door 24 on the App Store"
             >
-              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-4 sm:px-5">
+              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur transition-all duration-300 sm:h-12 sm:gap-4 sm:px-5 group-hover:border-[var(--door24-primary-end)] group-hover:bg-black/60">
                 <Image
                   src="/assets/App-Store-Apple-Logo.svg"
                   alt="Apple logo"
@@ -170,10 +170,10 @@ export default function Footer() {
             {/* Google Play Button */}
             <button
               onClick={() => setIsComingSoonOpen(true)}
-              className="group inline-block transition hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
+              className="group inline-block transition-all duration-300 ease-out hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)]"
               aria-label="Get Door 24 on Google Play"
             >
-              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur sm:h-12 sm:gap-4 sm:px-5">
+              <div className="flex h-10 items-center gap-3 rounded-lg border border-[var(--door24-border-hover)] bg-black/40 px-4 py-2 backdrop-blur transition-all duration-300 sm:h-12 sm:gap-4 sm:px-5 group-hover:border-[var(--door24-primary-end)] group-hover:bg-black/60">
                 <Image
                   src="/assets/Play-Store-Icon.svg"
                   alt="Google Play logo"

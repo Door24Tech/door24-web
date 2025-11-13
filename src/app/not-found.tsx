@@ -16,14 +16,14 @@ export default function NotFound() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
 
-      <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
-        <div className="flex w-full flex-col items-center gap-5 text-center sm:gap-6">
+      <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] flex-col items-center justify-start px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24 lg:px-12">
+        <div className="flex w-full flex-col items-center gap-5 text-center sm:gap-6 pt-4 sm:pt-6">
           {/* Astra as focal point */}
           <div className="relative flex flex-col items-center gap-4">
             {/* Astra Image */}
             <div className="relative">
               <Image
-                src="/assets/Astra-Version-1.png"
+                src="/assets/Astra-Dark.svg"
                 alt="Astra the owl"
                 width={160}
                 height={160}
@@ -36,40 +36,32 @@ export default function NotFound() {
             {/* Message */}
             <div className="flex flex-col gap-3">
               <h1 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                Looks like Astra got a bit lost
+                Astra wandered off the path.
               </h1>
-              <p className="mx-auto max-w-2xl text-sm leading-6 text-[var(--door24-muted)] sm:text-base sm:leading-7">
-                Even the wisest owls can take a wrong turn. Don't worry—Astra knows the way home, and so do we.
-              </p>
+              <div className="flex flex-col gap-0">
+                <p className="mx-auto max-w-2xl text-sm leading-6 text-[var(--door24-muted)] sm:text-base sm:leading-7">
+                  Even the wisest guides get curious.
+                </p>
+                <p className="mx-auto max-w-2xl text-sm leading-6 text-[var(--door24-muted)] sm:text-base sm:leading-7 -mt-4 sm:-mt-5">
+                  Don't worry — clarity is right around the corner.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
-            <Link
+          {/* CTA Button */}
+          <div className="flex justify-center">
+            <Link 
               href="/"
-              className="door24-gradient group relative inline-flex overflow-hidden rounded-xl px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(139,92,246,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3 sm:text-base"
+              className="group inline-flex"
             >
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
-              <span className="relative z-10">Return Home</span>
-            </Link>
-            <Link
-              href="/mission"
-              className="group relative inline-flex overflow-hidden rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-2.5 text-sm font-semibold text-[var(--door24-foreground)] transition hover:bg-[var(--door24-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-start)] sm:px-8 sm:py-3 sm:text-base"
-            >
-              <span className="relative">Our Mission</span>
+              <span className="relative inline-flex overflow-hidden rounded-full border border-[var(--door24-border)] bg-gradient-to-br from-[var(--door24-surface)] to-[var(--door24-surface)] px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-[var(--door24-foreground)] transition-all duration-300 ease-out group-hover:border-transparent group-hover:bg-gradient-to-r group-hover:from-[#6b46c2] group-hover:to-[#8b5cf6] group-hover:shadow-lg group-hover:shadow-[rgba(107,70,198,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--door24-primary-end)] sm:px-8 sm:py-3 sm:text-base">
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                <span className="relative z-10">Guide Me Back</span>
+              </span>
             </Link>
           </div>
 
-          {/* Fun Message */}
-          <div className="mt-2 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-4 backdrop-blur sm:p-5">
-            <p className="text-xs italic leading-relaxed text-[var(--door24-muted)] sm:text-sm">
-              "Sometimes the path less traveled leads to unexpected discoveries. Let's find your way back together."
-            </p>
-            <p className="mt-1.5 text-xs text-[var(--door24-muted)]">
-              Astra, your guide
-            </p>
-          </div>
         </div>
       </main>
 
