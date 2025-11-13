@@ -39,7 +39,7 @@ export default function AdminDashboard() {
       description: "Content automation, metrics tracking, and generation tools",
       href: "/admin/content",
       icon: (
-        <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
       description: "Create, edit, and manage blog posts",
       href: "/admin/blog",
       icon: (
-        <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
       ),
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
       description: "View and manage waitlist submissions",
       href: "/admin/waitlist",
       icon: (
-        <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
       ),
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
       description: "Create and send email campaigns",
       href: "/admin/email",
       icon: (
-        <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
@@ -77,58 +77,103 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
-      <Header />
+    <>
+      <style dangerouslySetInnerHTML={{__html: `
+        /* Admin Panel Typography Overrides */
+        .admin-panel main h1 {
+          font-family: var(--font-inter), "Inter", sans-serif !important;
+          font-size: 1.875rem !important;
+          font-weight: 600 !important;
+          line-height: 1.4 !important;
+          letter-spacing: 0 !important;
+          margin-top: 0 !important;
+          margin-bottom: 1rem !important;
+          color: var(--door24-foreground) !important;
+        }
+        @media (min-width: 640px) {
+          .admin-panel main h1 {
+            font-size: 2.25rem !important;
+          }
+        }
+        .admin-panel main h2 {
+          font-family: var(--font-inter), "Inter", sans-serif !important;
+          font-size: 1rem !important;
+          font-weight: 600 !important;
+          line-height: 1.4 !important;
+          letter-spacing: 0 !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+          color: var(--door24-foreground) !important;
+        }
+        .admin-panel main p {
+          font-family: var(--font-inter), "Inter", sans-serif !important;
+          font-size: 0.875rem !important;
+          line-height: 1.5 !important;
+          margin-bottom: 0 !important;
+        }
+      `}} />
+      <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)] admin-panel">
+        <Header />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
-        <div className="flex flex-col gap-8">
-          {/* Header */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-3xl font-bold sm:text-4xl">Admin Dashboard</h1>
-              <div className="flex items-center gap-2 text-sm text-[var(--door24-muted)]">
-                <span>Logged in as:</span>
-                <span className="font-medium text-[var(--door24-foreground)]">{user?.email}</span>
+        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+          <div className="flex flex-col gap-10">
+            {/* Header */}
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex flex-col gap-3">
+                <h1>Admin Dashboard</h1>
+                <div className="flex items-center gap-2 text-sm text-[var(--door24-muted)]">
+                  <span>Logged in as:</span>
+                  <span className="font-medium text-[var(--door24-foreground)]">{user?.email}</span>
+                </div>
               </div>
-            </div>
-            <button
-              onClick={logout}
-              className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)] sm:px-4 sm:py-2"
-            >
-              Logout
-            </button>
-          </div>
-
-          {/* Admin Cards Grid */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {adminCards.map((card) => (
-              <Link
-                key={card.href}
-                href={card.href}
-                className="group relative overflow-hidden rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 transition-all duration-300 hover:border-[var(--door24-primary-end)] hover:shadow-lg hover:shadow-[rgba(139,92,246,0.2)] hover:scale-[1.02]"
+              <button
+                onClick={logout}
+                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
               >
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <div className="rounded-lg bg-[var(--door24-primary-start)]/10 p-3 text-white transition-colors duration-300 group-hover:bg-[var(--door24-primary-start)]/20">
-                      {card.icon}
+                Logout
+              </button>
+            </div>
+
+            {/* Admin List */}
+            <div className="flex flex-col gap-3">
+              {adminCards.map((card) => (
+                <Link
+                  key={card.href}
+                  href={card.href}
+                  className="group flex items-center gap-4 rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 py-4 transition-colors duration-200 hover:border-[var(--door24-primary-end)] hover:bg-[var(--door24-surface-hover)] backdrop-blur"
+                >
+                  {/* Icon */}
+                  <div className="flex-shrink-0">
+                    <div className="rounded-lg bg-[var(--door24-primary-start)]/10 p-2 text-white transition-colors duration-200 group-hover:bg-[var(--door24-primary-start)]/20">
+                      <div className="h-5 w-5">
+                        {card.icon}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-xl font-semibold text-[var(--door24-foreground)]">
+                  
+                  {/* Text Content */}
+                  <div className="flex flex-1 flex-col gap-1 min-w-0">
+                    <h2 className="text-[var(--door24-foreground)]">
                       {card.title}
                     </h2>
                     <p className="text-sm text-[var(--door24-muted)]">
                       {card.description}
                     </p>
                   </div>
-                </div>
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
-              </Link>
-            ))}
+                  
+                  {/* Arrow Icon */}
+                  <div className="flex-shrink-0 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5">
+                    <svg className="h-5 w-5 text-[var(--door24-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }
 
