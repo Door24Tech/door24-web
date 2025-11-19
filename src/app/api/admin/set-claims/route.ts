@@ -5,8 +5,6 @@ import {
   getMobileAdminFieldValue,
 } from "@/lib/firebaseAdminMobile";
 
-export const dynamic = "force-dynamic";
-
 const ALLOWED_CLAIMS = ["admin", "sideQuestAdmin", "prototypeAdmin"] as const;
 type AllowedClaim = (typeof ALLOWED_CLAIMS)[number];
 
