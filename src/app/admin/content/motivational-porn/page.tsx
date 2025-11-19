@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
+import AdminNavBar from "@/app/components/AdminNavBar";
 
 export default function MotivationalPornAdmin() {
   const { user, loading } = useAuth();
@@ -36,26 +37,10 @@ export default function MotivationalPornAdmin() {
   return (
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
+      <AdminNavBar backHref="/admin/content" />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-32 sm:px-8 sm:py-12 sm:pt-36">
         <div className="flex flex-col gap-8">
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin/content"
-              className="group inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--door24-foreground)] text-[var(--door24-muted)]"
-              aria-label="Back to content tools"
-            >
-              <svg 
-                className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span>Back to Content Tools</span>
-            </Link>
-          </div>
 
           <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-6 pt-6 pb-4 backdrop-blur sm:px-8 sm:pt-8 sm:pb-5">
             <h1 className="text-3xl font-bold sm:text-4xl mb-4">Motivational Porn</h1>

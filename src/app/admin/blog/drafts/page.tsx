@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
+import AdminNavBar from "@/app/components/AdminNavBar";
 import { getAllDrafts, deleteDraft, getDraft, type BlogPost } from "@/lib/blog";
 
 export default function DraftsPage() {
@@ -85,21 +87,14 @@ export default function DraftsPage() {
 
   return (
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
-      <Header />
+        <Header />
+        <AdminNavBar backHref="/admin/blog" />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
-        <div className="flex flex-col gap-8">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-32 sm:px-8 sm:py-12 sm:pt-36">
+          <div className="flex flex-col gap-8">
           {/* Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold sm:text-4xl">Drafts</h1>
-            </div>
-            <button
-              onClick={() => router.push("/admin/blog")}
-              className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--door24-surface-hover)] sm:px-6 sm:py-2.5"
-            >
-              Back to Admin
-            </button>
+          <div>
+            <h1 className="text-3xl font-bold sm:text-4xl">Drafts</h1>
           </div>
 
           {/* Drafts List */}

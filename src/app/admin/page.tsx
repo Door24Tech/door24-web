@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
+import AdminNavBar from "@/app/components/AdminNavBar";
 
 export default function AdminDashboard() {
   const { user, loading, logout } = useAuth();
@@ -34,6 +35,16 @@ export default function AdminDashboard() {
   }
 
   const adminCards = [
+    {
+      title: "App Management",
+      description: "Manage app content, settings, and other in-app items",
+      href: "/admin/app-management",
+      icon: (
+        <svg className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
     {
       title: "Content Tools",
       description: "Content automation, metrics tracking, and generation tools",
@@ -124,24 +135,13 @@ export default function AdminDashboard() {
       `}} />
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)] admin-panel">
         <Header />
+        <AdminNavBar backHref={undefined} />
 
-        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-32 sm:px-8 sm:py-12 sm:pt-36">
           <div className="flex flex-col gap-10">
             {/* Header */}
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex flex-col gap-3">
-                <h1>Admin Dashboard</h1>
-                <div className="flex items-center gap-2 text-sm text-[var(--door24-muted)]">
-                  <span>Logged in as:</span>
-                  <span className="font-medium text-[var(--door24-foreground)]">{user?.email}</span>
-                </div>
-              </div>
-              <button
-                onClick={logout}
-                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
-              >
-                Logout
-              </button>
+            <div className="flex flex-col gap-3">
+              <h1>Admin Dashboard</h1>
             </div>
 
             {/* Admin List */}

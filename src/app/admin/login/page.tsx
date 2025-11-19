@@ -70,7 +70,15 @@ export default function AdminLogin() {
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
 
-        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 py-8 sm:px-8 sm:py-12">
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[600px] flex-col items-center justify-center px-4 pt-24 pb-8 sm:px-8 sm:pt-32 sm:py-12">
+                 <div className="w-full mb-4 text-center">
+                   <h1 className="text-3xl font-semibold text-[var(--door24-foreground)] mb-2">
+                     Admin Login
+                   </h1>
+                   <p className="text-base text-[var(--door24-muted)]">
+                     Sign in to access the admin dashboard
+                   </p>
+                 </div>
                  <form
                    onSubmit={handleSubmit}
                    className="w-full rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8"

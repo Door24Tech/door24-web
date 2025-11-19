@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
+import AdminNavBar from "@/app/components/AdminNavBar";
 import { 
   getSocialAccountsByCategory, 
   addSocialAccount,
@@ -12,6 +13,14 @@ import {
   deleteSocialAccount,
   type SocialAccount 
 } from "@/lib/social";
+import {
+  getAllBurnerAccounts,
+  getBurnerAccountsByPlatform,
+  addBurnerAccount,
+  updateBurnerAccount,
+  deleteBurnerAccount,
+  type BurnerAccount
+} from "@/lib/burnerAccounts";
 
 type TabType = "clipping" | "official";
 
@@ -30,6 +39,14 @@ export default function SocialMediaHub() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showBurnerAccounts, setShowBurnerAccounts] = useState(false);
+  const [burnerAccounts, setBurnerAccounts] = useState<BurnerAccount[]>([]);
+  const [loadingBurnerAccounts, setLoadingBurnerAccounts] = useState(false);
+  const [showBurnerAddForm, setShowBurnerAddForm] = useState(false);
+  const [burnerAddForm, setBurnerAddForm] = useState<Partial<BurnerAccount>>({});
+  const [editingBurnerId, setEditingBurnerId] = useState<string | null>(null);
+  const [burnerEditForm, setBurnerEditForm] = useState<Partial<BurnerAccount>>({});
+  const [deleteBurnerConfirmId, setDeleteBurnerConfirmId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -40,15 +57,23 @@ export default function SocialMediaHub() {
   useEffect(() => {
     if (user) {
       loadAccounts();
+      if (activeTab === "clipping") {
+        loadBurnerAccounts();
+      }
     }
   }, [user, activeTab]);
 
   const loadAccounts = async () => {
     try {
+      // Small delay to allow smooth transition
       setLoading(true);
       setError("");
+      // Brief delay to allow opacity transition to start
+      await new Promise(resolve => setTimeout(resolve, 50));
       const categoryAccounts = await getSocialAccountsByCategory(activeTab);
       setAccounts(categoryAccounts);
+      // Ensure content is visible before finishing
+      await new Promise(resolve => setTimeout(resolve, 50));
     } catch (err: any) {
       console.error("Error loading social accounts:", err);
       setError(err.message || "Failed to load social accounts. Please try again.");
@@ -232,6 +257,134 @@ export default function SocialMediaHub() {
     }
   };
 
+  // Burner Accounts Functions
+  const loadBurnerAccounts = async () => {
+    try {
+      setLoadingBurnerAccounts(true);
+      const allBurnerAccounts = await getAllBurnerAccounts();
+      setBurnerAccounts(allBurnerAccounts);
+    } catch (err: any) {
+      console.error("Error loading burner accounts:", err);
+      setError(err.message || "Failed to load burner accounts. Please try again.");
+    } finally {
+      setLoadingBurnerAccounts(false);
+    }
+  };
+
+  const handleBurnerAdd = () => {
+    setShowBurnerAddForm(true);
+    setBurnerAddForm({
+      email: "",
+      password: "",
+      phoneId: "",
+      status: "active",
+    });
+    setError("");
+    setSuccessMessage("");
+  };
+
+  const handleBurnerCancelAdd = () => {
+    setShowBurnerAddForm(false);
+    setBurnerAddForm({});
+    setError("");
+    setSuccessMessage("");
+  };
+
+  const handleBurnerSaveAdd = async () => {
+    try {
+      setSaving(true);
+      setError("");
+      setSuccessMessage("");
+
+      if (!burnerAddForm.email || !burnerAddForm.password || !burnerAddForm.phoneId) {
+        throw new Error("Email, Password, and Phone ID are required");
+      }
+
+      await addBurnerAccount({
+        email: burnerAddForm.email,
+        password: burnerAddForm.password,
+        phoneId: burnerAddForm.phoneId,
+        notes: burnerAddForm.notes,
+        status: burnerAddForm.status || "active",
+      } as BurnerAccount);
+
+      setSuccessMessage("Burner account added successfully");
+      setShowBurnerAddForm(false);
+      setBurnerAddForm({});
+      await loadBurnerAccounts();
+    } catch (err: any) {
+      console.error("Error adding burner account:", err);
+      setError(err.message || "Failed to add burner account. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBurnerEdit = (account: BurnerAccount) => {
+    setEditingBurnerId(account.id || null);
+    setBurnerEditForm({
+      email: account.email,
+      password: account.password,
+      phoneId: account.phoneId,
+      notes: account.notes,
+      status: account.status,
+    });
+    setError("");
+    setSuccessMessage("");
+  };
+
+  const handleBurnerCancelEdit = () => {
+    setEditingBurnerId(null);
+    setBurnerEditForm({});
+    setError("");
+    setSuccessMessage("");
+  };
+
+  const handleBurnerSaveEdit = async () => {
+    if (!editingBurnerId) return;
+
+    try {
+      setSaving(true);
+      setError("");
+      setSuccessMessage("");
+
+      await updateBurnerAccount(editingBurnerId, {
+        email: burnerEditForm.email,
+        password: burnerEditForm.password,
+        phoneId: burnerEditForm.phoneId,
+        notes: burnerEditForm.notes,
+        status: burnerEditForm.status,
+      });
+
+      setSuccessMessage("Burner account updated successfully");
+      setEditingBurnerId(null);
+      setBurnerEditForm({});
+      await loadBurnerAccounts();
+    } catch (err: any) {
+      console.error("Error updating burner account:", err);
+      setError(err.message || "Failed to update burner account. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBurnerDelete = async (id: string) => {
+    try {
+      setDeleting(true);
+      setError("");
+      setSuccessMessage("");
+
+      await deleteBurnerAccount(id);
+      setSuccessMessage("Burner account deleted successfully");
+      setDeleteBurnerConfirmId(null);
+      await loadBurnerAccounts();
+    } catch (err: any) {
+      console.error("Error deleting burner account:", err);
+      setError(err.message || "Failed to delete burner account. Please try again.");
+      setDeleting(false);
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
@@ -284,30 +437,22 @@ export default function SocialMediaHub() {
           line-height: 1.5 !important;
           margin-bottom: 0 !important;
         }
+        /* Fix dropdown arrow positioning */
+        .admin-panel select {
+          padding-right: 2.5rem !important;
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+          background-position: right 0.5rem center !important;
+          background-repeat: no-repeat !important;
+          background-size: 1.5em 1.5em !important;
+          appearance: none !important;
+        }
       `}} />
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)] admin-panel">
         <Header />
+        <AdminNavBar backHref="/admin" />
 
-        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+        <main className="mx-auto max-w-[1080px] px-4 py-8 pt-32 sm:px-8 sm:py-12 sm:pt-36">
           <div className="flex flex-col gap-10">
-            <div className="flex items-center gap-4">
-              <Link
-                href="/admin"
-                className="group inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--door24-foreground)] text-[var(--door24-muted)]"
-                aria-label="Back to admin dashboard"
-              >
-                <svg 
-                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>Back to Admin Dashboard</span>
-              </Link>
-            </div>
-
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <h1>Social Media Hub</h1>
@@ -318,7 +463,7 @@ export default function SocialMediaHub() {
               <div className="flex gap-2 border-b border-[var(--door24-border)]">
                 <button
                   onClick={() => setActiveTab("clipping")}
-                  className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-200 border-b-2 ${
                     activeTab === "clipping"
                       ? "border-[var(--door24-primary-end)] text-[var(--door24-foreground)]"
                       : "border-transparent text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
@@ -328,7 +473,7 @@ export default function SocialMediaHub() {
                 </button>
                 <button
                   onClick={() => setActiveTab("official")}
-                  className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-200 border-b-2 ${
                     activeTab === "official"
                       ? "border-[var(--door24-primary-end)] text-[var(--door24-foreground)]"
                       : "border-transparent text-[var(--door24-muted)] hover:text-[var(--door24-foreground)]"
@@ -351,6 +496,17 @@ export default function SocialMediaHub() {
                   >
                     {loading ? "Loading..." : "Refresh"}
                   </button>
+                  {activeTab === "clipping" && (
+                    <button
+                      onClick={() => {
+                        setShowBurnerAccounts(true);
+                        loadBurnerAccounts();
+                      }}
+                      className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                    >
+                      Burner Accts
+                    </button>
+                  )}
                   <button
                     onClick={handleAdd}
                     className="door24-gradient group relative overflow-hidden rounded-lg px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)]"
@@ -384,13 +540,18 @@ export default function SocialMediaHub() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-medium mb-1">Platform *</label>
-                      <input
-                        type="text"
+                      <select
                         value={addForm.platform || ""}
                         onChange={(e) => setAddForm({ ...addForm, platform: e.target.value })}
-                        placeholder="e.g., TikTok, Instagram"
                         className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)]"
-                      />
+                      >
+                        <option value="">Select Platform</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="TikTok">TikTok</option>
+                        <option value="X">X</option>
+                        <option value="YouTube">YouTube</option>
+                      </select>
                     </div>
                     <div>
                       <label className="block text-xs font-medium mb-1">Handle *</label>
@@ -456,14 +617,19 @@ export default function SocialMediaHub() {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-medium mb-1">Phone ID #</label>
-                          <input
-                            type="text"
+                          <label className="block text-xs font-medium mb-1">Phone/Acct ID</label>
+                          <select
                             value={addForm.phoneId || ""}
                             onChange={(e) => setAddForm({ ...addForm, phoneId: e.target.value })}
-                            placeholder="Optional - e.g., Phone 1, Phone 2"
                             className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)] focus-visible:bg-[var(--door24-surface-hover)]"
-                          />
+                          >
+                            <option value="">Select Phone/Acct ID</option>
+                            {burnerAccounts.map((account) => (
+                                <option key={account.id} value={account.phoneId}>
+                                  {account.phoneId} {account.email ? `- ${account.email}` : ''}
+                                </option>
+                              ))}
+                          </select>
                         </div>
                         <div>
                           <label className="block text-xs font-medium mb-1">Link in Bio</label>
@@ -596,16 +762,23 @@ export default function SocialMediaHub() {
               )}
 
               {/* Accounts Table */}
-              {loading ? (
-                <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-                  <p className="text-[var(--door24-muted)]">Loading accounts...</p>
-                </div>
-              ) : accounts.length === 0 ? (
-                <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
-                  <p className="text-[var(--door24-muted)]">No {activeTab === "clipping" ? "clipping pages" : "official channels"} yet.</p>
-                </div>
-              ) : (
-                <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] overflow-hidden backdrop-blur">
+              <div className="relative min-h-[400px] transition-all duration-300">
+                <div
+                  key={activeTab}
+                  className={`transition-opacity duration-300 ${
+                    loading ? "opacity-0 absolute inset-0 pointer-events-none" : "opacity-100"
+                  }`}
+                >
+                  {loading ? (
+                    <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
+                      <p className="text-[var(--door24-muted)]">Loading accounts...</p>
+                    </div>
+                  ) : accounts.length === 0 ? (
+                    <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] p-6 backdrop-blur sm:p-8">
+                      <p className="text-[var(--door24-muted)]">No {activeTab === "clipping" ? "clipping pages" : "official channels"} yet.</p>
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-surface)] overflow-hidden backdrop-blur">
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full">
                       <thead>
@@ -617,7 +790,7 @@ export default function SocialMediaHub() {
                               <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Channel Name</th>
                               <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Status</th>
                               <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Priority</th>
-                              <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Phone ID #</th>
+                              <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Phone/Acct ID</th>
                               <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--door24-foreground)]">Link in Bio</th>
                             </>
                           ) : (
@@ -638,12 +811,18 @@ export default function SocialMediaHub() {
                           >
                             <td className="px-6 py-4 text-sm">
                               {editingId === account.id ? (
-                                <input
-                                  type="text"
+                                <select
                                   value={editForm.platform || ""}
                                   onChange={(e) => setEditForm({ ...editForm, platform: e.target.value })}
                                   className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
-                                />
+                                >
+                                  <option value="">Select Platform</option>
+                                  <option value="Facebook">Facebook</option>
+                                  <option value="Instagram">Instagram</option>
+                                  <option value="TikTok">TikTok</option>
+                                  <option value="X">X</option>
+                                  <option value="YouTube">YouTube</option>
+                                </select>
                               ) : (
                                 <span className="font-medium">{account.platform}</span>
                               )}
@@ -714,13 +893,18 @@ export default function SocialMediaHub() {
                                 </td>
                                 <td className="px-6 py-4 text-sm text-[var(--door24-muted)]">
                                   {editingId === account.id ? (
-                                    <input
-                                      type="text"
+                                    <select
                                       value={editForm.phoneId || ""}
                                       onChange={(e) => setEditForm({ ...editForm, phoneId: e.target.value })}
-                                      placeholder="e.g., Phone 1, Phone 2"
                                       className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
-                                    />
+                                    >
+                                      <option value="">Select Phone/Acct ID</option>
+                                      {burnerAccounts.map((burnerAccount) => (
+                                          <option key={burnerAccount.id} value={burnerAccount.phoneId}>
+                                            {burnerAccount.phoneId} {burnerAccount.email ? `- ${burnerAccount.email}` : ''}
+                                          </option>
+                                        ))}
+                                    </select>
                                   ) : (
                                     <span>{account.phoneId || "—"}</span>
                                   )}
@@ -873,12 +1057,18 @@ export default function SocialMediaHub() {
                           <div className="space-y-3 pt-2">
                             <div>
                               <label className="block text-xs font-medium mb-1">Platform</label>
-                              <input
-                                type="text"
+                              <select
                                 value={editForm.platform || ""}
                                 onChange={(e) => setEditForm({ ...editForm, platform: e.target.value })}
                                 className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
-                              />
+                              >
+                                <option value="">Select Platform</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="X">X</option>
+                                <option value="YouTube">YouTube</option>
+                              </select>
                             </div>
                             <div>
                               <label className="block text-xs font-medium mb-1">Handle</label>
@@ -914,14 +1104,19 @@ export default function SocialMediaHub() {
                                   </select>
                                 </div>
                                 <div>
-                                  <label className="block text-xs font-medium mb-1">Phone ID #</label>
-                                  <input
-                                    type="text"
+                                  <label className="block text-xs font-medium mb-1">Phone/Acct ID</label>
+                                  <select
                                     value={editForm.phoneId || ""}
                                     onChange={(e) => setEditForm({ ...editForm, phoneId: e.target.value })}
-                                    placeholder="e.g., Phone 1, Phone 2"
                                     className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
-                                  />
+                                  >
+                                    <option value="">Select Phone/Acct ID</option>
+                                    {burnerAccounts.map((burnerAccount) => (
+                                        <option key={burnerAccount.id} value={burnerAccount.phoneId}>
+                                          {burnerAccount.phoneId} {burnerAccount.email ? `- ${burnerAccount.email}` : ''}
+                                        </option>
+                                      ))}
+                                  </select>
                                 </div>
                                 <div>
                                   <label className="block text-xs font-medium mb-1">Link in Bio</label>
@@ -986,6 +1181,239 @@ export default function SocialMediaHub() {
                       </div>
                     ))}
                   </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Burner Accounts Modal */}
+              {showBurnerAccounts && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+                  <div className="relative w-full max-w-4xl rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-background)] p-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-2xl font-semibold">
+                        {showBurnerAddForm ? "Add Burner Account" : "Burner Accounts"}
+                      </h3>
+                      <div className="flex items-center gap-3">
+                        {/* Add Button */}
+                        {!showBurnerAddForm && !editingBurnerId && (
+                          <button
+                            onClick={handleBurnerAdd}
+                            className="door24-gradient group relative overflow-hidden rounded-lg px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)]"
+                          >
+                            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                            <span className="relative z-10">Add Account</span>
+                          </button>
+                        )}
+                        <button
+                          onClick={() => {
+                            if (showBurnerAddForm || editingBurnerId) {
+                              setShowBurnerAddForm(false);
+                              setEditingBurnerId(null);
+                            } else {
+                              setShowBurnerAccounts(false);
+                            }
+                          }}
+                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                        >
+                          {showBurnerAddForm || editingBurnerId ? "Back" : "Close"}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Add Form */}
+                    {showBurnerAddForm && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Email *</label>
+                            <input
+                              type="email"
+                              value={burnerAddForm.email || ""}
+                              onChange={(e) => setBurnerAddForm({ ...burnerAddForm, email: e.target.value })}
+                              className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Password *</label>
+                            <input
+                              type="password"
+                              value={burnerAddForm.password || ""}
+                              onChange={(e) => setBurnerAddForm({ ...burnerAddForm, password: e.target.value })}
+                              className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Phone ID *</label>
+                            <input
+                              type="text"
+                              value={burnerAddForm.phoneId || ""}
+                              onChange={(e) => setBurnerAddForm({ ...burnerAddForm, phoneId: e.target.value })}
+                              placeholder="e.g., Phone 1, Phone 2"
+                              className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium mb-1">Status</label>
+                            <select
+                              value={burnerAddForm.status || "active"}
+                              onChange={(e) => setBurnerAddForm({ ...burnerAddForm, status: e.target.value as any })}
+                              className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                            >
+                              <option value="active">Active</option>
+                              <option value="paused">Paused</option>
+                              <option value="retired">Retired</option>
+                            </select>
+                          </div>
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-medium mb-1">Notes</label>
+                            <textarea
+                              value={burnerAddForm.notes || ""}
+                              onChange={(e) => setBurnerAddForm({ ...burnerAddForm, notes: e.target.value })}
+                              rows={3}
+                              className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                            />
+                          </div>
+                          <div className="md:col-span-2 flex justify-end mt-4">
+                            <button
+                              onClick={handleBurnerSaveAdd}
+                              disabled={saving}
+                              className="door24-gradient group relative overflow-hidden rounded-lg px-4 py-2 text-sm font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
+                            >
+                              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                              <span className="relative z-10">
+                                {saving ? "Saving..." : "Save"}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                    )}
+
+                    {/* Burner Accounts Table */}
+                    {!showBurnerAddForm && (loadingBurnerAccounts ? (
+                      <p className="text-[var(--door24-muted)]">Loading burner accounts...</p>
+                    ) : burnerAccounts.length === 0 ? (
+                      <p className="text-[var(--door24-muted)]">No burner accounts yet.</p>
+                    ) : (
+                      <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] overflow-hidden">
+                        <div className="overflow-x-auto">
+                          <table className="w-full">
+                            <thead>
+                              <tr className="border-b border-[var(--door24-border)]">
+                                <th className="text-left px-6 py-4 text-sm font-semibold">Email</th>
+                                <th className="text-left px-6 py-4 text-sm font-semibold">Password</th>
+                                <th className="text-left px-6 py-4 text-sm font-semibold">Phone ID</th>
+                                <th className="text-left px-6 py-4 text-sm font-semibold">Status</th>
+                                <th className="text-right px-6 py-4 text-sm font-semibold">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {burnerAccounts.map((account) => (
+                                <tr key={account.id} className="border-b border-[var(--door24-border)] last:border-b-0 hover:bg-[var(--door24-surface-hover)] transition-colors">
+                                  <td className="px-6 py-4 text-sm">
+                                    {editingBurnerId === account.id ? (
+                                      <input
+                                        type="email"
+                                        value={burnerEditForm.email || ""}
+                                        onChange={(e) => setBurnerEditForm({ ...burnerEditForm, email: e.target.value })}
+                                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                                      />
+                                    ) : (
+                                      <span>{account.email}</span>
+                                    )}
+                                  </td>
+                                  <td className="px-6 py-4 text-sm">
+                                    {editingBurnerId === account.id ? (
+                                      <input
+                                        type="password"
+                                        value={burnerEditForm.password || ""}
+                                        onChange={(e) => setBurnerEditForm({ ...burnerEditForm, password: e.target.value })}
+                                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                                      />
+                                    ) : (
+                                      <span className="font-mono">••••••••</span>
+                                    )}
+                                  </td>
+                                  <td className="px-6 py-4 text-sm">
+                                    {editingBurnerId === account.id ? (
+                                      <input
+                                        type="text"
+                                        value={burnerEditForm.phoneId || ""}
+                                        onChange={(e) => setBurnerEditForm({ ...burnerEditForm, phoneId: e.target.value })}
+                                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                                      />
+                                    ) : (
+                                      <span>{account.phoneId}</span>
+                                    )}
+                                  </td>
+                                  <td className="px-6 py-4 text-sm">
+                                    {editingBurnerId === account.id ? (
+                                      <select
+                                        value={burnerEditForm.status || "active"}
+                                        onChange={(e) => setBurnerEditForm({ ...burnerEditForm, status: e.target.value as any })}
+                                        className="w-full rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition-all duration-200 focus-visible:border-[var(--door24-primary-end)]"
+                                      >
+                                        <option value="active">Active</option>
+                                        <option value="paused">Paused</option>
+                                        <option value="retired">Retired</option>
+                                      </select>
+                                    ) : (
+                                      <span className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
+                                        account.status === "active"
+                                          ? "bg-[var(--door24-success)]/20 text-[var(--door24-success)]"
+                                          : account.status === "paused"
+                                          ? "bg-yellow-500/20 text-yellow-500"
+                                          : "bg-[var(--door24-muted)]/20 text-[var(--door24-muted)]"
+                                      }`}>
+                                        {account.status || "Active"}
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-6 py-4 text-sm text-right">
+                                    {editingBurnerId === account.id ? (
+                                      <div className="flex items-center justify-end gap-2">
+                                        <button
+                                          onClick={handleBurnerSaveEdit}
+                                          disabled={saving}
+                                          className="door24-gradient group relative overflow-hidden rounded-lg px-3 py-1.5 text-xs font-semibold text-[var(--door24-foreground)] shadow-lg shadow-[rgba(107,70,198,0.25)] transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[rgba(139,92,246,0.5)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
+                                        >
+                                          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+                                          <span className="relative z-10">
+                                            {saving ? "Saving..." : "Save"}
+                                          </span>
+                                        </button>
+                                        <button
+                                          onClick={handleBurnerCancelEdit}
+                                          disabled={saving}
+                                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div className="flex items-center justify-end gap-2">
+                                        <button
+                                          onClick={() => account.id && handleBurnerEdit(account)}
+                                          className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--door24-surface-hover)]"
+                                        >
+                                          Edit
+                                        </button>
+                                        <button
+                                          onClick={() => account.id && setDeleteBurnerConfirmId(account.id)}
+                                          className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-3 py-1.5 text-xs font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20"
+                                        >
+                                          Delete
+                                        </button>
+                                      </div>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -1007,6 +1435,34 @@ export default function SocialMediaHub() {
                       </button>
                       <button
                         onClick={() => deleteConfirmId && handleDelete(deleteConfirmId)}
+                        disabled={deleting}
+                        className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-4 py-2 text-sm font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {deleting ? "Deleting..." : "Delete"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Delete Burner Account Confirmation Modal */}
+              {deleteBurnerConfirmId && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                  <div className="relative w-full max-w-md rounded-2xl border border-[var(--door24-border)] bg-[var(--door24-background)] p-6 shadow-2xl">
+                    <h3 className="text-lg font-semibold mb-2">Confirm Delete</h3>
+                    <p className="text-sm text-[var(--door24-muted)] mb-6">
+                      Are you sure you want to delete this burner account? This action cannot be undone.
+                    </p>
+                    <div className="flex gap-3 justify-end">
+                      <button
+                        onClick={() => setDeleteBurnerConfirmId(null)}
+                        disabled={deleting}
+                        className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => deleteBurnerConfirmId && handleBurnerDelete(deleteBurnerConfirmId)}
                         disabled={deleting}
                         className="rounded-lg border border-[var(--door24-error)]/20 bg-[var(--door24-error)]/10 px-4 py-2 text-sm font-medium text-[var(--door24-error)] transition hover:bg-[var(--door24-error)]/20 disabled:opacity-50 disabled:cursor-not-allowed"
                       >

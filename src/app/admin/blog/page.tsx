@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/app/components/Header";
+import AdminNavBar from "@/app/components/AdminNavBar";
 import ImageUpload from "@/app/components/ImageUpload";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -562,7 +563,8 @@ export default function BlogAdmin() {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
-        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center px-4 py-8 pt-20 sm:py-12 sm:pt-24">
+        <AdminNavBar backHref="/admin" />
+        <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center px-4 py-8 pt-32 sm:py-12 sm:pt-36">
           <div className="text-center">
             <p className="text-[var(--door24-muted)]">Loading...</p>
           </div>
@@ -578,8 +580,9 @@ export default function BlogAdmin() {
   return (
     <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
       <Header />
+      <AdminNavBar backHref="/admin" backLabel="Back to Admin Dashboard" />
 
-      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
+      <main className="mx-auto max-w-[1080px] px-4 py-8 pt-32 sm:px-8 sm:py-12 sm:pt-36">
         <div className="flex flex-col gap-8">
           {/* Header */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -587,22 +590,6 @@ export default function BlogAdmin() {
               <h1 className="text-3xl font-bold sm:text-4xl">Blog Admin</h1>
               {!showEditor && (
                 <div className="flex items-center gap-2 text-sm text-[var(--door24-muted)]">
-                  <Link
-                    href="/admin"
-                    className="group inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--door24-foreground)]"
-                    aria-label="Back to admin dashboard"
-                  >
-                    <svg 
-                      className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    <span>Back to Admin Dashboard</span>
-                  </Link>
-                  <span className="text-[var(--door24-muted)]">/</span>
                   <Link
                     href="/blog"
                     className="group inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--door24-foreground)]"

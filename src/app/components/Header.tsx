@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import WaitlistModal from "./WaitlistModal";
 import MobileMenu from "./MobileMenu";
 
@@ -13,6 +14,9 @@ export default function Header() {
 
   // Check if we're on an admin page
   const isAdminPage = pathname?.startsWith('/admin');
+  
+  // Get auth context (hooks must be called unconditionally)
+  const authContext = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -100,6 +104,20 @@ export default function Header() {
                 </div>
               </button>
             </nav>
+          )}
+
+          {isAdminPage && authContext.user && (
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:inline-block text-sm text-[var(--door24-muted)]">
+                {authContext.user.email}
+              </span>
+              <button
+                onClick={authContext.logout}
+                className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--door24-surface-hover)]"
+              >
+                Logout
+              </button>
+            </div>
           )}
         </div>
       </header>
