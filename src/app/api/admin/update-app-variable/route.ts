@@ -1,7 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { mobileAdminDb } from '@/lib/firebaseAdminMobile';
+import { NextRequest, NextResponse } from "next/server";
+import { getMobileAdminDb } from "@/lib/firebaseAdminMobile";
 
 export async function POST(request: NextRequest) {
+  const mobileAdminDb = getMobileAdminDb();
+
+  if (!mobileAdminDb) {
+    return NextResponse.json(
+      {
+        error:
+          "Firebase Admin SDK is not configured. Please set APP_DEV_FIREBASE_* secrets.",
+      },
+      { status: 500 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { path, data } = body;
@@ -24,9 +36,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error updating app variable:', error);
+    console.error("Error updating app variable:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to update app variable' },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to update app variable",
+      },
       { status: 500 }
     );
   }
