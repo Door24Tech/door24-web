@@ -39,13 +39,16 @@ const ensureInitialized = (): boolean => {
   }
 
   try {
-    mobileAdminApp = admin.apps.length
-      ? admin.apps[0]
-      : admin.initializeApp({
+    mobileAdminApp =
+      admin.apps.find((app) => app.name === "mobile-admin") ??
+      admin.initializeApp(
+        {
           credential: admin.credential.cert(config),
-        });
-    cachedDb = admin.firestore();
-    cachedAuth = admin.auth();
+        },
+        "mobile-admin"
+      );
+    cachedDb = mobileAdminApp.firestore();
+    cachedAuth = mobileAdminApp.auth();
     return true;
   } catch (error) {
     console.error("Failed to initialize Firebase Admin SDK:", error);
