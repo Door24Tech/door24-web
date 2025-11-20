@@ -40,7 +40,7 @@ const ensureInitialized = (): boolean => {
 
   try {
     mobileAdminApp =
-      admin.apps.find((app) => app.name === "mobile-admin") ??
+      admin.apps.find((app) => app?.name === "mobile-admin") ??
       admin.initializeApp(
         {
           credential: admin.credential.cert(config),
