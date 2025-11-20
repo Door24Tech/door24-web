@@ -32,9 +32,7 @@ export async function POST(request: NextRequest) {
     const decoded = await webAuth.verifyIdToken(webIdToken, true);
 
     try {
-      const customToken = await mobileAuth.createCustomToken(decoded.uid, {
-        email: decoded.email ?? undefined,
-      });
+      const customToken = await mobileAuth.createCustomToken(decoded.uid);
 
       return NextResponse.json({ token: customToken });
     } catch (error) {
