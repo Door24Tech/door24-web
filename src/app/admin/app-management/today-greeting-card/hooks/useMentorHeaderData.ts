@@ -21,16 +21,16 @@ const INITIAL_STATE: FetchState = {
 
 const BASE_PATH = "/api/admin/prototype/mentor-header";
 
-export const useMentorHeaderData = (user: User | null) => {
+export const useMentorHeaderData = (mobileUser: User | null) => {
   const [state, setState] = useState<FetchState>(INITIAL_STATE);
 
   const authorizedFetch = useCallback(
     async <T>(path: string, options?: RequestInit): Promise<T> => {
-      if (!user) {
-        throw new Error("You must be signed in to perform this action.");
+      if (!mobileUser) {
+        throw new Error("Mobile admin session is not ready.");
       }
 
-      const token = await user.getIdToken();
+      const token = await mobileUser.getIdToken();
       const headers = new Headers(options?.headers);
       headers.set("Authorization", `Bearer ${token}`);
       if (options?.body) {
@@ -57,12 +57,16 @@ export const useMentorHeaderData = (user: User | null) => {
 
       return (data as T) ?? (undefined as T);
     },
-    [user]
+    [mobileUser]
   );
 
   const refresh = useCallback(async () => {
-    if (!user) {
-      setState(INITIAL_STATE);
+    if (!mobileUser) {
+      setState((prev) => ({
+        ...prev,
+        loading: false,
+        error: null,
+      }));
       return;
     }
 
@@ -87,7 +91,7 @@ export const useMentorHeaderData = (user: User | null) => {
         error instanceof Error ? error.message : "Failed to load data.";
       setState((prev) => ({ ...prev, loading: false, error: message }));
     }
-  }, [authorizedFetch, user]);
+  }, [authorizedFetch, mobileUser]);
 
   useEffect(() => {
     refresh();
@@ -188,5 +192,4 @@ export const useMentorHeaderData = (user: User | null) => {
     publishVariant,
   };
 };
-
 

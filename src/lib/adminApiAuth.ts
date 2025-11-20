@@ -59,8 +59,10 @@ export async function getAdminRequestContext(
 
   try {
     const decoded = await auth.verifyIdToken(token, true);
+    const hasAdminAccess =
+      decoded.admin === true || decoded.prototypeAdmin === true;
 
-    if (!decoded.admin) {
+    if (!hasAdminAccess) {
       return {
         ok: false,
         response: NextResponse.json({ error: "Forbidden" }, { status: 403 }),

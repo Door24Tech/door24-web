@@ -11,6 +11,7 @@ import {
   type MentorVariantResponse,
 } from "@/lib/prototypeMentorHeader";
 import { useMentorHeaderData } from "./hooks/useMentorHeaderData";
+import { useMobilePrototypeAuth } from "./hooks/useMobilePrototypeAuth";
 
 const statusStyles: Record<
   "draft" | "published",
@@ -67,6 +68,13 @@ export default function TodayGreetingCardAdmin() {
   );
 
   const {
+    mobileUser,
+    loading: mobileAuthLoading,
+    error: mobileAuthError,
+    refresh: refreshMobileAuth,
+  } = useMobilePrototypeAuth(user);
+
+  const {
     config,
     variants,
     loading: dataLoading,
@@ -76,7 +84,7 @@ export default function TodayGreetingCardAdmin() {
     updateVariant,
     deleteVariant,
     publishVariant,
-  } = useMentorHeaderData(user);
+  } = useMentorHeaderData(mobileUser);
 
   const [configForm, setConfigForm] = useState({
     activeVariant: "",
@@ -283,13 +291,17 @@ export default function TodayGreetingCardAdmin() {
     }
   };
 
-  if (authLoading || dataLoading) {
+  if (authLoading || mobileAuthLoading || dataLoading) {
     return (
       <div className="relative min-h-screen bg-[var(--door24-background)] text-[var(--door24-foreground)]">
         <Header />
         <main className="mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] flex-col items-center justify-center px-4 py-8 pt-20 sm:px-8 sm:py-12 sm:pt-24">
           <div className="text-center">
-            <p className="text-[var(--door24-muted)]">Loading mentor data...</p>
+            <p className="text-[var(--door24-muted)]">
+              {mobileAuthLoading
+                ? "Authorizing mobile admin session..."
+                : "Loading mentor data..."}
+            </p>
           </div>
         </main>
       </div>
@@ -353,9 +365,30 @@ export default function TodayGreetingCardAdmin() {
               </p>
             </div>
 
-            {dataError && (
+            {(dataError || mobileAuthError) && (
               <div className="rounded-xl border border-[var(--door24-error)]/30 bg-[var(--door24-error)]/10 px-4 py-3 text-sm text-[var(--door24-error)]">
-                {dataError}
+                {mobileAuthError || dataError}
+                {mobileAuthError && (
+                  <button
+                    onClick={refreshMobileAuth}
+                    className="ml-3 inline-flex items-center text-xs font-semibold underline"
+                  >
+                    Retry
+                  </button>
+                )}
+              </div>
+            )}
+
+            {!mobileUser && !mobileAuthLoading && (
+              <div className="rounded-xl border border-[var(--door24-border)] bg-[var(--door24-surface)] px-4 py-3 text-sm text-[var(--door24-muted)]">
+                Connect to the mobile Firebase project to continue. Click{" "}
+                <button
+                  onClick={refreshMobileAuth}
+                  className="font-semibold text-[var(--door24-primary-end)] underline underline-offset-2"
+                >
+                  refresh mobile auth
+                </button>{" "}
+                after confirming your account has the required claims.
               </div>
             )}
 
