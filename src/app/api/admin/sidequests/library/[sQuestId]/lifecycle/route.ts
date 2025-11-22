@@ -25,7 +25,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     context: { db, FieldValue, user },
   } = authResult;
 
-  const actionId = ensureSideQuestId(params.sQuestId);
+  const actionId = params.sQuestId;
+  if (!actionId) {
+    return errorResponse("Invalid SideQuest id.");
+  }
   const docRef = getSideQuestDocRef(db, actionId);
 
   let payload: Record<string, unknown>;

@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAdminRequestContext } from "@/lib/adminApiAuth";
 import {
   buildSideQuestPayload,
-  ensureSideQuestId,
   getSideQuestDocRef,
   getSideQuestStatsDocRef,
   serializeSideQuestSnapshot,
@@ -76,7 +75,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     context: { db, FieldValue, user },
   } = authResult;
 
-  const sQuestId = ensureSideQuestId(params.sQuestId);
+  const sQuestId = params.sQuestId;
+  if (!sQuestId) {
+    return errorResponse("Invalid SideQuest id.");
+  }
   const docRef = getSideQuestDocRef(db, sQuestId);
 
   let payload: Record<string, unknown>;
