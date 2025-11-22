@@ -237,9 +237,13 @@ export const serializeSideQuestSnapshot = (
   snapshot: DocumentSnapshot
 ): SideQuestResponse => {
   const data = snapshot.data() as SideQuestDoc;
+  const fallbackId = snapshot.id;
+  const sQuestId = data?.sQuestId ?? fallbackId;
   return {
     id: snapshot.id,
     ...data,
+    sQuestId,
+    slug: data?.slug ?? sQuestId,
     createdAt: timestampToIsoString(data?.createdAt ?? null),
     updatedAt: timestampToIsoString(data?.updatedAt ?? null),
   };
