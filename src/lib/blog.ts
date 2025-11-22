@@ -54,7 +54,7 @@ export async function createBlogPost(post: Omit<BlogPost, "id" | "createdAt" | "
   }
 
   // Remove undefined values to avoid Firestore errors
-  const postData: any = {
+  const postData: Record<string, unknown> = {
     title: post.title,
     slug: post.slug,
     content: post.content,
@@ -101,7 +101,7 @@ export async function updateBlogPost(id: string, post: Partial<BlogPost>): Promi
   }
 
   // Remove undefined values to avoid Firestore errors
-  const postData: any = {
+  const postData: Record<string, unknown> = {
     updatedAt: serverTimestamp(),
   };
 
@@ -197,7 +197,7 @@ export async function getAllBlogPosts(publishedOnly: boolean = false, category?:
     throw new Error("Firestore is not initialized");
   }
 
-  let q = query(collection(db, "blogPosts"), orderBy("publishedAt", "desc"));
+  const q = query(collection(db, "blogPosts"), orderBy("publishedAt", "desc"));
 
   const querySnapshot = await getDocs(q);
   const posts: BlogPost[] = [];
@@ -221,7 +221,7 @@ export async function getAllBlogPosts(publishedOnly: boolean = false, category?:
       if (post.scheduledDate) {
         const scheduledTime = post.scheduledDate instanceof Date
           ? post.scheduledDate.getTime()
-          : (post.scheduledDate as any).toMillis?.() || post.scheduledDate.seconds * 1000;
+          : (post.scheduledDate as Timestamp).toMillis?.() || (post.scheduledDate as Timestamp).seconds * 1000;
         
         // Only include if scheduled time has passed
         if (scheduledTime > now.getTime()) {
@@ -265,7 +265,7 @@ export async function createCategory(category: Omit<Category, "id" | "createdAt"
   }
 
   // Remove undefined values to avoid Firestore errors
-  const categoryData: any = {
+  const categoryData: Record<string, unknown> = {
     name: category.name,
     slug: category.slug,
     createdAt: serverTimestamp(),
@@ -286,7 +286,7 @@ export async function updateCategory(id: string, category: Partial<Category>): P
   }
 
   // Remove undefined values to avoid Firestore errors
-  const updateData: any = {};
+  const updateData: Record<string, unknown> = {};
   
   if (category.name !== undefined) {
     updateData.name = category.name;
@@ -330,16 +330,16 @@ export async function getScheduledPosts(): Promise<BlogPost[]> {
     
     const scheduledTime = post.scheduledDate instanceof Date
       ? post.scheduledDate.getTime()
-      : (post.scheduledDate as any).toMillis?.() || post.scheduledDate.seconds * 1000;
+      : (post.scheduledDate as Timestamp).toMillis?.() || (post.scheduledDate as Timestamp).seconds * 1000;
     
     return scheduledTime > now.getTime();
   }).sort((a, b) => {
     const aTime = a.scheduledDate instanceof Date
       ? a.scheduledDate.getTime()
-      : (a.scheduledDate as any).toMillis?.() || a.scheduledDate!.seconds * 1000;
+      : (a.scheduledDate as Timestamp).toMillis?.() || (a.scheduledDate as Timestamp)!.seconds * 1000;
     const bTime = b.scheduledDate instanceof Date
       ? b.scheduledDate.getTime()
-      : (b.scheduledDate as any).toMillis?.() || b.scheduledDate!.seconds * 1000;
+      : (b.scheduledDate as Timestamp).toMillis?.() || (b.scheduledDate as Timestamp)!.seconds * 1000;
     return aTime - bTime;
   });
 }

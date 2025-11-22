@@ -1,10 +1,11 @@
 import type { Timestamp } from "firebase-admin/firestore";
 
 export const SIDEQUEST_LIBRARY_COLLECTION = "sideQuestLibrary";
-export const SIDEQUEST_GLOBAL_CONFIG_PATH = "adminTools/sideQuests/globalConfig";
+export const SIDEQUEST_GLOBAL_CONFIG_PATH =
+  "adminTools/sideQuests/config/global";
 export const SIDEQUEST_STATS_COLLECTION = "adminTools/sideQuests/stats";
 export const SIDEQUEST_ANALYTICS_SUMMARY_PATH =
-  "adminTools/sideQuests/analyticsSummary";
+  "adminTools/sideQuests/analytics/summary";
 
 export const SIDEQUEST_DOMAINS = ["emotion", "clarity", "discipline"] as const;
 export type SideQuestDomain = (typeof SIDEQUEST_DOMAINS)[number];
