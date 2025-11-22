@@ -45,6 +45,26 @@ export default function AppManagementAdmin() {
         </svg>
       ),
     },
+    {
+      title: "SideQuest Generator",
+      description: "Author, review, and analyze SideQuest content",
+      href: "/admin/app-management/sidequest-generator",
+      icon: (
+        <svg
+          className="h-full w-full"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
+          />
+        </svg>
+      ),
+    },
   ];
 
   return (

@@ -60,7 +60,9 @@ export async function getAdminRequestContext(
   try {
     const decoded = await auth.verifyIdToken(token, true);
     const hasAdminAccess =
-      decoded.admin === true || decoded.prototypeAdmin === true;
+      decoded.admin === true ||
+      decoded.prototypeAdmin === true ||
+      decoded.sideQuestAdmin === true;
 
     if (!hasAdminAccess) {
       return {
