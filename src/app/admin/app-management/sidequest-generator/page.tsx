@@ -15,7 +15,7 @@ import {
 import { useMobilePrototypeAuth } from "../today-greeting-card/hooks/useMobilePrototypeAuth";
 import { useSideQuestGlobalConfig } from "./hooks/useSideQuestGlobalConfig";
 import {
-  useSideQuestLibrary,
+    useSideQuestLibrary,
   type SideQuestListItem,
 } from "./hooks/useSideQuestLibrary";
 import { useSideQuestAnalytics } from "./hooks/useSideQuestAnalytics";
@@ -135,6 +135,7 @@ export default function SideQuestGeneratorAdminPage() {
   const [editingForm, setEditingForm] = useState<QuestFormState | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [formSaving, setFormSaving] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
   const [configForm, setConfigForm] =
     useState<SideQuestGlobalConfigResponse | null>(null);
 
@@ -146,7 +147,11 @@ export default function SideQuestGeneratorAdminPage() {
   } = useMobilePrototypeAuth(user);
 
   const globalConfig = useSideQuestGlobalConfig(mobileUser);
-  const library = useSideQuestLibrary(mobileUser);
+  const library = useSideQuestLibrary(mobileUser, {
+    onError: (error) => {
+      setEditError(error.message);
+    },
+  });
   const analytics = useSideQuestAnalytics(mobileUser);
   const ai = useAiQuestGenerator(mobileUser);
 
@@ -903,6 +908,9 @@ export default function SideQuestGeneratorAdminPage() {
                       >
                         Close
                       </button>
+                      {editError && (
+                        <p className="text-sm text-[var(--door24-error)]">{editError}</p>
+                      )}
                     </div>
                   </div>
                 )}

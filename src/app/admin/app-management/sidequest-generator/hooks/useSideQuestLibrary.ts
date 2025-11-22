@@ -32,7 +32,10 @@ const INITIAL_STATE: LibraryState = {
   error: null,
 };
 
-export const useSideQuestLibrary = (mobileUser: User | null) => {
+export const useSideQuestLibrary = (
+  mobileUser: User | null,
+  options?: { onError?: (error: Error) => void }
+) => {
   const api = useSideQuestAdminApi(mobileUser);
   const [state, setState] = useState<LibraryState>(INITIAL_STATE);
   const [filters, setFilters] = useState<SideQuestFilters>({
@@ -89,21 +92,26 @@ export const useSideQuestLibrary = (mobileUser: User | null) => {
         setSelectedQuest(null);
         return;
       }
-      try {
-        const response = await api<{ quest: SideQuestResponse; stats?: SideQuestStatsResponse | null }>(
-          `/api/admin/sidequests/library/${sQuestId}`
-        );
-        setSelectedQuest({
-          ...response.quest,
-          stats: response.stats ?? null,
-        });
-      } catch (error) {
-        setSelectedQuest(null);
-        throw error;
+    try {
+      const response =
+        await api<{
+          quest: SideQuestResponse;
+          stats?: SideQuestStatsResponse | null;
+        }>(`/api/admin/sidequests/library/${sQuestId}`);
+      setSelectedQuest({
+        ...response.quest,
+        stats: response.stats ?? null,
+      });
+    } catch (error) {
+      setSelectedQuest(null);
+      if (options?.onError && error instanceof Error) {
+        options.onError(error);
       }
-    },
-    [api]
-  );
+      throw error;
+    }
+  },
+  [api, options]
+);
 
   const createQuest = useCallback(
     async (payload: Record<string, unknown>) => {
