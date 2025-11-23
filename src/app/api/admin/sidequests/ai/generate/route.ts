@@ -6,11 +6,6 @@ import {
   type AiQuestGenerationRequest,
   type AiQuestSuggestion,
 } from "@/lib/sideQuestAdmin";
-import {
-  getSideQuestGlobalConfigRef,
-  serializeGlobalConfigSnapshot,
-} from "@/lib/sideQuestAdmin.server";
-
 const pickFallback = <T,>(value: T | undefined, fallback: T): T =>
   value ?? fallback;
 
@@ -20,10 +15,6 @@ export async function POST(request: NextRequest) {
     return authResult.response;
   }
 
-  const {
-    context: { db },
-  } = authResult;
-
   let payload: AiQuestGenerationRequest;
   try {
     payload = (await request.json()) as AiQuestGenerationRequest;
@@ -31,18 +22,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { error: "Invalid JSON payload." },
       { status: 400 }
-    );
-  }
-
-  const configSnapshot = await getSideQuestGlobalConfigRef(db).get();
-  const config = configSnapshot.exists
-    ? serializeGlobalConfigSnapshot(configSnapshot)
-    : null;
-
-  if (config && !config.aiGenerationEnabled) {
-    return NextResponse.json(
-      { error: "AI generation is disabled in config." },
-      { status: 403 }
     );
   }
 
@@ -76,7 +55,7 @@ export async function POST(request: NextRequest) {
         photoProof: payload.requiredTools?.includes("photoProof") ?? false,
         locationTracking:
           payload.requiredTools?.includes("locationTracking") ?? false,
-        notes: payload.notes ?? null,
+        customPrompts: payload.notes ? [payload.notes] : [],
       },
       tags: ["ai-suggested", domain, archetype],
     })
@@ -84,7 +63,7 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     suggestions: scaffolds,
-    promptUsed: config?.aiPromptTemplate ?? null,
+    promptUsed: null,
   });
 }
 

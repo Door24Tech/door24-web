@@ -185,7 +185,10 @@ export const ensureToolsConfig = (value: unknown): SideQuestToolsConfig => {
       (value as Record<string, unknown>).locationTracking,
       "tools.locationTracking"
     ),
-    notes: ensureOptionalString((value as Record<string, unknown>).notes, "tools.notes") ?? null,
+    customPrompts: ensureStringArray(
+      (value as Record<string, unknown>).customPrompts,
+      "tools.customPrompts"
+    ),
   };
 };
 

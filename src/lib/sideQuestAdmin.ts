@@ -34,7 +34,7 @@ export type SideQuestToolsConfig = {
   survey: boolean;
   photoProof: boolean;
   locationTracking: boolean;
-  notes?: string | null;
+  customPrompts?: string[];
 };
 
 export type SideQuestPrerequisites = {
@@ -135,13 +135,7 @@ export type SideQuestAnalyticsSummaryResponse = Omit<
 };
 
 export type SideQuestGlobalConfigDoc = {
-  chaosModeDefault: boolean;
-  maxRerolls: number;
-  allowChaosFallbackInNormalMode: boolean;
   targetChaosRatio: number;
-  baselineAcceptanceRate: number;
-  aiPromptTemplate: string;
-  aiGenerationEnabled: boolean;
   updatedAt?: Timestamp | null;
   updatedBy?: string | null;
 };
@@ -194,14 +188,7 @@ export const calculateXpTotal = (xp: Omit<SideQuestXpAward, "total">): number =>
   xp.emotion + xp.clarity + xp.discipline + xp.momentum;
 
 export const defaultSideQuestGlobalConfig = (): SideQuestGlobalConfigDoc => ({
-  chaosModeDefault: false,
-  maxRerolls: 3,
-  allowChaosFallbackInNormalMode: false,
   targetChaosRatio: 0.25,
-  baselineAcceptanceRate: 0.5,
-  aiPromptTemplate:
-    "You are generating playful, safe micro-quests for Door24 members. Return concise, actionable quests.",
-  aiGenerationEnabled: false,
 });
 
 

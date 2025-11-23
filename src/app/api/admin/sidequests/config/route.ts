@@ -5,8 +5,6 @@ import {
   type SideQuestGlobalConfigDoc,
 } from "@/lib/sideQuestAdmin";
 import {
-  ensureBoolean,
-  ensureNonEmptyString,
   ensureNumber,
   getSideQuestGlobalConfigRef,
   serializeGlobalConfigSnapshot,
@@ -63,49 +61,11 @@ export async function PUT(request: NextRequest) {
   const updates: Partial<SideQuestGlobalConfigDoc> = {};
 
   try {
-    if ("chaosModeDefault" in payload) {
-      updates.chaosModeDefault = ensureBoolean(
-        payload.chaosModeDefault,
-        "chaosModeDefault"
-      );
-    }
-    if ("maxRerolls" in payload) {
-      updates.maxRerolls = ensureNumber(payload.maxRerolls, "maxRerolls", {
-        min: 1,
-        max: 10,
-        integer: true,
-      });
-    }
-    if ("allowChaosFallbackInNormalMode" in payload) {
-      updates.allowChaosFallbackInNormalMode = ensureBoolean(
-        payload.allowChaosFallbackInNormalMode,
-        "allowChaosFallbackInNormalMode"
-      );
-    }
     if ("targetChaosRatio" in payload) {
       updates.targetChaosRatio = ensureNumber(
         payload.targetChaosRatio,
         "targetChaosRatio",
         { min: 0, max: 1 }
-      );
-    }
-    if ("baselineAcceptanceRate" in payload) {
-      updates.baselineAcceptanceRate = ensureNumber(
-        payload.baselineAcceptanceRate,
-        "baselineAcceptanceRate",
-        { min: 0, max: 1 }
-      );
-    }
-    if ("aiPromptTemplate" in payload) {
-      updates.aiPromptTemplate = ensureNonEmptyString(
-        payload.aiPromptTemplate,
-        "aiPromptTemplate"
-      );
-    }
-    if ("aiGenerationEnabled" in payload) {
-      updates.aiGenerationEnabled = ensureBoolean(
-        payload.aiGenerationEnabled,
-        "aiGenerationEnabled"
       );
     }
   } catch (error) {
