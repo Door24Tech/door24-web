@@ -428,7 +428,6 @@ export default function SideQuestGeneratorAdminPage() {
   };
 
   const handleLoadPromptVersion = () => {
-  const handleLoadPromptVersion = () => {
     if (!selectedPromptVersionId) {
       return;
     }
@@ -754,7 +753,7 @@ export default function SideQuestGeneratorAdminPage() {
                           : "bg-[var(--door24-muted)]/20 text-[var(--door24-muted)]"
                       }`}
                     >
-                      {aiConfig.chaosMode ? "On" : "Off"
+                    {aiConfig.chaosMode ? "On" : "Off"}
                     </button>
                   </div>
                   <select
@@ -1154,7 +1153,6 @@ export default function SideQuestGeneratorAdminPage() {
                         className="rounded-lg border border-[var(--door24-border)] bg-[var(--door24-background)] px-3 py-2 text-sm outline-none transition"
                       />
                     </label>
-                    <label className="flex flex-col
                     <label className="flex flex-col gap-1 text-sm font-medium">
                       Cooldown Hours
                       <input
@@ -1550,7 +1548,6 @@ export default function SideQuestGeneratorAdminPage() {
                     {formatNumber((analytics.summary?.completionRate ?? 0) * 100)}
                   </p>
                 </div>
-                <div className="rounded-xl border
                 <div className="rounded-xl border border-[var(--door24-border)]/60 bg-[var(--door24-background)]/40 p-4">
                   <p className="text-xs uppercase tracking-wide text-[var(--door24-muted)]">
                     XP Awarded
